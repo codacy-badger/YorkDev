@@ -1,0 +1,13 @@
+# Directories
+/node_modules/
+/logs/
+/backup/
+
+# File Extensions
+*.log
+*.eslintrc.json
+
+# Specific Files
+settings.json
+config.json
+tagsbot.sqlite
