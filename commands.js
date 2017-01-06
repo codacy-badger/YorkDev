@@ -139,7 +139,7 @@ var commands = {
           let message_content = message.mentions.users.array().length === 1 ? `${message.mentions.users.array()[0]} ${row.contents}` : row.contents;
           message.channel.sendMessage(message_content);
         } else {
-          message.channel.sendMessage(`Could not find tag (${args[0]}).`).then(response => {
+          message.channel.sendMessage(`A tag with the name **${args[0]}** could not be found.`).then(response => {
             response.delete(5000);
           });
         }
@@ -157,7 +157,7 @@ var commands = {
       sql.open('./tagsbot.sqlite').then(() => {
         sql.run('DELETE FROM tags WHERE name = ?', args[0])
           .then(() => {
-            message.channel.sendMessage('The tag (' + args[0] + ') has been deleted').then(response => {
+            message.channel.sendMessage(`The tag **${args[0]}** has been deleted`).then(response => {
               response.delete(5000);
             });
           })
