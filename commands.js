@@ -3,7 +3,7 @@ const sql = require('sqlite');
 const config = require('./config.json');
 
 const Pad = (str, l) => {
-  return str + Array(l - str.length + 1).join(' ');
+  return str + ' '.repeat(l - str.length + 1);
 };
 
 const aliases = {
@@ -35,38 +35,31 @@ var commands = {
     usage: config.prefix + 'help <command>',
     alias: 'h',
     execute: function(client, message, args) {
-      let sendhelp = [];
+      let sendhelp;
       let command = args[0];
       if (command) {
-        if (commands.hasOwnProperty(command)) {
-          sendhelp.push(`Name: ${commands[command].name}`);
-          if (commands[command].alias) {
-            sendhelp.push(`Alias: ${commands[command].alias}`);
-          }
-          sendhelp.push(`Description: ${commands[command].description}`);
-          if (commands[command].usage) {
-            sendhelp.push(`Usage: ${commands[command].usage}`);
-          }
-          if (commands[command].permissions) {
-            sendhelp.push(`Permissions: ${commands[command].permissions}`);
-          }
-          message.channel.sendCode('LDIF', sendhelp).catch(error => console.log(error));
-        }
+        if (!commands.hasOwnProperty(command)) return;
+        sendhelp = [];
+                                            sendhelp.push(`Name: ${commands[command].name}`);
+        if (commands[command].alias)        sendhelp.push(`Alias: ${commands[command].alias}`);
+                                            sendhelp.push(`Description: ${commands[command].description}`);
+        if (commands[command].usage)        sendhelp.push(`Usage: ${commands[command].usage}`);
+        if (commands[command].permissions)  sendhelp.push(`Permissions: ${commands[command].permissions}`);
       } else {
-        let toSend = '';
+        sendhelp = `This is a list of commands available to you, to get more info just do ${config.prefix}help <command>\n`;
         let i = 0;
         let sortedKeys = Object.keys(commands);
         sortedKeys.sort();
         for (let key in sortedKeys) {
-          if ((i % 3) == 0) {
-            toSend += `\n${Pad(toTitleCase(sortedKeys[key]), 12)}`;
+          if ((i % 3) === 0) {
+            sendhelp += `\n${Pad(toTitleCase(sortedKeys[key]), 12)}`;
           } else {
-            toSend += `${Pad(toTitleCase(sortedKeys[key]), 12)}`;
+            sendhelp += `${Pad(toTitleCase(sortedKeys[key]), 12)}`;
           }
           i++;
         }
-        message.channel.sendCode('LDIF', `This is a list of commands available to you, to get more info just do ${config.prefix}help <command>\n ${toSend}`).catch(error => console.log(error));
       }
+      message.channel.sendCode('LDIF', sendhelp).catch(console.error);
     }
   },
 
@@ -76,7 +69,7 @@ var commands = {
     usage: '',
     alias: 'r, rld',
     execute: function(client, message) {
-      if (!message.member.roles.has(message.guild.roles.find('name', 'Staff').id)) return;
+      if (!message.member.roles.exists('name', 'Staff')) return;
       self.reload(message);
     }
   },
@@ -87,10 +80,10 @@ var commands = {
     usage: '',
     alias: '',
     execute: function(client, message) {
-      if (!message.member.roles.has(message.guild.roles.find('name', 'Staff').id)) return;
+      if (!message.member.roles.exists('name', 'Staff')) return;
       message.channel.sendMessage('Rebooting...').then(() => {
         process.exit();
-      }).catch(error => console.log(error));
+      }).catch(console.error);
     }
   },
 
@@ -100,31 +93,31 @@ var commands = {
     usage: config.prefix + 'addtag <name>',
     alias: 'at',
     execute: function(client, message, args) {
-      if (!message.member.roles.has(message.guild.roles.find('name', 'Staff').id)) return;
+      if (!message.member.roles.exists('name', 'Staff')) return;
       let name = args[0];
       if (!name) return message.reply('You must give the tag a name.');
       sql.open('./tagsbot.sqlite').then(() => sql.get(`SELECT * FROM tags WHERE name = '${name}'`)).then(row => {
-        if (row) return message.channel.sendMessage(`The tag **\`${name}\`** already exists, please choose a different name.`);
+        if (row) return message.channel.sendMessage(`The tag **\`${name}\`** already exists, please choose a different name.`).then(() => null);
+
         message.channel.sendMessage(`Adding tag **\`${name}\`**, what would you like it to say?\n\nReply with \`cancel\` to abort the command. The command will self-abort in 30 seconds`);
-        message.channel.awaitMessages(m => m.author.id === message.author.id, {
+        return message.channel.awaitMessages(m => m.author.id === message.author.id, {
           'errors': ['time'],
           'max': 1,
           time: 30000
-        })
-          .then(resp => {
-            resp = resp.array()[0];
-            if (resp.content === 'cancel') return message.channel.sendMessage(`Aborting tag creation of \`${name}\`.`);
-            message.channel.sendMessage(`Created tag **\`${name}\`** with content:\n\`\`\`\n${resp.content}\n\`\`\``)
-              .then(msg => {
-                sql.run('INSERT INTO tags (name, contents) VALUES (?, ?)', [name, resp.content]).then(() => {
-                  message.channel.sendMessage(`A tag with the name ${name} has been added`).then(response => {
-                    response.delete(5000);
-                  });
-                }).catch(error => console.log(error));
-              });
-          })
-          .catch(err => message.channel.sendMessage('You failed to respond. Aborting tag creation.'));
-      }).catch(error => console.log(error));
+        });
+      }).then(resp => {
+        if(!resp) return;
+        resp = resp.array()[0];
+
+        if (resp.content === 'cancel') return message.channel.sendMessage(`Aborting tag creation of \`${name}\`.`);
+        return message.channel.sendMessage(`Created tag **\`${name}\`** with content:\n\`\`\`\n${resp.content}\n\`\`\``).then(() => {
+          return sql.run('INSERT INTO tags (name, contents) VALUES (?, ?)', [name, resp.content]);
+        }).then(() => {
+          return message.channel.sendMessage(`A tag with the name ${name} has been added`);
+        }).then(response => {
+          return response.delete(5000);
+        });
+      }).catch(console.error);
     }
   },
 
@@ -137,13 +130,13 @@ var commands = {
       sql.open('./tagsbot.sqlite').then(() => sql.get('SELECT * FROM tags WHERE name = ?', args[0])).then(row => {
         if (row) {
           let message_content = message.mentions.users.array().length === 1 ? `${message.mentions.users.array()[0]} ${row.contents}` : row.contents;
-          message.channel.sendMessage(message_content);
+          return message.channel.sendMessage(message_content);
         } else {
-          message.channel.sendMessage(`A tag with the name **${args[0]}** could not be found.`).then(response => {
-            response.delete(5000);
+          return message.channel.sendMessage(`A tag with the name **${args[0]}** could not be found.`).then(response => {
+            return response.delete(5000);
           });
         }
-      }).catch(error => console.log(error));
+      }).catch(console.error);
     }
   },
 
@@ -153,16 +146,14 @@ var commands = {
     usage: config.prefix + 'deltag <tag name>',
     alias: 'dt',
     execute: function(client, message, args) {
-      if (!message.member.roles.has(message.guild.roles.find('name', 'Staff').id)) return;
+      if (!message.member.roles.exists('name', 'Staff')) return;
       sql.open('./tagsbot.sqlite').then(() => {
-        sql.run('DELETE FROM tags WHERE name = ?', args[0])
-          .then(() => {
-            message.channel.sendMessage(`The tag **${args[0]}** has been deleted`).then(response => {
-              response.delete(5000);
-            });
-          })
-          .catch(error => console.log(error));
-      });
+        return sql.run('DELETE FROM tags WHERE name = ?', args[0]);
+      }).then(() => {
+        return message.channel.sendMessage(`The tag **${args[0]}** has been deleted`)
+      }).then(response => {
+        return response.delete(5000);
+      }).catch(console.error);
     }
   },
 
@@ -173,8 +164,8 @@ var commands = {
     alias: 'tags, tl',
     execute: function(client, message) {
       sql.open('./tagsbot.sqlite').then(() => sql.all('SELECT * FROM tags')).then(rows => {
-        rows < 1 ? message.channel.sendMessage('There appears to be no tags saved at this time.').catch(error => console.log(error)) : message.channel.sendMessage('Tags: ' + rows.map(r => r.name).join(', ')).catch(error => console.log(error));
-      }).catch(error => console.log(error));
+        return message.channel.sendMessage(rows < 1 ? 'There appears to be no tags saved at this time.' : 'Tags: ' + rows.map(r => r.name).join(', '));
+      }).catch(console.error);
     }
   },
 
