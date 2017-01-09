@@ -1,4 +1,4 @@
-const self = require('./app.js');
+const self = require('./events/message.js');
 const sql = require('sqlite');
 const config = require('./config.json');
 
