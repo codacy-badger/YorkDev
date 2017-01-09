@@ -8,6 +8,7 @@ client.login(config.token);
 
 client.on('ready', () => {
   console.log('Ready to go!');
+  client.user.setGame('?help');
 });
 
 const prefix = new RegExp(`^\\${config.prefix}`);
@@ -16,7 +17,7 @@ client.on('message', message => {
   if (message.author.bot || !message.content.startsWith(config.prefix)) return;
 
   const args = [];
-  const unprefixed = message.content.replace(prefix, '').toLowerCase();
+  const unprefixed = message.content.replace(prefix, '');
 
   let match;
   const re = /\S+/g;
@@ -35,7 +36,7 @@ client.on('message', message => {
 
   if (cmd.hasOwnProperty('permissions')) {
     let missingPerms = [];
-    for(const val of cmd.permissions) {
+    for (const val of cmd.permissions) {
       if (!message.channel.permissionsFor(client.user).hasPermission(val)) {
         missingPerms.push(cmds.toTitleCase(val.replace('_', ' ')));
       }
@@ -57,10 +58,10 @@ let reload = (message) => {
   try {
     cmds = require('./commands');
   } catch (err) {
-    message.reply(`Problem loading bot_self_commands.js: ${err}`).then(
+    message.reply(`Problem loading commands.js: ${err}`).then(
       response => response.delete(1000)
     ).catch(error => console.log(error.stack));
-    console.log(`Problem loading bot_self_commands.js: ${err}`);
+    console.log(`Problem loading commands.js: ${err}`);
     return;
   }
   message.reply('Commands reload was a success!').then(
