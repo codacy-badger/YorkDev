@@ -1,0 +1,64 @@
+{
+    "errors": {
+        "strictmode": {
+            "message": "It looks like you have an outdated node version! You need 6.0.0 or newer. Go to https://nodejs.org/en/download/ to update.",
+            "info": "Discord.js uses features in ES6, you need node 6.0.0 or above to use these features",
+            "problem": "Outdated node version",
+            "solution": "Go to [nodejs.org](https://nodejs.org/en/download/) and update your node version to 6.0.0 or above."
+        },
+        "async": {
+            "message": "It looks like you are trying to use async! To do this you need node 7.0.0 (you can check this with `node -v`) or newer and you need to use the `--harmony` flag. E.g. `node --harmony bot.js`. Go to https://nodejs.org/en/download/ if you need to update.",
+            "info": "Async needs the harmony flag and node 7.0.0 or above",
+            "problem": "Either an outdated node version, or no harmony flag",
+            "solution": "If your node version is less than 7.0.0 (you can check with `node -v`) go to [nodejs.org](https://nodejs.org/en/download/) and update your node version to 7.0.0 or above\nAlso make sure to run with the `--harmony` flag (note: this flag needs to go *before* your filename). E.g. `node --harmony bot.js`"
+        },
+        "gyperror": {
+            "message": "It looks like you are having gyp errors! You want to install windows-build-tools (`npm i -g windows-build-tools`) if you are on Windows or build-essential (`sudo apt install build-essential`) if you are on Linux",
+            "info": "Some packages require a C++ compiler and Python2 to install. Installing windows-build-tools or build-utils will install these for you",
+            "problem": "gyp errors",
+            "solution": "Install windows-build-tools (`npm i -g windows-build-tools`) if you are on Windows or build-essential (`sudo apt install build-essential`) if you are on Linux"
+        },
+        "lostmodule": {
+            "message": "It looks like you either forgot to install something or node cant find your file! Double check your spelling of the filename. You need to run `npm install PACKAGENAME` to install a package. To install discord.js run `npm install discord.js`",
+            "info": "You are either requiring a package that you didnt install or trying to run a file that doesnt exist",
+            "problem": "Missing package or file doesnt exist",
+            "solution": "Double check your spelling of the file. Run `npm install PACKAGENAME` to install a package. To install discord.js run `npm install discord.js`"
+        },
+        "msgnotdef": {
+            "message": "It seems like you are trying to use `msg` or `message` where it is not defined.",
+            "info": "Trying to use a message handler where it is not defined.",
+            "problem": "Either using the wrong message handler or youre trying to use it in another event other than message, such as `guildCreate`",
+            "solution": "Use the correct `message` or `msg`, or dont use it at all."
+        },
+        "botnotdef": {
+            "message": "It seems like you are trying to use `bot` or `client` where it is not defined.",
+            "info": "This is what typically happens when someone who copies and pastes codes without checking.",
+            "problem": "You are trying to use `bot` or `client` where it isnt defined!",
+            "solution": "Use the same variable defined in the `const <thisvar> = new Discord.Client();` line, whether thats `bot` or `client`, at the top of your file."
+        },
+        "richembed": {
+            "message": "Message",
+            "info": "Info",
+            "problem": "Problem",
+            "solution": "Solution"
+        },
+        "unhandledpromise": {
+            "message": "Message",
+            "info": "Info",
+            "problem": "Problem",
+            "solution": "Solution"
+        },
+        "opusengine": {
+            "message": "Message",
+            "info": "Info",
+            "problem": "Problem",
+            "solution": "Solution"
+        },
+        "ffmpeg": {
+            "message": "Discord.js requires a nifty piece of software called FFMPEG in order to stream audio from your system to Discord. Please ensure you follow the solution as it will help resolve this issue.",
+            "info": "\u200b",
+            "problem": "FFMPEG was not found/installed on your system. This will prevent you from being able to utilise any audio functions of the Discord.js Library as it is requires to transcode and stream the audio data to Discord via your bot.",
+            "solution": "Dependant on which OS your system is running on, it can be as simple as running a terminal command or as hard has having to modify system variables.\n\n[**Windows**](http://adaptivesamples.com/how-to-install-ffmpeg-on-windows/) :: [**OSX**](http://www.renevolution.com/ffmpeg/2013/03/16/how-to-install-ffmpeg-on-mac-os-x.html) :: [**Linux**](https://www.assetbank.co.uk/support/documentation/install/ffmpeg-debian-squeeze/ffmpeg-debian-jessie/)"
+        }
+    }
+}

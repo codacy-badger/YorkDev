@@ -2,7 +2,7 @@ exports.run = (client, message) => {
   message.channel.sendMessage(`Are you sure you want to reboot?\n\nReply with \`cancel\` to abort the reboot. The reboot will self-abort in 30 seconds`);
   return message.channel.awaitMessages(m => m.author.id === message.author.id, {
     'errors': ['time'],
-    'max': 5,
+    'max': 1,
     time: 30000
   }).then(resp => {
     if (!resp) return;
