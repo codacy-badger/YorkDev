@@ -1,5 +1,5 @@
 {
-    "errors": {
+    "responses": {
         "strictmode": {
             "message": "It looks like you have an outdated node version! You need 6.0.0 or newer. Go to https://nodejs.org/en/download/ to update.",
             "info": "Discord.js uses features in ES6, you need node 6.0.0 or above to use these features",
@@ -43,16 +43,16 @@
             "solution": "Solution"
         },
         "unhandledpromise": {
-            "message": "Message",
-            "info": "Info",
-            "problem": "Problem",
-            "solution": "Solution"
+            "message": "Looks like you've forgotten to catch a promise somewhere.  Promises have 3 states: `pending`, `resolved`, and `rejected`.  Most of the time you only deal with the `resolved` case (by appending `.then` to an asynchronous API call, for instance), but occasionally a promise might reject if there was some sort of error.",
+            "info": "Both of these solutions will log the full error into console so you can find out what the problem is and where to find it.  The first solution should only be used for debugging: it's bad practice to have a catchall for errors because errors properly require case-by-case handling.  Check out [promise chaining](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/then#Chaining) to efficiently handle your errors: you can insert a `catch` call anywhere in a promise chain, which will catch any prior rejections.",
+            "problem": "Unhandled promise rejections usually arise from incorrect calls to the Discord API, which often means that you're missing a parameter (`Bad Request`) or your bot doesn't have permission to do what it's trying to do (`Forbidden`).  If you're missing a parameter, that usually means that some data that you expect to be defined is actually `undefined` or some other unexpected value.",
+            "solution": "There are a couple options.  If you're debugging and just want to find the error, you can place the following in your main bot file:\n```js\nprocess.on('unhandledRejection', console.error);\n```\nFor a more permanent solution, place the following after any API calls that might fail:\n```js\n<some api call>.catch(console.error);\n```"
         },
         "opusengine": {
-            "message": "Message",
-            "info": "Info",
-            "problem": "Problem",
-            "solution": "Solution"
+            "message": "In order to output sound, discord.js requires either one of 2 opus libraries. `opusscript` is easy to install, but has memory leaks. `node-opus` is harder to install but is better overall.",
+            "info": "You'll also need ffmpeg installed on your system.\nPlease see: [**Windows**](http://adaptivesamples.com/how-to-install-ffmpeg-on-windows/) :: [**OSX**](http://www.renevolution.com/ffmpeg/2013/03/16/how-to-install-ffmpeg-on-mac-os-x.html) :: [**Linux**](https://www.assetbank.co.uk/support/documentation/install/ffmpeg-debian-squeeze/ffmpeg-debian-jessie/)",
+            "problem": "Discord.js requires an opus engine module to output sound.",
+            "solution": "`npm install opusscript` to install opusscript. Great in dev environments where performance won't matter (and especially windows)\n_or_\n`npm install node-opus` to install node-opus. Requires Python **version 2.7.x** installed, and build tools, see <link> for more info. "
         },
         "ffmpeg": {
             "message": "Discord.js requires a nifty piece of software called FFMPEG in order to stream audio from your system to Discord. Please ensure you follow the solution as it will help resolve this issue.",
