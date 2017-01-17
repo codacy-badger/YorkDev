@@ -1,5 +1,9 @@
 {
-    "examplesChannel": "",
-    "token": "",
-    "prefix": "?"
+  "examplesChannel": "",
+  "ownerid": "",
+  "modroleid": "",
+  "adminroleid": "",
+  "cooldown": 12,
+  "token": "",
+  "prefix": "?"
 }
