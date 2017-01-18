@@ -1,17 +1,17 @@
 const sql = require('sqlite');
+sql.open('./tagsbot.sqlite');
 const config = require('../config.json');
-exports.run = (client, message, args) => {
+exports.run = async(client, message, args) => {
   let name = args.join(' ');
-  if (!message.member.roles.exists('name', 'Staff')) return;
-  sql.open('./tagsbot.sqlite').then(() => sql.get('SELECT * FROM examples WHERE name = ?', name)).then(row => {
-    client.channels.get(config.examplesChannel).fetchMessage(row.msgId).then(msg => msg.delete()).then(() => {
-      return sql.run('DELETE FROM examples WHERE name = ?', name);
-    }).then(() => {
-      return message.channel.sendMessage(`The **${name}** example has been deleted`);
-    }).then(response => {
-      return response.delete(5000);
-    }).catch(console.error);
-  });
+  try {
+    const row = await sql.get('SELECT * FROM examples WHERE name = ?', name);
+    if (!row) return message.channel.sendMessage(`An example with the name **${name}** could not be found.`);
+    await client.channels.get(config.examplesChannel).fetchMessage(row.msgId).then(msg => msg.delete());
+    await sql.run('DELETE FROM examples WHERE name = ?', name);
+    return message.channel.sendMessage(`The **${name}** example has been deleted`);
+  } catch (error) {
+    console.error;
+  }
 };
 
 exports.conf = {

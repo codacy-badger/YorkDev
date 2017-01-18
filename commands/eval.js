@@ -4,7 +4,7 @@ exports.run = (client, message, args = []) => {
     var evaled = eval(code);
     if (typeof evaled !== 'string')
       evaled = require('util').inspect(evaled);
-    message.channel.sendMessage('```xl\n' + clean(evaled.toString().replace(client.token, 'Redacted')) + '\n```');
+    message.channel.sendMessage('```xl\n' + clean(evaled.toString().replace(client.token, 'Redacted')) + '\n```', {split:true}).catch(console.error);
   } catch (err) {
     console.log(err);
     message.channel.sendMessage('`ERROR` ```xl\n' +

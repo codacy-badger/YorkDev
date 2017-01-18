@@ -12,7 +12,7 @@ exports.run = (client, message, args) => {
   } else {
     message.channel.overwritePermissions(message.guild.id, {
       SEND_MESSAGES: false
-    }).then(message.channel.sendMessage(`Channel lockdown for ${ms(ms(time), { long:true })}`)).catch(error => {
+    }).then(message.channel.sendMessage(`Channel locked down for ${ms(ms(time), { long:true })}`)).catch(error => {
 
       console.log(error);
     });

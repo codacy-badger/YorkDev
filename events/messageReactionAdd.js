@@ -1,6 +1,7 @@
-module.exports = (r, user) => {
-  if (r.message.author.id === r.message.client.user.id) return;
-  if (r.message.author.id === user.id) return;
+module.exports = async (r, user) => {
+  let message = r.message;
+  if (message.author.id === message.client.user.id) return message.reply('I cannot pin my own messages.');
+  if (message.author.id === user.id) return message.reply('You cannot pin your own messages.');
   // console.log(`${user.username} reacted with ${r.emoji} (ID: ${r.emoji.id}), the count is now ${r.count}`);
   let validEmojis = ['📌', '📍'];
   if (validEmojis.includes(r.emoji.name)) {
@@ -10,7 +11,7 @@ module.exports = (r, user) => {
     // })
     .catch(error => {
       if (error.response.body.message === 'Cannot send messages to this user') {
-        r.message.channel.sendMessage(`I cannot send you that message ${user}, as it appears you have **Direct Messages's** disabled.`).catch(error => console.log(error));
+        message.channel.sendMessage(`I cannot send you that message ${user}, as it appears you have **Direct Messages's** disabled.`).catch(error => console.log(error));
       } else {
         console.log(error);
       }

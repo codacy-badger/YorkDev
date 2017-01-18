@@ -1,10 +1,10 @@
 const config = require('../config.json');
 const errorChecks = require('../functions/errorchecks.js');
-module.exports = message => {
+module.exports = async message => {
   let client = message.client;
   if (message.author.bot) return;
-  errorChecks(message, message.content);
-  if(!message.content.startsWith(config.prefix)) return;
+  // errorChecks(message, message.content);
+  if (!message.content.startsWith(config.prefix)) return;
   let command = message.content.split(' ')[0].slice(config.prefix.length);
   let params = message.content.split(' ').slice(1);
   let perms = client.elevation(message);

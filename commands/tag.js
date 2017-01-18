@@ -1,15 +1,15 @@
 const sql = require('sqlite');
-exports.run = (client, message, args) => {
+sql.open('./tagsbot.sqlite');
+exports.run = async(client, message, args) => {
   let name = args.join(' ');
   if (!name) return message.channel.sendMessage('You must specify a tag to display').catch(console.error);
-  sql.open('./tagsbot.sqlite').then(() => sql.get('SELECT * FROM tags WHERE name = ?', name)).then(row => {
-    if (row) {
-      let message_content = message.mentions.users.array().length === 1 ? `${message.mentions.users.array()[0]} ${row.contents}` : row.contents;
-      return message.channel.sendMessage(message_content).catch(console.error);
-    } else {
-      return message.channel.sendMessage(`A tag with the name **${name}** could not be found.`).catch(console.error);
-    }
-  }).catch(console.error);
+  try {
+    const row = await sql.get('SELECT * FROM tags WHERE name = ?', name);
+    if (row) return message.channel.sendMessage(row.contents);
+    await message.channel.sendMessage(`A tag with the name **${name}** could not be found.`);
+  } catch (error) {
+    console.error;
+  }
 };
 
 exports.conf = {
