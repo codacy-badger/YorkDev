@@ -44,12 +44,12 @@ async function addRep(client, message, awardee, guildid, awarder, type, reason) 
 exports.conf = {
   enabled: true,
   guildOnly: false,
-  aliases: [],
+  aliases: ['addrep'],
   permLevel: 0
 };
 
 exports.help = {
-  name: 'addrep',
+  name: 'repadd',
   description: 'Give a user either a positive (++) or a negative (--) reputation.',
-  usage: 'addrep <type> <mention> <reason>'
+  usage: 'repadd <type> <mention> <reason>'
 };

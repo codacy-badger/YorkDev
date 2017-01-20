@@ -1,9 +1,10 @@
 {
-  "examplesChannel": "",
-  "ownerid": "",
-  "modroleid": "",
-  "adminroleid": "",
-  "cooldown": 12,
-  "token": "",
-  "prefix": "?"
+    "examplesChannel": "",
+    "ownerId": "",
+    "modRole": "",
+    "superModRole": "",
+    "adminRole": "",
+    "cooldown": 12,
+    "token": "",
+    "prefix": "?"
 }

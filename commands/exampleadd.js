@@ -31,12 +31,12 @@ exports.run = (client, message, args) => {
 exports.conf = {
   enabled: true,
   guildOnly: false,
-  aliases: ['addex'],
+  aliases: ['addex', 'addexample'],
   permLevel: 2
 };
 
 exports.help = {
-  name: 'addexample',
+  name: 'exampleadd',
   description: 'Adds an example to the examples channel.',
-  usage: 'addexample <name>'
+  usage: 'exampleadd <name>'
 };

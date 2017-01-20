@@ -3,7 +3,7 @@
 	Yes, this is a modified version of Auto by Hackzilla
 
 */
-const issue = require('./issuelist.json');
+const issue = require('./issueList.json');
 function parse(input) {
   const text = input.toLowerCase();
   if (text.includes('not yet supported outside strict mode')) {

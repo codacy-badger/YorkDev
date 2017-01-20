@@ -15,12 +15,12 @@ exports.run = async(client, message, args) => {
 exports.conf = {
   enabled: true,
   guildOnly: false,
-  aliases: ['dt'],
+  aliases: ['dt', 'deltag'],
   permLevel: 3
 };
 
 exports.help = {
-  name: 'deltag',
+  name: 'tagdel',
   description: 'Issue this command if you want to remove a tag.',
-  usage: 'deltag <name>'
+  usage: 'tagdel <name>'
 };

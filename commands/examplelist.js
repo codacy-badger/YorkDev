@@ -8,12 +8,12 @@ exports.run = (client, message) => {
 exports.conf = {
   enabled: true,
   guildOnly: false,
-  aliases: ['examplelist', 'exlist'],
+  aliases: ['examples', 'exlist'],
   permLevel: 0
 };
 
 exports.help = {
-  name: 'examples',
+  name: 'examplelist',
   description: 'Displays a list of examples.',
-  usage: 'examples'
+  usage: 'examplelist'
 };

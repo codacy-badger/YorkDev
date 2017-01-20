@@ -12,12 +12,12 @@ exports.run = async (client, message) => {
 exports.conf = {
   enabled: true,
   guildOnly: false,
-  aliases: ['taglist'],
+  aliases: ['tags'],
   permLevel: 0
 };
 
 exports.help = {
-  name: 'tags',
+  name: 'taglist',
   description: 'Displays all tags.',
   usage: 'tags'
 };

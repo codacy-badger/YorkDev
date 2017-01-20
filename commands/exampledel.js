@@ -17,12 +17,12 @@ exports.run = async(client, message, args) => {
 exports.conf = {
   enabled: true,
   guildOnly: false,
-  aliases: ['delex'],
+  aliases: ['delex', 'delexample'],
   permLevel: 3
 };
 
 exports.help = {
-  name: 'delexample',
+  name: 'exampledel',
   description: 'Deletes an example from the examples channel.',
-  usage: 'delexample <name>'
+  usage: 'exampledel <name>'
 };

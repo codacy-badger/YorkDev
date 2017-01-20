@@ -29,12 +29,12 @@ exports.run = async(client, message, args) => {
 exports.conf = {
   enabled: true,
   guildOnly: false,
-  aliases: ['at'],
+  aliases: ['at', 'addtag'],
   permLevel: 2
 };
 
 exports.help = {
-  name: 'addtag',
+  name: 'tagadd',
   description: 'Start the process of adding a tag to the database.',
-  usage: 'addtag <name>'
+  usage: 'tagadd <name>'
 };

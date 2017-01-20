@@ -1,9 +1,9 @@
 const config = require('../config.json');
-const errorChecks = require('../functions/errorchecks.js');
+const errorChecks = require('../functions/parseText.js');
 module.exports = async message => {
   let client = message.client;
   if (message.author.bot) return;
-  // errorChecks(message, message.content);
+  errorChecks(message, message.content);
   if (!message.content.startsWith(config.prefix)) return;
   let command = message.content.split(' ')[0].slice(config.prefix.length);
   let params = message.content.split(' ').slice(1);

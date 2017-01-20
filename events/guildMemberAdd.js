@@ -1,5 +1,5 @@
 const moment = require('moment');
-module.exports = async(member) => {
+module.exports = async (member) => {
   let guild = member.guild;
   let memberLog = guild.channels.find('name', 'member-log');
   if (!memberLog) return console.log('Can\'t find it');
