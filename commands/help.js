@@ -1,5 +1,7 @@
 const config = require('../config.json');
+const cooldown = require('../functions/cooldown.js');
 exports.run = (client, message, params) => {
+  if (cooldown(message.author.id)) return;
   if (!params[0]) {
     const commandNames = Array.from(client.commands.keys());
     const longest = commandNames.reduce((long, str) => Math.max(long, str.length), 0);
