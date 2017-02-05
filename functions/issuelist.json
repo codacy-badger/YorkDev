@@ -59,6 +59,18 @@
             "info": "\u200b",
             "problem": "FFMPEG was not found/installed on your system. This will prevent you from being able to utilise any audio functions of the Discord.js Library as it is requires to transcode and stream the audio data to Discord via your bot.",
             "solution": "Dependant on which OS your system is running on, it can be as simple as running a terminal command or as hard has having to modify system variables.\n\n[**Windows**](http://adaptivesamples.com/how-to-install-ffmpeg-on-windows/) :: [**OSX**](http://www.renevolution.com/ffmpeg/2013/03/16/how-to-install-ffmpeg-on-mac-os-x.html) :: [**Linux**](https://www.assetbank.co.uk/support/documentation/install/ffmpeg-debian-squeeze/ffmpeg-debian-jessie/)"
+        },
+        "badrequest": {
+          "message":"Looks like you've encountered a bad request.",
+          "info":"There's 3 known causes for a bad request, empty message, message too big and embed error.",
+          "problem":"Either you're sending an empty message, your message is too big or you have a problem with your embed.",
+          "solution":"**1)** Your message is empty: An empty message, aka a 0-length string. Messages cannot be empty.\n**2)** Your message is too big: Any message over 2000 character is rejected, just like in the client.\n**3)** There is an error in your embed: If you're attempting to send an embed, there is an error in it. For example an empty field, a field that's too large, etc."
+        },
+        "forbidden": {
+          "message":"Looks like you've encountered a Forbidden error, this happens when your bot attempts to do something it can't.",
+          "info":"The forbidden permission is typically related to permissions, for example trying to delete messages without the **MANAGE_MESSAGES** permission.",
+          "problem":"Your bot is attempting to do something it can't, for example apply roles above itself to users.",
+          "solution":"Depending on the action your bot is attempting will decide the course of action, your bot must have the correct permissions to achieve what you want and the bot for example cannot apply roles, or affect users with roles above it's own."
         }
     }
 }

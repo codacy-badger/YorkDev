@@ -78,6 +78,24 @@ function parse(input) {
     };
   } else
 
+  if (text.includes('bad request')) {
+    return {
+      message: issue.responses.badrequest.message,
+      info: issue.responses.badrequest.info,
+      problem: issue.responses.badrequest.problem,
+      solution: issue.responses.badrequest.solution,
+    };
+  } else
+
+  if (text.includes('forbidden')) {
+    return {
+      message: issue.responses.forbidden.message,
+      info: issue.responses.forbidden.info,
+      problem: issue.responses.forbidden.problem,
+      solution: issue.responses.forbidden.solution,
+    };
+  } else
+
   if (text.includes('couldn\'t find an opus engine')) {
     return {
       message: issue.responses.opusengine.message,

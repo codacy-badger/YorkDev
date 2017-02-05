@@ -1,9 +1,23 @@
+const CleverBot = require('cleverbot-node');
+const clever = new CleverBot;
 const config = require('../config.json');
 const errorChecks = require('../functions/parseText.js');
 module.exports = async message => {
   let client = message.client;
   if (message.author.bot) return;
   errorChecks(message, message.content);
+  if (message.channel.type === 'dm') {
+    let args = message.content.split(' ').slice(1);
+    CleverBot.prepare(() => {
+      clever.write(args, (response) => {
+        message.channel.startTyping();
+        setTimeout(() => {
+          message.channel.sendMessage(response.message).catch(console.error);
+          message.channel.stopTyping();
+        }, Math.random() * (1 - 3) + 1 * 1000);
+      });
+    });
+  }
   if (!message.content.startsWith(config.prefix)) return;
   let command = message.content.split(' ')[0].slice(config.prefix.length);
   let params = message.content.split(' ').slice(1);
