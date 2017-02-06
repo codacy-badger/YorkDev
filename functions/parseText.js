@@ -5,8 +5,7 @@
 */
 const issue = require('./issueList.json');
 function parse(input) {
-  const text = input.toLowerCase();
-  if (text.includes('not yet supported outside strict mode')) {
+  if (input.includes('Block-scoped declarations (let, const, function, class) not yet supported outside strict mode')) {
     return {
       message: issue.responses.strictmode.message,
       info: issue.responses.strictmode.info,
@@ -15,7 +14,7 @@ function parse(input) {
     };
   } else
 
-  if (text.includes('async') && text.includes('unexpected token')) {
+  if ((input.includes('async (') && input.includes('SyntaxError: Unexpected token (')) || (input.includes('async ') && input.includes('SyntaxError: missing') && input.includes('^^^^^'))) {
     return {
       message: issue.responses.async.message,
       info: issue.responses.async.info,
@@ -24,7 +23,7 @@ function parse(input) {
     };
   } else
 
-  if (text.includes('gyp error') || (text.includes('npm exit status 1') && (text.includes('node—gyp rebuild') || text.includes('node-gyp rebuild')))) {
+  if (input.includes('gyp error') || (input.includes('npm exit status 1') && (input.includes('node—gyp rebuild') || input.includes('node-gyp rebuild')))) {
     return {
       message: issue.responses.gyperror.message,
       info: issue.responses.gyperror.info,
@@ -33,7 +32,7 @@ function parse(input) {
     };
   } else
 
-  if (text.includes('cannot find module')) {
+  if (input.includes('Error:') && input.includes('Cannot find module')) {
     return {
       message: issue.responses.lostmodule.message,
       info: issue.responses.lostmodule.info,
@@ -42,7 +41,7 @@ function parse(input) {
     };
   } else
 
-  if (text.includes('msg is not defined') || text.includes('message is not defined')) {
+  if (input.includes('msg is not defined') || input.includes('message is not defined')) {
     return {
       message: issue.responses.msgnotdef.message,
       info: issue.responses.msgnotdef.info,
@@ -51,7 +50,7 @@ function parse(input) {
     };
   } else
 
-  if (text.includes('bot is not defined') || text.includes('client is not defined')) {
+  if (input.includes('bot is not defined') || input.includes('client is not defined')) {
     return {
       message: issue.responses.botnotdef.message,
       info: issue.responses.botnotdef.info,
@@ -60,7 +59,7 @@ function parse(input) {
     };
   } else
 
-  if (text.includes('discord.richembed') && text.includes('is not a constructor')) {
+  if (input.includes('TypeError: Discord.RichEmbed is not a constructor')) {
     return {
       message: issue.responses.richembed.message,
       info: issue.responses.richembed.info,
@@ -68,17 +67,8 @@ function parse(input) {
       solution: issue.responses.richembed.solution,
     };
   } else
-
-  if (text.includes('unhandledpromiserejectionwarning') || text.includes('unhandled promise rejection')) {
-    return {
-      message: issue.responses.unhandledpromise.message,
-      info: issue.responses.unhandledpromise.info,
-      problem: issue.responses.unhandledpromise.problem,
-      solution: issue.responses.unhandledpromise.solution,
-    };
-  } else
-
-  if (text.includes('bad request')) {
+// : Unhandled promise rejection (rejection id: 1): Error: Bad Request
+  if (input.includes('UnhandledPromiseRejectionWarning') && input.includes('Unhandled promise rejection') && input.includes('Error: Bad Request')) {
     return {
       message: issue.responses.badrequest.message,
       info: issue.responses.badrequest.info,
@@ -87,7 +77,8 @@ function parse(input) {
     };
   } else
 
-  if (text.includes('forbidden')) {
+
+  if (input.includes('You have triggered an unhandledRejection, you may have forgotten to catch a Promise rejection:') && input.includes('Error: Forbidden')) {
     return {
       message: issue.responses.forbidden.message,
       info: issue.responses.forbidden.info,
@@ -96,7 +87,7 @@ function parse(input) {
     };
   } else
 
-  if (text.includes('couldn\'t find an opus engine')) {
+  if (input.includes('Couldn\'t find an Opus engine')) {
     return {
       message: issue.responses.opusengine.message,
       info: issue.responses.opusengine.info,
@@ -105,7 +96,7 @@ function parse(input) {
     };
   } else
 
-  if (text.includes('ffmpeg was not found on your system')) {
+  if (input.includes('Error: FFMPEG was not found on your system, so audio cannot be played. Please make sure FFMPEG is installed and in your PATH.')) {
     return {
       message: issue.responses.ffmpeg.message,
       info: issue.responses.ffmpeg.info,

@@ -7,9 +7,8 @@ module.exports = async message => {
   if (message.author.bot) return;
   errorChecks(message, message.content);
   if (message.channel.type === 'dm') {
-    let args = message.content.split(' ').slice(1);
     CleverBot.prepare(() => {
-      clever.write(args, (response) => {
+      clever.write(message.content, (response) => {
         message.channel.startTyping();
         setTimeout(() => {
           message.channel.sendMessage(response.message).catch(console.error);
