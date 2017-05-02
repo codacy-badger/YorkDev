@@ -5,13 +5,13 @@ module.exports = async (r, user) => {
     if (message.author.id === user.id) return message.reply('You cannot pin your own messages.');
     user.sendMessage(`Here is the message you pinned.\n${r.message.cleanContent}`)
     // .then(() => {
-    //   r.message.channel.sendMessage(`${user}, I have sent you that message.`).catch(error => console.log(`ERROR: ${error.response.body.message}`));
+    //   r.message.channel.sendMessage(`${user}, I have sent you that message.`).catch(error => console.error(`ERROR: ${error.response.body.message}`));
     // })
     .catch(error => {
       if (error.response.body.message === 'Cannot send messages to this user') {
-        message.channel.sendMessage(`I cannot send you that message ${user}, as it appears you have **Direct Messages's** disabled.`).catch(error => console.log(error));
+        message.channel.sendMessage(`I cannot send you that message ${user}, as it appears you have **Direct Messages's** disabled.`).catch(error => console.error(error));
       } else {
-        console.log(error);
+        console.error(error);
       }
     });
   }

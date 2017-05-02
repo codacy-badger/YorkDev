@@ -59,14 +59,14 @@ function parse(input) {
     };
   } else
 
-  if (input.includes('TypeError: Discord.RichEmbed is not a constructor')) {
-    return {
-      message: issue.responses.richembed.message,
-      info: issue.responses.richembed.info,
-      problem: issue.responses.richembed.problem,
-      solution: issue.responses.richembed.solution,
-    };
-  } else
+  // if (input.includes('TypeError: Discord.RichEmbed is not a constructor')) {
+  //   return {
+  //     message: issue.responses.richembed.message,
+  //     info: issue.responses.richembed.info,
+  //     problem: issue.responses.richembed.problem,
+  //     solution: issue.responses.richembed.solution,
+  //   };
+  // } else
 // : Unhandled promise rejection (rejection id: 1): Error: Bad Request
   if (input.includes('UnhandledPromiseRejectionWarning') && input.includes('Unhandled promise rejection') && input.includes('Error: Bad Request')) {
     return {

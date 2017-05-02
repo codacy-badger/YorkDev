@@ -24,7 +24,7 @@ exports.run = (client, msg, params) => {
 exports.conf = {
   enabled: true,
   guildOnly: false,
-  aliases: ['r', 'rld'],
+  aliases: ['r', 'rld', 'refresh'],
   permLevel: 3
 };
 

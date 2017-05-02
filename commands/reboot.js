@@ -1,5 +1,5 @@
 exports.run = (client, message) => {
-  message.channel.sendMessage(`Are you sure you want to reboot?\n\nReply with \`cancel\` to abort the reboot. The reboot will self-abort in 30 seconds`);
+  message.channel.sendMessage('Are you sure you want to reboot?\n\nReply with \`cancel\` to abort the reboot. The reboot will self-abort in 30 seconds');
   return message.channel.awaitMessages(m => m.author.id === message.author.id, {
     'errors': ['time'],
     'max': 1,
@@ -14,20 +14,20 @@ exports.run = (client, message) => {
       } else if (resp.content === 'yes' || resp.content === 'y') {
         client.destroy().then(() => {
           process.exit();
-        }).catch(console.error);
+        }).catch(error => console.error(error));
       }
     } else {
-      message.channel.sendMessage(`Only \`${validAnswers.join('`, `')}\` are valid, please supply one of those.`).catch(()=>console.error);
+      message.channel.sendMessage(`Only \`${validAnswers.join('`, `')}\` are valid, please supply one of those.`).catch(error => console.error(error));
     }
-  }).catch(() => {
-    console.error;
+  }).catch(error => {
+    console.error(error);
     message.channel.sendMessage('Reboot timed out');
   });
 };
 exports.conf = {
   enabled: true,
   guildOnly: false,
-  aliases: [],
+  aliases: ['restart'],
   permLevel: 10
 };
 

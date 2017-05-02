@@ -61,6 +61,6 @@ client.elevation = message => {
   return permlvl;
 };
 
-process.on('unhandledRejection', err => {
-  console.error('Uncaught Promise Error: \n' + err);
+process.on('unhandledRejection', error => {
+  console.error(`Uncaught Promise Error: ${error}`);
 });

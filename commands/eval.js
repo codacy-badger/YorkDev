@@ -1,13 +1,13 @@
 exports.run = (client, message, args = []) => {
-  var code = args.join(' ');
+  let code = args.join(' ');
   try {
-    var evaled = eval(code);
+    let evaled = eval(code);
     if (typeof evaled !== 'string')
-      evaled = require('util').inspect(evaled);
+      evaled = require('util').inspect(evaled, {depth: 0});
     message.channel.sendCode('xl', clean(evaled.toString().replace(client.token, 'Redacted')), {split:true}).catch(console.error);
-  } catch (err) {
-    console.log(err);
-    message.channel.sendCode('xl', `ERROR\n${clean(err)}`);
+  } catch (error) {
+    console.error(error);
+    message.channel.sendCode('xl', `ERROR\n${clean(error)}`);
   }
 };
 

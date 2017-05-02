@@ -13,7 +13,7 @@ exports.run = (client, message, args) => {
       clearTimeout(client.lockit[message.channel.id]);
       delete client.lockit[message.channel.id];
     }).catch(error => {
-      console.log(error);
+      console.error(error);
     });
   } else {
     message.channel.overwritePermissions(message.guild.id, {
@@ -29,7 +29,7 @@ exports.run = (client, message, args) => {
         }, ms(time));
 
       }).catch(error => {
-        console.log(error);
+        console.error(error);
       });
     });
   }

@@ -1,13 +1,13 @@
 const config = require('../config.json');
-const cooldown = require('../functions/cooldown.js');
-exports.run = (client, message, params) => {
-  if (cooldown(message.author.id)) return;
-  if (!params[0]) {
+// const cooldown = require('../functions/cooldown.js');
+exports.run = (client, message, args) => {
+  // if (cooldown(message.author.id)) return;
+  if (!args[0]) {
     const commandNames = Array.from(client.commands.keys());
     const longest = commandNames.reduce((long, str) => Math.max(long, str.length), 0);
     message.channel.sendCode('asciidoc', `= Command List =\n\n[Use ${config.prefix}help <commandname> for details]\n\n${client.commands.map(c => `${config.prefix}${c.help.name}${' '.repeat(longest - c.help.name.length)} :: ${c.help.description}`).join('\n')}`);
   } else {
-    let command = params[0];
+    let command = args[0];
     if (client.commands.has(command)) {
       command = client.commands.get(command);
       message.channel.sendCode('asciidoc', `= ${command.help.name} = \n${command.help.description}\nUsage:: ${command.help.usage}`);

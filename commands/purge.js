@@ -10,7 +10,7 @@ exports.run = (client, message, args) => {
       const filterBy = user ? user.id : client.user.id;
       messages = messages.filter(m => m.author.id === filterBy).array().slice(0, amount);
     }
-    message.channel.bulkDelete(messages).catch(error => console.log(error.stack));
+    message.channel.bulkDelete(messages).catch(error => console.error(error));
   });
 };
 exports.conf = {
