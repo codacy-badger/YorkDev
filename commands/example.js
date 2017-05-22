@@ -1,19 +1,18 @@
-const config = require('../config.json');
-const sql = require('sqlite');
-sql.open('./tagsbot.sqlite');
 exports.run = async(client, message, args) => {
+  const permission = client.elevation(message);
   let name = args.join(' ');
   let newName = name.split(' ').slice(1).join(' ');
-  let flag = ['-add', '-del', '-list'];
+  let flag = ['-add', '-edit', '-del', '-list'];
   let a = flag.indexOf(args[0]);
   switch (a) {
     case 0:
       {
-        if (!newName) return message.channel.sendMessage('You must give the example a name.');
+        if (permission < 2) return;
+        if (!newName) return message.channel.send('You must give the example a name.');
         try {
-          let row = await sql.get(`SELECT * FROM examples WHERE name = '${newName}'`);
-          if (row) return message.channel.sendMessage(`An example by **\`${newName}\`** already exists, please choose a different name.`);
-          await message.reply(`Adding example **\`${newName}\`**, what would you like it to be?\n\nReply with \`cancel\` to abort the command. The command will self-abort in 30 seconds`);
+          let row = await client.sql.get(`SELECT * FROM examples WHERE name = '${newName}'`);
+          if (row) return message.channel.send(`The example **\`${newName}\`** already exists, please choose a different name.`);
+          await message.reply(`Adding example **\`${newName}\`**, what would you like it to say?\n\nRespond with \`cancel\` to cancel the command. The command will automatically be cancelled in 30 seconds.`);
           let resp = await message.channel.awaitMessages(m => m.author.id === message.author.id, {
             'errors': ['time'],
             'max': 1,
@@ -21,10 +20,9 @@ exports.run = async(client, message, args) => {
           });
           if (!resp) return;
           resp = resp.array()[0];
-          if (resp.content === 'cancel') return message.channel.sendMessage(`Aborting \`${newName}\` example creation.`);
-          let post = await client.channels.get(config.exampleChannel).sendMessage(`**EXAMPLE:** ${newName}\n\`\`\`js\n${resp.content}\n\`\`\``);
-          await sql.run('INSERT INTO examples (name, contents, msgId) VALUES (?, ?, ?)', [newName, resp.content, post.id]);
-          return message.channel.sendMessage(`Created example **\`${newName}\`** with content:\n\`\`\`\n${resp.content}\n\`\`\``);
+          if (resp.content === 'cancel') return message.channel.send(`Aborting example creation of \`${newName}\`.`);
+          await client.sql.run('INSERT INTO examples (name, contents) VALUES (?, ?)', [newName, resp.content]);
+          return message.channel.send(`Created example **\`${newName}\`** with content:\n\`\`\`\n${resp.content}\n\`\`\``);
         } catch (error) {
           console.error(error);
         }
@@ -32,35 +30,58 @@ exports.run = async(client, message, args) => {
       }
     case 1:
       {
+        if (permission < 2) return;
         try {
-          console.log(newName);
-          const row = await sql.get('SELECT * FROM examples WHERE name = ?', newName);
-          if (!row) return message.channel.sendMessage(`An example with the name **${newName}** could not be found.`);
-          await client.channels.get(config.exampleChannel).fetchMessage(row.msgId).then(msg => msg.delete());
-          await sql.run('DELETE FROM examples WHERE name = ?', newName);
-          return message.channel.sendMessage(`The **${newName}** example has been deleted`);
+          if (!newName) return message.reply('You must name an existing example to edit..');
+          let row = await client.sql.get(`SELECT * FROM examples WHERE name = '${newName}'`);
+          if (!row) return message.channel.send(`An example by the name **${newName}** could not be found.`);
+          await message.channel.send(`Editing **\`${newName}\`** example, what would you like it to be?\n\nReply with \`cancel\` to abort the command. The command will self-abort in 30 seconds`);
+          let resp = await message.channel.awaitMessages(m => m.author.id === message.author.id, {
+            'errors': ['time'],
+            'max': 1,
+            time: 30000
+          });
+          if (!resp) return;
+          resp = resp.array()[0];
+          if (resp.content === 'cancel') return message.channel.send(`Aborting update of \`${newName}\` example.`);
+          let nRow = await client.sql.get(`SELECT * FROM examples WHERE name = '${newName}'`);
+          if (nRow) await client.sql.run(`UPDATE examples SET contents = "${resp.content}" WHERE id = ${nRow['id']}`);
+          return await message.channel.send(`Updated **\`${newName}\`** example with content:\n\`\`\`js\n${resp.content}\n\`\`\``);
         } catch (error) {
-          console.error(error);
+          console.log(error);
         }
         break;
       }
     case 2:
       {
+        if (permission < 2) return;
         try {
-          const rows = await sql.all('SELECT * FROM examples');
-          return await message.channel.sendMessage(rows < 1 ? 'There appears to be no examples saved at this time.' : '**❯ Examples: **' + rows.map(r => r.name).join(', '));
+          const row = await client.sql.get(`SELECT * FROM examples WHERE name = '${newName}'`);
+          if (!row) return message.channel.send(`An example with the name **${newName}** could not be found.`);
+          await client.sql.run('DELETE FROM examples WHERE name = ?', newName);
+          await message.channel.send(`The example **${newName}** has been deleted`);
         } catch (error) {
           console.error(error);
         }
         break;
       }
+    case 3: {
+      try {
+        const rows = await client.sql.all('SELECT * FROM examples');
+        await message.channel.send(rows < 1 ? 'There appears to be no examples saved at this time.' : '**❯ examples: **' + rows.map(r => r.name).join(', '));
+      } catch (error) {
+        console.error(error);
+      }
+      break;
+    }
     default:
       {
         try {
-          let row = await sql.get('SELECT * FROM examples WHERE name = ?', name);
-          await message.channel.sendCode('js', row.contents);
+          let row = await client.sql.get('SELECT * FROM examples WHERE name = ?', name);
+          await message.channel.send(row.contents, {code:'js'});
         } catch (error) {
           console.error(error);
+          if (!newName) return message.channel.send('You must name an example to display.');
           await message.reply(`An example by the name **${name}** could not be found.`);
         }
         break;
@@ -69,14 +90,13 @@ exports.run = async(client, message, args) => {
 };
 
 exports.conf = {
-  enabled: true,
-  guildOnly: false,
-  aliases: ['examp'],
+  aliases: [],
   permLevel: 0
 };
 
 exports.help = {
   name: 'example',
   description: 'Displays an example.',
-  usage: 'example <name>'
+  usage: 'example [-add|-edit|-del|-list] [name]',
+  category: 'examples'
 };

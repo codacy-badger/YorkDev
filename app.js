@@ -1,5 +1,7 @@
 const Discord = require('discord.js');
 const client = new Discord.Client();
+client.sql = require('sqlite');
+client.sql.open('./tagsbot.sqlite');
 const config = require('./config.json');
 const moment = require('moment');
 const fs = require('fs');
@@ -16,7 +18,7 @@ fs.readdir('./commands/', (err, files) => {
   log(`Loading a total of ${files.length} commands.`);
   files.forEach(f => {
     let props = require(`./commands/${f}`);
-    log(`Loading Command: ${props.help.name}. 👌`);
+    log(`Loading Command: ${props.help.name}. ✔`);
     client.commands.set(props.help.name, props);
     props.conf.aliases.forEach(alias => {
       client.aliases.set(alias, props.help.name);
@@ -45,22 +47,21 @@ client.reload = command => {
 };
 
 client.elevation = message => {
-  /* This function should resolve to an ELEVATION level which
-     is then sent to the command handler for verification*/
   let permlvl = 0;
-  // Mod
-  let mod_role = message.guild.roles.find('name', config.modRole);
-  if (mod_role && message.member.roles.has(mod_role.id)) permlvl = 2;
-  // Super Mod
-  let super_mod_role = message.guild.roles.find('name', config.superModRole);
-  if (super_mod_role && message.member.roles.has(super_mod_role.id)) permlvl = 3;
-  // Admin
-  let admin_role = message.guild.roles.find('name', config.adminRole);
-  if (admin_role && message.member.roles.has(admin_role.id)) permlvl = 4;
-  if (message.author.id === config.ownerId) permlvl = 10;
+  if (config.ownerId.includes(message.author.id)) return permlvl = 10;
+  if (!message.guild) return permlvl;
+  if (message.guild) {
+    let mod_role = message.guild.roles.find('name', config.modRole);
+    if (mod_role && message.member.roles.has(mod_role.id)) permlvl = 2;
+
+    let admin_role = message.guild.roles.find('name', config.adminRole);
+    if (admin_role && message.member.roles.has(admin_role.id)) permlvl = 3;
+
+    if (message.author.id === message.guild.owner.id) permlvl = 4;
+  }
   return permlvl;
 };
 
-process.on('unhandledRejection', error => {
-  console.error(`Uncaught Promise Error: ${error}`);
+process.on('unhandledRejection', err => {
+  console.error('Uncaught Promise Error: \n' + err);
 });

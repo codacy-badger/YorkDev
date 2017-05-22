@@ -1,8 +1,10 @@
-exports.run = (client, message) => {
-  message.channel.sendMessage('Ping?')
-    .then(msg => {
-      msg.edit(`Pong! (took: ${msg.createdTimestamp - message.createdTimestamp}ms)`);
-    });
+exports.run = async (client, message) => {
+  try {
+    let msg = await message.channel.send('🏓 Ping!');
+    msg.edit(`🏓 Pong! (Roundtrip took: ${msg.createdTimestamp - message.createdTimestamp}ms. 💙: ${Math.round(client.ping)}ms.)`);
+  } catch (e) {
+    console.log(e);
+  }
 };
 
 exports.conf = {
@@ -14,6 +16,8 @@ exports.conf = {
 
 exports.help = {
   name: 'ping',
-  description: 'Ping/Pong command. I wonder what this does? /sarcasm',
-  usage: 'ping'
+  description: 'Latency and API response times.',
+  usage: 'ping',
+  category:'General',
+
 };

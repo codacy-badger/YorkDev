@@ -6,9 +6,9 @@ exports.run = (client, msg, params) => {
     command = client.aliases.get(params[0]);
   }
   if (!command) {
-    return msg.channel.sendMessage(`I cannot find the command: ${params[0]}`);
+    return msg.channel.send(`I cannot find the command: ${params[0]}`);
   } else {
-    msg.channel.sendMessage(`Reloading: ${command}`)
+    msg.channel.send(`Reloading: ${command}`)
     .then(m => {
       client.reload(command)
       .then(() => {
@@ -22,8 +22,6 @@ exports.run = (client, msg, params) => {
 };
 
 exports.conf = {
-  enabled: true,
-  guildOnly: false,
   aliases: ['r', 'rld', 'refresh'],
   permLevel: 3
 };
@@ -31,5 +29,6 @@ exports.conf = {
 exports.help = {
   name: 'reload',
   description: 'Reloads the command file, if it\'s been updated or modified.',
-  usage: 'reload <commandname>'
+  usage: 'reload <commandname>',
+  category:'System'
 };

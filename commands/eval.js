@@ -1,27 +1,57 @@
-exports.run = (client, message, args = []) => {
-  let code = args.join(' ');
+const util = require('util');
+exports.run = async (client, message, args = []) => {
+  let suffix = args.join(' ');
   try {
-    let evaled = eval(code);
-    if (typeof evaled !== 'string')
-      evaled = require('util').inspect(evaled, {depth: 0});
-    message.channel.sendCode('xl', clean(evaled.toString().replace(client.token, 'Redacted')), {split:true}).catch(console.error);
-  } catch (error) {
-    console.error(error);
-    message.channel.sendCode('xl', `ERROR\n${clean(error)}`);
+    let evaled = await eval(suffix);
+    let type = typeof evaled;
+    let insp = util.inspect(evaled, {depth: 0});
+    let tosend = [];
+
+    if (evaled === null) evaled = 'null';
+
+    tosend.push('**EVAL:**');
+    tosend.push('\`\`\`js');
+    tosend.push(clean(suffix));
+    tosend.push('\`\`\`');
+    tosend.push('**Evaluates to:**');
+    tosend.push('\`\`\`LDIF');
+    tosend.push(clean(evaled.toString().replace(client.token, 'Redacted').replace(client.user.email, 'Redacted')));
+    tosend.push('\`\`\`');
+    if (evaled instanceof Object) {
+      tosend.push('**Inspect:**');
+      tosend.push('\`\`\`js');
+      tosend.push(insp.toString().replace(client.token, 'Redacted').replace(client.user.email, 'Redacted'));
+      tosend.push('\`\`\`');
+    } else {
+      tosend.push('**Type:**');
+      tosend.push('\`\`\`js');
+      tosend.push(type);
+      tosend.push('\`\`\`');
+    }
+    await message.channel.send(tosend, {split: true});
+  } catch (err) {
+    let tosend = [];
+    tosend.push('**EVAL:** \`\`\`js');
+    tosend.push(clean(suffix));
+    tosend.push('\`\`\`');
+    tosend.push('**Error:** \`\`\`LDIF');
+    tosend.push(clean(err.message));
+    tosend.push('\`\`\`');
+    await message.channel.send(tosend, {split: true});
   }
 };
 
 exports.conf = {
-  enabled: true,
-  guildOnly: false,
   aliases: ['ev'],
   permLevel: 10
 };
 
 exports.help = {
   name: 'eval',
-  description: 'Evaluates arbitrary Javascript. Not for the faint of heart, expression may contain multiple lines. Oh and **you** can\'t use it.',
-  usage: 'eval <expression>'
+  description: 'Evaluates arbitrary Javascript.',
+  usage: 'eval <expression>',
+  category:'System',
+  subCategory:'Owner'
 };
 
 function clean(text) {

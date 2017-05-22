@@ -1,18 +1,21 @@
 module.exports = async (r, user) => {
   let message = r.message;
+  let perm = message.client.elevation(message);
   let validEmojis = ['📌', '📍'];
   if (validEmojis.includes(r.emoji.name)) {
-    if (message.author.id === user.id) return message.reply('You cannot pin your own messages.');
-    user.sendMessage(`Here is the message you pinned.\n${r.message.cleanContent}`)
-    // .then(() => {
-    //   r.message.channel.sendMessage(`${user}, I have sent you that message.`).catch(error => console.error(`ERROR: ${error.response.body.message}`));
-    // })
-    .catch(error => {
-      if (error.response.body.message === 'Cannot send messages to this user') {
-        message.channel.sendMessage(`I cannot send you that message ${user}, as it appears you have **Direct Messages's** disabled.`).catch(error => console.error(error));
-      } else {
-        console.error(error);
+    if (perm > 0) {
+      message.pin();
+    } else {
+      try {
+        await user.send(`Here is the message you pinned:\n${message.cleanContent}`);
+      } catch (e) {
+        if (e.response.body.message === 'Cannot send messages to this user') {
+          await message.channel.send(`I cannot send you that message ${user}, as it appears you have **Direct Messages's** disabled.`);
+        } else {
+          console.log(e);
+        }
       }
-    });
+
+    }
   }
 };
