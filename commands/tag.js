@@ -1,7 +1,7 @@
 exports.run = async(client, message, args) => {
   const permission = client.elevation(message);
   let name = args.join(' ');
-  let newName = name.split(' ').slice(1).join(' ');
+  let newName = name.split(' ').slice(1).join(' ').toLowerCase();
   let flag = ['-add', '-edit', '-del', '-list'];
   let a = flag.indexOf(args[0]);
   switch (a) {
@@ -77,12 +77,12 @@ exports.run = async(client, message, args) => {
     default:
       {
         try {
-          let row = await client.sql.get('SELECT * FROM tags WHERE name = ?', newName);
+          let row = await client.sql.get('SELECT * FROM tags WHERE name = ?', name);
           await message.channel.send(row.contents);
         } catch (error) {
           console.error(error);
           if (!newName) return message.channel.send('You must name a tag to display.');
-          await message.reply(`A tag by the name **${newName}** could not be found.`);
+          await message.reply(`A tag by the name **${name}** could not be found.`);
         }
         break;
       }

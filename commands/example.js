@@ -1,7 +1,7 @@
-exports.run = async(client, message, args) => {
+exports.run = async (client, message, args) => {
   const permission = client.elevation(message);
   let name = args.join(' ');
-  let newName = name.split(' ').slice(1).join(' ');
+  let newName = name.split(' ').slice(1).join(' ').toLowerCase();
   let flag = ['-add', '-edit', '-del', '-list'];
   let a = flag.indexOf(args[0]);
   switch (a) {

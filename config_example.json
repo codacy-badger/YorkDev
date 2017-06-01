@@ -1,10 +1,14 @@
 {
-    "examplesChannel": "",
-    "ownerId": "",
-    "modRole": "",
-    "superModRole": "",
-    "adminRole": "",
-    "cooldown": 12,
-    "token": "",
-    "prefix": "?"
+  "ownerId": [""],
+  "clientID": "",
+  "modRole": "Moderator",
+  "adminRole": "Admin",
+  "token": "",
+  "prefix": "?",
+  "dash": {
+    "port": 8000,
+    "oauthSecret": "",
+    "callback": "",
+    "domain": ""
+  }
 }

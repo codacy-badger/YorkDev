@@ -1,5 +1,6 @@
 const Discord = require('discord.js');
 const client = new Discord.Client();
+client.vote = new Discord.Collection();
 client.sql = require('sqlite');
 client.sql.open('./tagsbot.sqlite');
 const config = require('./config.json');
@@ -65,3 +66,4 @@ client.elevation = message => {
 process.on('unhandledRejection', err => {
   console.error('Uncaught Promise Error: \n' + err);
 });
+module.exports = client;
