@@ -1,6 +1,6 @@
 exports.run = async (client, message) => {
   try {
-    let msg = await message.channel.send('🏓 Ping!');
+    const msg = await message.channel.send('🏓 Ping!');
     msg.edit(`🏓 Pong! (Roundtrip took: ${msg.createdTimestamp - message.createdTimestamp}ms. 💙: ${Math.round(client.ping)}ms.)`);
   } catch (e) {
     console.log(e);
@@ -8,8 +8,7 @@ exports.run = async (client, message) => {
 };
 
 exports.conf = {
-  enabled: true,
-  guildOnly: false,
+  hidden: false,
   aliases: [],
   permLevel: 0
 };

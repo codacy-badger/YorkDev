@@ -1,11 +1,11 @@
 const util = require('util');
 exports.run = async (client, message, args = []) => {
-  let suffix = args.join(' ');
+  const suffix = args.join(' ');
   try {
     let evaled = await eval(suffix);
-    let type = typeof evaled;
-    let insp = util.inspect(evaled, {depth: 0});
-    let tosend = [];
+    const type = typeof evaled;
+    const insp = util.inspect(evaled, {depth: 0});
+    const tosend = [];
 
     if (evaled === null) evaled = 'null';
 
@@ -30,7 +30,7 @@ exports.run = async (client, message, args = []) => {
     }
     await message.channel.send(tosend, {split: true});
   } catch (err) {
-    let tosend = [];
+    const tosend = [];
     tosend.push('**EVAL:** \`\`\`js');
     tosend.push(clean(suffix));
     tosend.push('\`\`\`');
@@ -42,6 +42,7 @@ exports.run = async (client, message, args = []) => {
 };
 
 exports.conf = {
+  hidden: false,
   aliases: ['ev'],
   permLevel: 10
 };

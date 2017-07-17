@@ -20,6 +20,7 @@ const guides = {
   cmdhndlr: { url:'/coding-guides/a-basic-command-handler.html', snippet:'A Command Handler is essentially a way to separate your commands into different files, instead of having a bunch of `if/else` conditions inside your code (or a `switch/case` if you\'re being fancy).'},
   musicbot: { url:'/coding-guides/coding_a_music_bot.html', snippet:'Everyone including their grandparents want to create a music bot, I myself have created a music bot and believe me it\'s not as easy as you would think.'},
   cleverbot: { url:'/coding-guides/cleverbot-integration.html', snippet:'I\'ve had this request since I started my Idiot\'s Guide, in fact it was one of the very first requests I had, but I had a feeling it would be a disappointing short episode, maybe a 5 minute long episode. But for a written guide it\'d be perfect!'},
+  persistdata: { url:'/coding-guides/using-persistentcollections.html', snippet:'Persistent Collections are a data structure that can be used to store data in memory that is also saved in a database behind the scenes. The data is synchronized to the database automatically, seamlessly, and asynchronously so it should not adversely affect your performance compared to regular Discord.js Collections'},
 // Examples
   msgxusr: { url:'/examples/welcome_message_every_x_users.html', snippet:'This example will show how to keep an array/object of new users coming into a server. Then, when this array reaches a certain number of users, it shows a message welcoming those users as a group.'},
   msgra: { url:'/examples/message_reply_array.html', snippet:'This sample shows the use of a simple string array to reply specific strings when triggered.'},
@@ -44,7 +45,8 @@ exports.run = (client, message, [keyword]) => {
 };
 
 exports.conf = {
-  aliases: [],
+  hidden: false,
+  aliases: ['guide'],
   permLevel: 0
 };
 

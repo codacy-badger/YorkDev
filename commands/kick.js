@@ -1,8 +1,8 @@
 exports.run = async (client, message, args) => {
 
-  let reason = args.splice(1, args.length).join(' ');
-  let guild = message.guild;
-  let person = message.mentions.users.first();
+  const reason = args.splice(1, args.length).join(' ');
+  const guild = message.guild;
+  const person = message.mentions.users.first();
   try {
     if (!reason) return await message.reply('You must supply a reason for the kick.');
     if (!guild.me.permissions.has('KICK_MEMBERS')) return await message.reply('I do not have the correct permissions');
@@ -19,6 +19,7 @@ exports.run = async (client, message, args) => {
 };
 
 exports.conf = {
+  hidden: false,
   aliases: ['boot', 'toss'],
   permLevel: 2
 };

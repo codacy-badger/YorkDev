@@ -11,10 +11,12 @@
   "license": "MIT",
   "dependencies": {
     "body-parser": "^1.17.1",
-    "discord.js": "^11.1.0",
+    "canvas": "github:automattic/node-canvas",
+    "discord.js": "github:hydrabolt/discord.js#11.1-dev",
     "ejs": "^2.5.6",
     "express": "^4.15.2",
     "express-session": "^1.15.2",
+    "fs-extra-promise": "^1.0.1",
     "hbs": "^4.0.1",
     "helmet": "^3.6.0",
     "marked": "^0.3.6",

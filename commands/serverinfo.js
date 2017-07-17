@@ -1,5 +1,5 @@
 const Discord = require('discord.js');
-exports.run = async(client, message) => {
+exports.run = async (client, message) => {
   const embed = new Discord.RichEmbed()
   .setAuthor(message.guild.name, message.guild.iconURL)
   .setColor(3447003)
@@ -25,6 +25,7 @@ exports.run = async(client, message) => {
 };
 
 exports.conf = {
+  hidden: false,
   aliases: ['info','stats','serverstats','guildinfo','guildstats'],
   permLevel: 0
 };

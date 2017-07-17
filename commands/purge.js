@@ -13,6 +13,7 @@ exports.run = (client, message) => {
   });
 };
 exports.conf = {
+  hidden: false,
   aliases: ['prune'],
   permLevel: 2
 };

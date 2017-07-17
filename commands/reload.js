@@ -22,6 +22,7 @@ exports.run = (client, msg, params) => {
 };
 
 exports.conf = {
+  hidden: false,
   aliases: ['r', 'rld', 'refresh'],
   permLevel: 3
 };

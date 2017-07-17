@@ -5,7 +5,7 @@ exports.run = async (client, message, params) => {
   const longest = commandNames.reduce((long, str) => Math.max(long, str.length), 0);
   try {
     if (!params[0]) {
-      await message.channel.send(`= Command List =\n\n[Use ${config.prefix}help <commandname> for details]\n\n${client.commands.filter(cmd => cmd.conf.permLevel <= permission).map(c => `${config.prefix}${c.help.name}${' '.repeat(longest - c.help.name.length)} :: ${c.help.description}`).join('\n')}`, {code:'asciidoc'});
+      await message.channel.send(`= Command List =\n\n[Use ${config.prefix}help <commandname> for details]\n\n${client.commands.filter(cmd => cmd.conf.permLevel <= permission && cmd.conf.hidden !== true).map(c => `${config.prefix}${c.help.name}${' '.repeat(longest - c.help.name.length)} :: ${c.help.description}`).join('\n')}`, {code:'asciidoc'});
     } else {
       let command = params[0];
       if (client.commands.has(command)) {
@@ -19,6 +19,7 @@ exports.run = async (client, message, params) => {
 };
 
 exports.conf = {
+  hidden: false,
   aliases: ['h', 'halp'],
   permLevel: 0
 };

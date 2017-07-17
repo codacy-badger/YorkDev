@@ -7,8 +7,8 @@ exports.run = (client, message) => {
   }).then(resp => {
     if (!resp) return;
     resp = resp.array()[0];
-    let validAnswers = ['yes', 'y', 'no', 'n', 'cancel'];
-    if (validAnswers.includes(resp.content)) {
+    const validAnswers = ['yes', 'y', 'no', 'n', 'cancel'];
+    if (validAnswers.includes(resp.content.toLowerCase())) {
       if (resp.content === 'cancel' || resp.content === 'no' || resp.content === 'n') {
         return message.channel.send('Aborting reboot');
       } else if (resp.content === 'yes' || resp.content === 'y') {
@@ -25,6 +25,7 @@ exports.run = (client, message) => {
   });
 };
 exports.conf = {
+  hidden: false,
   aliases: ['restart'],
   permLevel: 10
 };
