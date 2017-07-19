@@ -51,8 +51,7 @@ exports.help = {
   name: 'eval',
   description: 'Evaluates arbitrary Javascript.',
   usage: 'eval <expression>',
-  category:'System',
-  subCategory:'Owner'
+  category:'System'
 };
 
 function clean(text) {

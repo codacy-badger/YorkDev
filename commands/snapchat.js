@@ -36,5 +36,5 @@ exports.help = {
   name: 'snapchat',
   description: 'Creates a meme based on the But MOOOOOM statue.',
   usage: 'snapchat <text>',
-  category: 'Fun',
+  category: 'Fun'
 };

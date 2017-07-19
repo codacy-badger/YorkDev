@@ -17,10 +17,12 @@ const guides = {
   stjson: { url:'/coding-guides/storing-data-in-a-json-file.html', snippet:'In this example we\'re going to read and write data to and from a JSON file. We\'ll keep is simple by using this JSON file for a points system.'},
   stsqlite: { url:'/coding-guides/storing-data-in-an-sqlite-file.html', snippet:'As mentioned in the Storing Data in a JSON file guide, JSON files could get corrupted due to race conditions. However SQLite doesn\'t suffer from that and is a better method of storing data between boot ups than JSON.'},
   webhp1: { url:'/coding-guides/discord-webhooks-part-1.html', snippet:'This has been a rather demanded topic recently, everyone wants to know how to use the webhooks, so here I am with this guide to explain the basic coverage of the webhooks.'},
+  webhp2: { url:'/coding-guides/discord-webhooks-part-2.html', snippet:'In the last chapter we covered how to create the webhooks via code, which to be honest isn\'t very useful, in this chapter we will continue where we left off and we will actually use the webhooks we create in some bot code.'},
   cmdhndlr: { url:'/coding-guides/a-basic-command-handler.html', snippet:'A Command Handler is essentially a way to separate your commands into different files, instead of having a bunch of `if/else` conditions inside your code (or a `switch/case` if you\'re being fancy).'},
   musicbot: { url:'/coding-guides/coding_a_music_bot.html', snippet:'Everyone including their grandparents want to create a music bot, I myself have created a music bot and believe me it\'s not as easy as you would think.'},
   cleverbot: { url:'/coding-guides/cleverbot-integration.html', snippet:'I\'ve had this request since I started my Idiot\'s Guide, in fact it was one of the very first requests I had, but I had a feeling it would be a disappointing short episode, maybe a 5 minute long episode. But for a written guide it\'d be perfect!'},
   persistdata: { url:'/coding-guides/using-persistentcollections.html', snippet:'Persistent Collections are a data structure that can be used to store data in memory that is also saved in a database behind the scenes. The data is synchronized to the database automatically, seamlessly, and asynchronously so it should not adversely affect your performance compared to regular Discord.js Collections'},
+  usingemojis: {url: '/coding-guides/using-emojis.html', snippet: 'Here\'s a fun fact you might not know about bots on Discord: They have access to every single "custom emoji" of every single guild they\'re in - for free. That\'s right, you have 1/4 of the features of Nitro, free in your bot, right now! In this page we\'ll be taking a look at how to take advantage of these emojis, how to access them and how to display them. '},
 // Examples
   msgxusr: { url:'/examples/welcome_message_every_x_users.html', snippet:'This example will show how to keep an array/object of new users coming into a server. Then, when this array reaches a certain number of users, it shows a message welcoming those users as a group.'},
   msgra: { url:'/examples/message_reply_array.html', snippet:'This sample shows the use of a simple string array to reply specific strings when triggered.'},
@@ -54,5 +56,5 @@ exports.help = {
   name: 'page',
   description: 'Returns page details from the awesome bot guide.',
   usage: 'page [-list] [name]',
-  category: 'Gitbook'
+  category: 'Support'
 };

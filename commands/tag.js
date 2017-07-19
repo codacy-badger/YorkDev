@@ -97,7 +97,7 @@ exports.conf = {
 
 exports.help = {
   name: 'tag',
-  description: 'Displays an tag.',
+  description: 'Displays a tag.',
   usage: 'tag [-add|-edit|-del|-list] [name]',
-  category: 'Tags'
+  category: 'Support'
 };

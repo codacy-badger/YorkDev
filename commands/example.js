@@ -99,5 +99,5 @@ exports.help = {
   name: 'example',
   description: 'Displays an example.',
   usage: 'example [-add|-edit|-del|-list] [name]',
-  category: 'examples'
+  category: 'Support'
 };

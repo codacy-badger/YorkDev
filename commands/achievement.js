@@ -47,4 +47,5 @@ exports.help = {
   name: 'achievement',
   description: 'Creates a Discord Themed "Minecraft" Achievement slate.',
   usage: 'achievement [user|text]',
+  category: 'Fun'
 };
