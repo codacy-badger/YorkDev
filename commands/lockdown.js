@@ -1,5 +1,5 @@
 const ms = require('ms');
-exports.run = async (client, message, args) => {
+exports.run = async (client, message, args, level) => { // eslint-disable-line no-unused-vars
   if (!client.lockit) client.lockit = [];
   const time = args.join(' ');
   const validUnlocks = ['release', 'unlock'];
@@ -31,7 +31,7 @@ exports.conf = {
 
 exports.help = {
   name: 'lockdown',
-  description: 'This will lock a channel down for the set duration, be it in hours, minutes or seconds.',
+  description: 'Locks the channel for a set duration.',
   usage: 'lockdown <duration>',
   category:'Moderation'
 };

@@ -1,5 +1,5 @@
 const Discord = require('discord.js');
-exports.run = async (client, message) => {
+exports.run = (client, message, args, level) => {// eslint-disable-line no-unused-vars
   const embed = new Discord.RichEmbed()
   .setAuthor(message.guild.name, message.guild.iconURL)
   .setColor(3447003)
@@ -11,17 +11,7 @@ exports.run = async (client, message) => {
   .addBlankField(true)
   .setTimestamp()
   .setFooter(client.user.username, client.user.avatarURL);
-
-  if(message.guild.afkChannelID !== null) {
-    embed.addField('AFK Timeout', `${message.guild.afkTimeout / 60} minutes`, true)
-    .addField('AFK Channel', `${client.channels.get(message.guild.afkChannelID).name} (${message.guild.afkChannelID})`, true);
-  }
-
-  try {
-    await message.channel.send({embed});
-  } catch (e) {
-    console.log(e);
-  }
+  message.channel.send({embed}).catch(e => console.error(e));
 };
 
 exports.conf = {
@@ -32,7 +22,7 @@ exports.conf = {
 
 exports.help = {
   name: 'serverinfo',
-  description: 'Displays server information & statistics',
+  description: 'Displays server information & statistics.',
   usage: 'serverinfo',
   category: 'General'
 };

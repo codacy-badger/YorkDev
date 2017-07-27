@@ -1,4 +1,4 @@
-const config = require('../config.json');
-module.exports = async (guild) => {
-  await guild.client.user.setGame(`${config.prefix}help | ${guild.client.guilds.size} Servers`);
+module.exports = async (client, guild) => {
+  await guild.client.user.setGame(`${client.config.prefix}help | ${guild.client.guilds.size} Servers`);
+  client.settings.delete(guild.id);
 };

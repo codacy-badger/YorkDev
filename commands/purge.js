@@ -1,4 +1,4 @@
-exports.run = (client, message) => {
+exports.run = async (client, message, args, level) => { // eslint-disable-line no-unused-vars
   const user = message.mentions.users.first();
   const amount = isNaN(message.content.split(' ')[1]) ? parseInt(message.content.split(' ')[2]) : parseInt(message.content.split(' ')[1]);
   if (!amount) if (!user) return message.reply('Must specify a user and amount, or just an amount, of messages to purge!');
@@ -20,7 +20,7 @@ exports.conf = {
 
 exports.help = {
   name: 'purge',
-  description: 'This will delete a given number of messages, supply a user and it will delete a given number of their messages.',
+  description: 'It purges between 2 and 99 messages.',
   usage: 'purge [user] <number',
   category:'Moderation'
 };

@@ -1,9 +1,6 @@
 # Directories
 /node_modules/
-/logs/
-/backup/
-/dashboard/
-/junk/
+/data/
 
 # File Extensions
 *.log
@@ -13,4 +10,3 @@
 settings.json
 config.json
 tagsbot.sqlite
-/functions/dashboard.js

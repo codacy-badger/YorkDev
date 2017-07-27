@@ -27,7 +27,7 @@ const getAchievement = async (text, person) => {
   ctx.fillText(text, 60, 58);
 };
 
-exports.run = async (client, message, args) => {
+exports.run = async (client, message, args, level) => { // eslint-disable-line no-unused-vars
   const person = (message.mentions.users.first() || client.user).displayAvatarURL;
   let text = args.join(' ');
   if (message.mentions.users.first()) text = text.replace(/<@!?\d+>/, '').replace(/\n/g, ' ').trim();
@@ -45,7 +45,7 @@ exports.conf = {
 
 exports.help = {
   name: 'achievement',
-  description: 'Creates a Discord Themed "Minecraft" Achievement slate.',
+  description: 'Creates a Discord Themed "Minecraft" Achievement.',
   usage: 'achievement [user|text]',
   category: 'Fun'
 };

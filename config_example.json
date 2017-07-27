@@ -1,10 +1,13 @@
 {
-  "ownerId": [""],
-  "clientID": "",
-  "modRole": "Moderator",
-  "adminRole": "Admin",
+  "ownerId": [],
+  "clientId": "",
   "token": "",
-  "prefix": "?",
+  "defaultSettings" : {
+    "prefix": "!",
+    "modLogChannel": "mod-log",
+    "modRole": "Moderator",
+    "adminRole": "Administrator"
+  },
   "dash": {
     "port": 8000,
     "oauthSecret": "",

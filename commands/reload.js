@@ -1,35 +1,43 @@
-exports.run = (client, msg, params) => {
+exports.run = async (client, message, args, level) => { // eslint-disable-line no-unused-vars
+  if (!args || args.size < 1) return message.channel.send('Must provide a command to reload.');
+
   let command;
-  if (client.commands.has(params[0])) {
-    command = params[0];
-  } else if (client.aliases.has(params[0])) {
-    command = client.aliases.get(params[0]);
+  if (client.commands.has(args[0])) {
+    command = client.commands.get(args[0]);
+  } else if (client.aliases.has(args[0])) {
+    command = client.commands.get(client.aliases.get(args[0]));
   }
-  if (!command) {
-    return msg.channel.send(`I cannot find the command: ${params[0]}`);
-  } else {
-    msg.channel.send(`Reloading: ${command}`)
-    .then(m => {
-      client.reload(command)
-      .then(() => {
-        m.edit(`Successfully reloaded: ${command}`);
-      })
-      .catch(e => {
-        m.edit(`Command reload failed: ${command}\n\`\`\`${e.stack}\`\`\``);
-      });
-    });
-  }
+  if (!command) return message.channel.send(`The command \`${args[0]}\` doesn't seem to exist, nor is it an alias. Try again!`);
+
+  if (command.db) await command.db.close();
+
+  command = command.help.name;
+
+  delete require.cache[require.resolve(`./${command}.js`)];
+  const cmd = require(`./${command}`);
+  client.commands.delete(command);
+  if (cmd.init) cmd.init(client);
+  client.aliases.forEach((cmd, alias) => {
+    if (cmd === command) client.aliases.delete(alias);
+  });
+  client.commands.set(command, cmd);
+  cmd.conf.aliases.forEach(alias => {
+    client.aliases.set(alias, cmd.help.name);
+  });
+
+  message.channel.send(`The command \`${command}\` has been reloaded`);
 };
 
 exports.conf = {
-  hidden: false,
-  aliases: ['r', 'rld', 'refresh'],
-  permLevel: 3
+  enabled: true,
+  guildOnly: false,
+  aliases: [],
+  permLevel: 10
 };
 
 exports.help = {
   name: 'reload',
-  description: 'Reloads the command file, if it\'s been updated or modified.',
-  usage: 'reload <commandname>',
-  category:'System'
+  category: 'System',
+  description: 'Reloads a command that\'s been modified.',
+  usage: 'reload [command]'
 };

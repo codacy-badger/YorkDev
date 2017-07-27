@@ -18,7 +18,7 @@ const getSnap = async (text) => {
   ctx.fillText(text, imgW / 2, 379);
 };
 
-exports.run = async (client, message, args) => {
+exports.run = async (client, message, args, level) => {// eslint-disable-line no-unused-vars
   const text = args.join(' ');
   if (text.length < 1) return message.reply('You must give the snap some text.');
   if (text.length > 28) return message.reply('I can only handle a maximum of 28 characters');

@@ -1,4 +1,4 @@
-exports.run = async (client, message, args) => {
+exports.run = async (client, message, args, level) => { // eslint-disable-line no-unused-vars
 
   const reason = args.splice(1, args.length).join(' ');
   const guild = message.guild;

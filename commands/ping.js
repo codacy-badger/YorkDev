@@ -1,4 +1,4 @@
-exports.run = async (client, message) => {
+exports.run = async (client, message, args, level) => { // eslint-disable-line no-unused-vars
   try {
     const msg = await message.channel.send('🏓 Ping!');
     msg.edit(`🏓 Pong! (Roundtrip took: ${msg.createdTimestamp - message.createdTimestamp}ms. 💙: ${Math.round(client.ping)}ms.)`);
@@ -9,7 +9,7 @@ exports.run = async (client, message) => {
 
 exports.conf = {
   hidden: false,
-  aliases: [],
+  aliases: ['pong'],
   permLevel: 0
 };
 

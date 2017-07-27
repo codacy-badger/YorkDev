@@ -1,69 +1,51 @@
 const Discord = require('discord.js');
 const client = new Discord.Client();
-client.vote = new Discord.Collection();
+require('./functions/utilities.js')(client);
+
 client.sql = require('sqlite');
 client.sql.open('./tagsbot.sqlite');
-const config = require('./config.json');
-const moment = require('moment');
-const fs = require('fs');
-require('./util/eventLoader')(client);
 
-client.login(config.token);
-const log = message => {
-  console.log(`[${moment().format('YYYY-MM-DD HH:mm:ss')}] ${message}`);
-};
+if (process.version.slice(1).split('.')[0] < 8) throw new Error('Node 8.0.0 or higher is required. Update Node on your system.');
+
+const { promisify } = require('util');
+const readdir = promisify(require('fs').readdir);
+const PersistentCollection = require('djs-collection-persistent');
+
+client.db = require('./functions/PersistentDB.js');
+client.config = require('./config.json');
+client.settings = new PersistentCollection({name: 'settings'});
 client.commands = new Discord.Collection();
 client.aliases = new Discord.Collection();
-fs.readdir('./commands/', (err, files) => {
-  if (err) console.error(err);
-  log(`Loading a total of ${files.length} commands.`);
-  files.forEach(f => {
-    let props = require(`./commands/${f}`);
-    log(`Loading Command: ${props.help.name}. ✔`);
-    client.commands.set(props.help.name, props);
-    props.conf.aliases.forEach(alias => {
-      client.aliases.set(alias, props.help.name);
-    });
-  });
-});
-client.reload = command => {
-  return new Promise((resolve, reject) => {
-    try {
-      delete require.cache[require.resolve(`./commands/${command}`)];
-      let cmd = require(`./commands/${command}`);
-      client.commands.delete(command);
-      client.aliases.forEach((cmd, alias) => {
-        if (cmd === command) client.aliases.delete(alias);
-      });
 
-      client.commands.set(command, cmd);
-      cmd.conf.aliases.forEach(alias => {
-        client.aliases.set(alias, cmd.help.name);
+const init = async () => {
+  const cmdFiles = await readdir('./commands/');
+  client.log('log', `Loading a total of ${cmdFiles.length} commands.`);
+  cmdFiles.forEach(f => {
+    try {
+      const props = require(`./commands/${f}`);
+      if (f.split('.').slice(-1)[0] !== 'js') return;
+      client.log('log', `Loading Command: ${props.help.name}. ✔`);
+      client.commands.set(props.help.name, props);
+      if (props.init) props.init(client);
+      props.conf.aliases.forEach(alias => {
+        client.aliases.set(alias, props.help.name);
       });
-      resolve();
-    } catch (e){
-      reject(e);
+    } catch (e) {
+      client.log(`Unable to load command ${f}: ${e}`);
     }
   });
+
+  const evtFiles = await readdir('./events/');
+  client.log('log', `Loading a total of ${evtFiles.length} events.`);
+  evtFiles.forEach(file => {
+    const eventName = file.split('.')[0];
+    const event = require(`./events/${file}`);
+    client.on(eventName, event.bind(null, client));
+    client.log('log', `Loading Event: ${eventName}. ✔`);
+    delete require.cache[require.resolve(`./events/${file}`)];
+  });
+
+  client.login(client.config.token);
 };
 
-client.elevation = message => {
-  let permlvl = 0;
-  if (config.ownerId.includes(message.author.id)) return permlvl = 10;
-  if (!message.guild) return permlvl;
-  if (message.guild) {
-    let mod_role = message.guild.roles.find('name', config.modRole);
-    if (mod_role && message.member.roles.has(mod_role.id)) permlvl = 2;
-
-    let admin_role = message.guild.roles.find('name', config.adminRole);
-    if (admin_role && message.member.roles.has(admin_role.id)) permlvl = 3;
-
-    if (message.author.id === message.guild.owner.id) permlvl = 4;
-  }
-  return permlvl;
-};
-
-process.on('unhandledRejection', err => {
-  console.error('Uncaught Promise Error: \n' + err);
-});
-module.exports = client;
+init();
