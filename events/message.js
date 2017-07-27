@@ -12,14 +12,14 @@ module.exports = (client, message) => {
   const prefixes = [settings.prefix, defaults.prefix];
   let prefix = false;
   for (const thisPrefix of prefixes) {
-    if (message.content.indexOf(thisPrefix) !== 0) prefix = thisPrefix;
+    if (message.content.indexOf(thisPrefix) == 0) prefix = thisPrefix;
   }
-  if (!prefix) return;
 
+  if (!prefix) return;
   message.settings = settings;
 
   const args = message.content.split(/ +/g);
-  const command = args.shift().slice(settings.prefix.length).toLowerCase();
+  const command = args.shift().slice(prefix.length).toLowerCase();
   const level = client.permlevel(message);
   const cmd = client.commands.get(command) || client.commands.get(client.aliases.get(command));
   if (cmd && level >= cmd.conf.permLevel) {

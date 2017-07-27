@@ -70,7 +70,6 @@ class PersistentDB extends PersistentCollection {
   }
 
   list() {
-    //< 1 ? 'There appears to be no tags saved at this time.' : '**❯ Tags: **' + rows.map(r => r.name).join(', ')
     return `**❯ ${this.type.toProperCase()}s:** ${this.map((s,k) =>k).join(', ')}`;
   }
 
