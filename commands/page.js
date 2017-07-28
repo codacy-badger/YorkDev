@@ -53,7 +53,7 @@ exports.init = client => {
 
 exports.conf = {
   hidden: false,
-  aliases: ['guide', 'g'],
+  aliases: ['guide', 'guides', 'g', 'pages', 'p'],
   permLevel: 0
 };
 

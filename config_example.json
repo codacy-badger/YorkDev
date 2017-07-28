@@ -3,7 +3,7 @@
   "clientId": "",
   "token": "",
   "defaultSettings" : {
-    "prefix": "!",
+    "prefix": "?",
     "modLogChannel": "mod-log",
     "modRole": "Moderator",
     "adminRole": "Administrator"

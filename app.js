@@ -1,21 +1,28 @@
-const Discord = require('discord.js');
-const client = new Discord.Client();
-require('./functions/utilities.js')(client);
-
-client.sql = require('sqlite');
-client.sql.open('./tagsbot.sqlite');
-
+// For dashboard stuff.
+// npm install body-parser ejs express express-session hbs helmet marked passport passport-discord
+const { Client, Collection } = require('discord.js');
+const {readdir} = require('fs-nextra');
+const PersistentCollection = require('djs-collection-persistent');
 if (process.version.slice(1).split('.')[0] < 8) throw new Error('Node 8.0.0 or higher is required. Update Node on your system.');
 
-const { promisify } = require('util');
-const readdir = promisify(require('fs').readdir);
-const PersistentCollection = require('djs-collection-persistent');
+class YorkDev extends Client {
+  constructor(options) {
+    super(options);
+    this.db = require('./functions/PersistentDB.js');
+    this.config = require('./config.json');
+    this.settings = new PersistentCollection({name: 'settings'});
+    this.commands = new Collection();
+    this.aliases = new Collection();
+  }
+}
 
-client.db = require('./functions/PersistentDB.js');
-client.config = require('./config.json');
-client.settings = new PersistentCollection({name: 'settings'});
-client.commands = new Discord.Collection();
-client.aliases = new Discord.Collection();
+const client = new YorkDev({
+  messageCacheMaxSize: 1,
+  fetchAllMembers: true,
+  disabledEvents:['TYPING_START']
+});
+
+require('./functions/utilities.js')(client);
 
 const init = async () => {
   const cmdFiles = await readdir('./commands/');

@@ -18,8 +18,8 @@ module.exports = (client, message) => {
   if (!prefix) return;
   message.settings = settings;
 
-  const args = message.content.split(/ +/g);
-  const command = args.shift().slice(prefix.length).toLowerCase();
+  const args = message.content.slice(prefix.length).trim().split(/ +/g);
+  const command = args.shift().toLowerCase();
   const level = client.permlevel(message);
   const cmd = client.commands.get(command) || client.commands.get(client.aliases.get(command));
   if (cmd && level >= cmd.conf.permLevel) {
