@@ -7,12 +7,19 @@ module.exports = (client, message) => {
   if (message.channel.type === 'dm' && message.author.id !== client.user.id)
     console.log(`[${message.author.id}] DM received from ${message.author.tag}: ${message.content}`);
 
+  if (!message.guild) return;
   const settings = client.settings.get(message.guild.id);
   const defaults = client.config.defaultSettings;
   const prefixes = [settings.prefix, defaults.prefix];
   let prefix = false;
   for (const thisPrefix of prefixes) {
     if (message.content.indexOf(thisPrefix) == 0) prefix = thisPrefix;
+  }
+  
+  if (message.content.match(new RegExp(`^<@!?${client.user.id}>$`))) {
+    let mentionMsg = '';
+    settings.prefix === defaults.prefix ? mentionMsg = `The prefix is \`${settings.prefix}\`.` : mentionMsg = `This server's prefix is \`${settings.prefix}\`, whilst the default prefix is \`${defaults.prefix}\``;
+    return message.channel.send(mentionMsg);
   }
 
   if (!prefix) return;

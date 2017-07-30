@@ -9,6 +9,7 @@ exports.run = async (client, message, args, level) => {
     return message.channel.send(`${msg.join(' ')}${tag}`);
   }
 
+  if (message.flags[0] === 'list') return message.channel.send(this.db.list());
   if (level < 2) return;
 
   const [name, ...extra] = args;

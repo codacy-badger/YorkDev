@@ -18,6 +18,7 @@ exports.run = async (client, message, args, level) => {
     return message.channel.send(`${details.snippet}\n**Read More**: <${baseUrl}${details.url}>`);
   }
 
+  if (message.flags[0] === 'list') return message.channel.send(this.db.list());
   if (level < 2) return;
 
   const [name, ...extra] = args.slice(0);

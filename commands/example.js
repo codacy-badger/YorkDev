@@ -6,9 +6,10 @@ exports.run = async (client, message, args, level) => {
     const [name, ...msg] = args;
     if (!this.db.has(name)) return message.channel.send(`The example \`${name}\` does not exist. Use \`${settings.prefix}examples -help\` for help.`);
     const example = this.db.get(name).contents;
-    return message.channel.send(`${msg.join(' ')}${example}`);
+    return message.channel.send(`${msg.join(' ')}${example}`,{code:'js'});
   }
 
+  if (message.flags[0] === 'list') return message.channel.send(this.db.list());
   if (level < 2) return;
 
   const [name, ...extra] = args;
