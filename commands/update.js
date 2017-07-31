@@ -4,21 +4,24 @@ const path = require('path');
 
 const { run: reboot } = require('./reboot');
 
-exports.run = async (client, message, args, level) => { // eslint-disable-line no-unused-vars
-  const { stdout, stderr, err } = await exec('git pull https://github.com/YorkAARGH/York-Dev.git', { cwd: path.join(__dirname, '../') }).catch(err => ({ err }));
+exports.run = async (client, message, args, level) => {
+  const { stdout, stderr, err } = await exec('git pull https://github.com/YorkAARGH/York-Dev.git', {
+    cwd: path.join(__dirname, '../')
+  }).catch(err => ({ err }));
   if (err) return console.error(err);
 
   const out = [];
   if (stdout) out.push(stdout);
   if (stderr) out.push(stderr);
 
-  await message.channel.send(out.join('\n'), {code:true});
-  return reboot(client, message, args);
+  await message.channel.send(out.join('\n'), { code: true });
+  if (stdout !== 'Already up-to-date') 
+    return reboot(client, message, args, level);
 };
 
 exports.conf = {
   hidden: false,
-  aliases: [],
+  aliases: ['git', 'pull'],
   permLevel: 10
 };
 
