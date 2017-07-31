@@ -50,7 +50,7 @@ exports.help = {
   category: 'Support',
   usage: 'tag <action> [tagname] <contents> (use -help action to show additional help)',
   extended: `-add newTagName This is your new tag contents
--del tagName
--edit existingtagName This is new new edited contents
--list`
+          -del tagName
+          -edit existingtagName This is new new edited contents
+          -list`
 };
