@@ -24,5 +24,6 @@ exports.help = {
   name: 'stats',
   category: 'General',
   description: 'Gives some useful bot statistics.',
-  usage: 'stats'
+  usage: 'stats',
+  extended: 'This command will display system stats such as memory used, uptime and version.'
 };

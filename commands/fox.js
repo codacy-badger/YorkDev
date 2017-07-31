@@ -14,5 +14,6 @@ exports.help = {
   name: 'fox',
   description: 'Grabs your Patreon styled Fox avatar.',
   usage: 'fox',
-  category: 'Fun'
+  category: 'Fun',
+  extended: 'This uses the Patreon fox avatar generator, based on your user ID.'
 };

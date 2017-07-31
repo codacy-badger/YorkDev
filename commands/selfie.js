@@ -34,5 +34,6 @@ exports.help = {
   name: 'selfie',
   description: 'Takes a live image from a webcam.',
   usage: 'selfie [string]',
-  category: 'Fun'
+  category: 'Fun',
+  extended: 'This command, with the use of \`fswebcam\` takes a live image from an attached webcam and uploads it to discord.'
 };

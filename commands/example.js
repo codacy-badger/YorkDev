@@ -48,9 +48,8 @@ exports.help = {
   description: 'Displays an example.',
   usage: 'example <action> [examplename] <contents> (use -help action to show additional help)',
   category: 'Support',
-  extended: `\`\`\`
-  -add newExampleName This is your new example contents
-  -del exampleName
-  -edit existingExampleName This is new example edited contents
-  -list\`\`\``
+  extended: `-add newExampleName This is your new example contents
+-del exampleName
+-edit existingExampleName This is new example edited contents
+-list`
 };

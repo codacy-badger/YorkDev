@@ -33,5 +33,6 @@ exports.help = {
   name: 'set',
   category: 'System',
   description: 'View or change settings for your server.',
-  usage: 'set <view/get/edit> <key> <value>'
+  usage: 'set <view/get/edit> <key> <value>',
+  extended: 'This command is designed to change per-server-configurations for the guild the command was issued on.'
 };

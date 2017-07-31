@@ -22,5 +22,6 @@ exports.help = {
   name: 'reboot',
   description: 'This reboots the bot.',
   usage: 'reboot',
-  category: 'System'
+  category: 'System',
+  extended: 'This will make the bot logout and destroy the client instance before exiting cleanly.'
 };

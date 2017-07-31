@@ -21,5 +21,6 @@ exports.help = {
   name: 'eval',
   description: 'Evaluates arbitrary Javascript.',
   usage: 'eval <expression>',
-  category:'System'
+  category:'System',
+  extended: 'This is an extremely dangerous command, use with caution and never eval stuff strangers tell you.'
 };

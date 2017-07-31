@@ -71,5 +71,6 @@ exports.help = {
   name: 'meme',
   description: 'Creates a top text/bottom text memes',
   usage: 'meme <top text; bottom text>',
-  category: 'Fun'
+  category: 'Fun',
+  extended: 'This command is based on the popular "Text on image" styled meme, it takes a live image from a connected webcam.'
 };

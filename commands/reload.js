@@ -39,5 +39,6 @@ exports.help = {
   name: 'reload',
   category: 'System',
   description: 'Reloads a command that\'s been modified.',
-  usage: 'reload [command]'
+  usage: 'reload [command]',
+  extended: 'This command is designed to unload, then reload the command from the command & aliases collections for the changes to take effect.'
 };

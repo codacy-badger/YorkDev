@@ -73,9 +73,9 @@ class PersistentDB extends PersistentCollection {
     return `**❯ ${this.type.toProperCase()}s:** ${this.map((s,k) =>k).join(', ')}`;
   }
 
-  help() {
-    return this.extendedHelp;
-  }
+  // help() {
+  //   return this.extendedHelp;
+  // }
 }
 
 module.exports = PersistentDB;

@@ -18,5 +18,5 @@ exports.help = {
   description: 'Latency and API response times.',
   usage: 'ping',
   category:'General',
-
+  extended: 'This command is a response test, it helps gauge if there is any latency (lag) in either the bots connection, or the API.'
 };

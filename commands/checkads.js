@@ -12,5 +12,6 @@ exports.help = {
   name: 'checkads',
   description: 'Returns a list of users with adverts',
   usage: 'checkads',
-  category:'Moderation'
+  category:'Moderation',
+  extended: 'This command will check for any discord invite links in members \`Playing\` status.'
 };

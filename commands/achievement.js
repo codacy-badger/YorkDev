@@ -47,5 +47,6 @@ exports.help = {
   name: 'achievement',
   description: 'Creates a Discord Themed "Minecraft" Achievement.',
   usage: 'achievement [user|text]',
-  category: 'Fun'
+  category: 'Fun',
+  extended: 'Either mention a user with text to give the achievement their user avatar, or just supply text for your own achievement.'
 };

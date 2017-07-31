@@ -34,5 +34,6 @@ exports.help = {
   name: 'help',
   description: 'Displays all the available commands for your permission level.',
   usage: 'help [command]',
-  category: 'Support'
+  category: 'Support',
+  extended: 'This command will display all available commands for your permission level, with the additonal option of getting per command information when you run \`help <command name>\`.'
 };

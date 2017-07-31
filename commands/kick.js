@@ -29,4 +29,5 @@ exports.help = {
   description: 'kicks a user from the server.',
   usage: 'kick <mention> <reason>',
   category:'Moderation',
+  extended: 'This command will kick a user from the server with a reason attached.'
 };

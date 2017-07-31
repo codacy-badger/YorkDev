@@ -33,5 +33,6 @@ exports.help = {
   name: 'lockdown',
   description: 'Locks the channel for a set duration.',
   usage: 'lockdown <duration>',
-  category:'Moderation'
+  category:'Moderation',
+  extended: 'This command will prevent the \`@everyone\` role from speaking in the locked channel, this is designed with raids and spam attacks in mind.'
 };

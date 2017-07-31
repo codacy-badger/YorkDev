@@ -24,5 +24,6 @@ exports.help = {
   name: 'serverinfo',
   description: 'Displays server information & statistics.',
   usage: 'serverinfo',
-  category: 'General'
+  category: 'General',
+  extended: 'This command will return an organised embed with server information and statistics.'
 };

@@ -76,5 +76,6 @@ exports.help = {
   name: 'triggered',
   description: 'Create a gif bassed on the infamous Triggered Meme',
   usage: 'triggered',
-  category: 'Fun'
+  category: 'Fun',
+  extended: 'This command is based on the well known Triggered meme, taking a live image from an attached webcam then applying the triggered effects.'
 };

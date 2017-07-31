@@ -32,5 +32,6 @@ exports.help = {
   name: 'fml',
   description: 'Grabs a random "fuck my life" story.',
   usage: 'fml',
-  category: 'Fun'
+  category: 'Fun',
+  extended: 'This command grabs a random "fuck my life" story from fmylife.com and displays it in an organised embed.'
 };

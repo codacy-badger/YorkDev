@@ -13,7 +13,8 @@ exports.run = async (client, message, args, level) => {
   const out = [];
   if (stdout) out.push(stdout);
   if (stderr) out.push(stderr);
-  console.log(stdout);
+  console.log(stdout, '\n\n');
+  console.log(stderr,'\n\n');
   await message.channel.send(out.join('\n'), { code: true });
   if (stdout !== 'Already up-to-date.')
     return reboot(client, message, args, level);
@@ -29,5 +30,6 @@ exports.help = {
   name: 'update',
   description: 'This updates the bot from its git repo.',
   usage: 'update',
-  category: 'System'
+  category: 'System',
+  extended: 'This command is designed to update the bot from it\'s own repository, then reboots the bot for the changes to take effect.'
 };

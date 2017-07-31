@@ -26,6 +26,7 @@ exports.conf = {
 exports.help = {
   name: 'announcement',
   description: 'Posts an announcement.',
-  usage: 'announcement [role] <announcement>',
-  category: 'Moderation'
+  usage: 'announcement <Komada|Idiot> <announcement>',
+  category: 'Moderation',
+  extended: '[role] is either \`Komada\` or \`Idiot\`, followed by your announcement.'
 };
