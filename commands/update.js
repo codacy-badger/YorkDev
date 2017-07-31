@@ -14,8 +14,13 @@ exports.run = async (client, message, args, level) => {
   if (stdout) out.push(stdout);
   if (stderr) out.push(stderr);
   await message.channel.send(out.join('\n'), { code: true });
-  if (stdout !== 'Already up-to-date.')
-    return reboot(client, message, args, level);
+  if (stdout === 'Already up-to-date.') {
+    return true;
+  } else {
+    return false;
+  }
+
+    // return reboot(client, message, args, level);
 };
 
 exports.conf = {
