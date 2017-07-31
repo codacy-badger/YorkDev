@@ -5,16 +5,14 @@ const path = require('path');
 const { run: reboot } = require('./reboot');
 
 exports.run = async (client, message, args, level) => {
-  const { stdout, stderr, err } = await exec('git pull https://github.com/YorkAARGH/York-Dev.git', {
-    cwd: path.join(__dirname, '../')
-  }).catch(err => ({ err }));
+  const { stdout, stderr, err } = await exec('git pull https://github.com/YorkAARGH/York-Dev.git', { cwd: path.join(__dirname, '../') }).catch(err => ({ err }));
   if (err) return console.error(err);
+  console.log(`stdout:: ${stdout}\n\n`);
+  console.log(`stderr:: ${stderr}\n\n`);
 
   const out = [];
   if (stdout) out.push(stdout);
   if (stderr) out.push(stderr);
-  console.log(`stdout:: ${stdout}\n\n`);
-  console.log(`stderr:: ${stderr}\n\n`);
   await message.channel.send(out.join('\n'), { code: true });
   if (stdout !== 'Already up-to-date.')
     return reboot(client, message, args, level);
