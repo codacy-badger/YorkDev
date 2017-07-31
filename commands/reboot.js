@@ -4,6 +4,7 @@ exports.run = async (client, message, args, level) => { // eslint-disable-line n
     for (const c of commandUnloads) {
       await c.db.close();
     }
+    await message.channel.send('Rebooting now...');
     await client.destroy();
     process.exit();
   } catch (e) {
