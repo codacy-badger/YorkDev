@@ -9,10 +9,10 @@ exports.run = async (client, message, args, level) => { // eslint-disable-line n
   if (err) return console.error(err);
 
   const out = [];
-  if (stdout) out.push(stdout);
-  if (stderr) out.push(stderr);
+  if (stdout) out.push(`\`\`\`${stdout}\`\`\``);
+  if (stderr) out.push(`\`\`\`${stderr}\`\`\``);
 
-  await message.channel.send(out.join('```\n```'), {code:true});
+  await message.channel.send(out.join('\n'), {code:true});
   return reboot(client, message, args);
 };
 
