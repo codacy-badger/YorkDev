@@ -46,7 +46,7 @@ exports.conf = {
 exports.help = {
   name: 'example',
   description: 'Displays an example.',
-  usage: 'example <action> [examplename] <contents> (use -help action to show additional help)',
+  usage: 'example <action> [examplename] <contents>.',
   category: 'Support',
   extended: `-add newExampleName This is your new example contents
           -del exampleName

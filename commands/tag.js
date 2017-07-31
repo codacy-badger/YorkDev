@@ -48,7 +48,7 @@ exports.help = {
   name: 'tag',
   description: 'Show or modify tags.',
   category: 'Support',
-  usage: 'tag <action> [tagname] <contents> (use -help action to show additional help)',
+  usage: 'tag <action> [tagname] <contents>.',
   extended: `-add newTagName This is your new tag contents
           -del tagName
           -edit existingtagName This is new new edited contents
