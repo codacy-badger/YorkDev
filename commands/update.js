@@ -13,8 +13,8 @@ exports.run = async (client, message, args, level) => {
   const out = [];
   if (stdout) out.push(stdout);
   if (stderr) out.push(stderr);
-  await message.channel.send(out.join('\n'), { code: true });
-  if (stdout === 'Already up-to-date.') {
+  await message.channel.send(out.join('---\n---'), { code: true });
+  if (stdout.toString() === 'Already up-to-date.') {
     return console.log(true);
   } else {
     return console.log(false);
