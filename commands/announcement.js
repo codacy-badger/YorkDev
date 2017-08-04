@@ -29,5 +29,5 @@ exports.help = {
   description: 'Posts an announcement.',
   usage: 'announcement <Komada|Idiot> <announcement>',
   category: 'Moderation',
-  extended: '[role] is either \`Komada\` or \`Idiot\`, followed by your announcement.'
+  extended: '[role] is either \'Komada\' or \'Idiot\', followed by your announcement.'
 };

@@ -2,7 +2,7 @@ exports.run = async (client, message, args, level) => { // eslint-disable-line n
   const user = message.mentions.users.first();
   const amount = isNaN(message.content.split(' ')[1]) ? parseInt(message.content.split(' ')[2]) : parseInt(message.content.split(' ')[1]);
   if (!amount) if (!user) return message.reply('Must specify a user and amount, or just an amount, of messages to purge!');
-  else return message.reply('Must specify an amount to delete!');
+    else return message.reply('Must specify an amount to delete!');
   if (amount > 100 && amount < 2) return message.reply('The amount must be between 2 to 100.');
   message.channel.fetchMessages({
     limit: amount,
