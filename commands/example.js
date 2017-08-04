@@ -1,10 +1,9 @@
 exports.run = async (client, message, args, level) => {
-  const settings = client.settings.get('message.guild.id');
   if (!args[0] && !message.flags.length) message.flags.push('list');
 
   if (!message.flags.length) {
     const [name, ...msg] = args;
-    if (!this.db.has(name)) return message.channel.send(`The example \`${name}\` does not exist. Use \`${settings.prefix}examples -help\` for help.`);
+    if (!this.db.has(name)) return message.channel.send(`The example \`${name}\` does not exist.`);
     const example = this.db.get(name).contents;
     return message.channel.send(`${msg.join(' ')}${example}`,{code:'js'});
   }
