@@ -25,6 +25,7 @@ function timeOut(ms) {
 
 exports.conf = {
   hidden: false,
+  guildOnly: true,
   aliases: ['ld'],
   permLevel: 2
 };

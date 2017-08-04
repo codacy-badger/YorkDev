@@ -81,6 +81,17 @@ module.exports = (client) => {
       return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
   };
 
+  Array.prototype.remove = function() {
+    var value, a = arguments, L = a.length, ax;
+    while (L && this.length) {
+      value = a[--L];
+      while ((ax = this.indexOf(value)) !== -1) {
+        this.splice(ax, 1);
+      }
+    }
+    return this;
+  };
+
   global.wait = require('util').promisify(setTimeout);
 
   global.range = (count, start = 0) => {

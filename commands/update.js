@@ -18,6 +18,7 @@ exports.run = async (client, message, args, level) => {
 
 exports.conf = {
   hidden: false,
+  guildOnly: false,
   aliases: ['git', 'pull'],
   permLevel: 10
 };

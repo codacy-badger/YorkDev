@@ -54,6 +54,7 @@ exports.init = client => {
 
 exports.conf = {
   hidden: false,
+  guildOnly: false,
   aliases: ['guide', 'guides', 'g', 'pages', 'p'],
   permLevel: 0
 };

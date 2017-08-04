@@ -40,6 +40,7 @@ exports.init = client => {
 
 exports.conf = {
   hidden: false,
+  guildOnly: false,
   aliases: ['t', 'tags'],
   permLevel: 0
 };

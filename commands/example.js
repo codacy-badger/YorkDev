@@ -39,6 +39,7 @@ exports.init = client => {
 
 exports.conf = {
   hidden: false,
+  guildOnly: false,
   aliases: ['ex', 'examples'],
   permLevel: 0
 };

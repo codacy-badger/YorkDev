@@ -16,6 +16,7 @@ exports.run = (client, message, args, level) => {// eslint-disable-line no-unuse
 
 exports.conf = {
   hidden: false,
+  guildOnly: true,
   aliases: ['info','stats','serverstats','guildinfo','guildstats'],
   permLevel: 0
 };
