@@ -2,7 +2,7 @@ const exec = require('child_process').exec;
 exports.run = function(client, message, args) {
   exec(`${args.join(' ')}`, (error, stdout) => {
     const response = (error || stdout);
-    message.edit(`Ran: ${message.content}\n\`\`\`${response}\`\`\``, {split: true})
+    message.channel.send(`Ran: ${message.content}\n\`\`\`${response}\`\`\``, {split: true})
       // .then(m => m.delete(30000))
       .catch(console.error);
   });
