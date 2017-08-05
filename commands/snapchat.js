@@ -1,4 +1,4 @@
-const Canvas = require('canvas-constructor');
+const { Canvas } = require('canvas-constructor');
 const [width, height] = [400, 533];
 const snapchat = new Canvas(width, height);
 const { resolve, join} = require('path');

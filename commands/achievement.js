@@ -1,4 +1,4 @@
-const Canvas = require('canvas-constructor');
+const { Canvas } = require('canvas-constructor');
 const achievement = new Canvas(320, 64);
 const snek = require('snekfetch');
 const { resolve, join} = require('path');
