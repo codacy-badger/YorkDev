@@ -103,8 +103,8 @@ module.exports = (client) => {
   };
 
   process.on('uncaughtException', (err) => {
-    const errormessage = err.stack.replace(new RegExp(`${__dirname}/`, 'g'), './');
-    console.error('Uncaught Exception: ', errormessage);
+    const errorMsg = err.stack.replace(new RegExp(`${__dirname}/`, 'g'), './');
+    console.error('Uncaught Exception: ', errorMsg);
   });
 
   process.on('unhandledRejection', err => {

@@ -1,29 +1,25 @@
+const Canvas = require('canvas-constructor');
+const [width, height] = [400, 533];
+const snapchat = new Canvas(width, height);
+const { resolve, join} = require('path');
 const fsn = require('fs-nextra');
-const path = require('path');
-const Canvas = require('canvas');
-const Snapchat = new Canvas.Font('Snapchat', path.resolve(path.join(__dirname, '../assets/font_snapchat.ttf')));
-const Image = Canvas.Image;
-const imgW = 400;
-const imgH = 533;
-const canvas = new Canvas(imgW, imgH);
-const ctx = canvas.getContext('2d');
-const imgPlate = new Image;
+
 const getSnap = async (text) => {
-  imgPlate.src = await fsn.readFile('./assets/image_snapchat.jpg');
-  ctx.addFont(Snapchat);
-  ctx.font = '18pt Snapchat';
-  ctx.drawImage(imgPlate, 0, 0);
-  ctx.fillStyle = 'white';
-  ctx.textAlign = 'center';
-  ctx.fillText(text, imgW / 2, 379);
+  const snap = await fsn.readFile('./assets/image_snapchat.jpg');
+  snapchat.addImage(snap, 0, 0, width, height)
+    .addTextFont(resolve(join(__dirname, '../assets/font_snapchat.ttf')), 'Snapchat')
+    .setTextAlign('center')
+    .setTextFont('18pt Snapchat')
+    .setColor('#FFFFFF')
+    .addText(text, width / 2, 379);
 };
 
-exports.run = async (client, message, args, level) => {// eslint-disable-line no-unused-vars
+exports.run = async (client, message, args, level) => { // eslint-disable-line no-unused-vars
   const text = args.join(' ');
   if (text.length < 1) return message.reply('You must give the snap some text.');
   if (text.length > 28) return message.reply('I can only handle a maximum of 28 characters');
   await getSnap(text);
-  await message.channel.send({files: [{attachment: canvas.toBuffer(undefined, 3, canvas.PNG_FILTER_NONE), name: `${text.toLowerCase().replace(' ', '-')}.jpg`}]});
+  await message.channel.send({files: [{attachment: snapchat.toBuffer(undefined, 3, Canvas.PNG_FILTER_NONE), name: `${text.toLowerCase().replace(' ', '-').replace('.', '-')}.jpg`}]});
 };
 
 exports.conf = {
