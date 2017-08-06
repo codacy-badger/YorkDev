@@ -1,5 +1,4 @@
 const { Canvas } = require('canvas-constructor');
-const achievement = new Canvas(320, 64);
 const snek = require('snekfetch');
 const { resolve, join} = require('path');
 const fsn = require('fs-nextra');
@@ -8,13 +7,14 @@ const getAchievement = async (text, person) => {
   const plate = await fsn.readFile('./assets/plate_achievement.png');
   const png = person.replace(/\.gif.+/g,'.png');
   const {body} = await snek.get(png);
-  achievement.addImage(plate, 0, 0, 320, 64)
+  return new Canvas(320, 64).addImage(plate, 0, 0, 320, 64)
     .addImage(body, 16, 16, 32, 32, {type:'round', radius: 16})
     .restore()
     .addTextFont(resolve(join(__dirname, '../assets/font_minecraftia.ttf')), 'Minecraftia')
     .setTextFont('12pt Minecraftia')
     .setColor('#FFFFFF')
-    .addText(text, 60, 58);
+    .addText(text, 60, 58)
+    .toBuffer(undefined, 3, Canvas.PNG_FILTER_NONE);
 };
 
 exports.run = async (client, message, args, level) => { // eslint-disable-line no-unused-vars
@@ -23,8 +23,8 @@ exports.run = async (client, message, args, level) => { // eslint-disable-line n
   if (message.mentions.users.first()) text = text.replace(/<@!?\d+>/, '').replace(/\n/g, ' ').trim();
   if (text.length < 1) return message.reply('You must give an achievement description.');
   if (text.length > 22) return message.reply('I can only handle a maximum of 22 characters');
-  await getAchievement(text, person);
-  await message.channel.send({files: [{attachment: achievement.toBuffer(undefined, 3, Canvas.PNG_FILTER_NONE), name: 'achievementGet.png'}]});
+  const result = await getAchievement(text, person);
+  await message.channel.send({files: [{attachment: result, name: 'achievementGet.png'}]});
 };
 
 exports.conf = {

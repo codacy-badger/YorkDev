@@ -1,4 +1,4 @@
-module.exports = async (r, user) => {
+module.exports = async (client, r, user) => {
   const message = r.message;
   const validEmojis = ['📌', '📍'];
   if (validEmojis.includes(r.emoji.name)) {

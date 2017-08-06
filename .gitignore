@@ -14,5 +14,6 @@ assets/selfie.jpg
 assets/selfie_meme.jpg
 assets/selfie_triggered.jpg
 commands/meme.js
+commands/meme_old.js
 commands/selfie.js
 commands/triggered.js
