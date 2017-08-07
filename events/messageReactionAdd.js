@@ -3,7 +3,13 @@ module.exports = async (client, r, user) => {
   const validEmojis = ['📌', '📍'];
   if (validEmojis.includes(r.emoji.name)) {
     try {
-      await user.send(`Here is the message you pinned:\n${message.cleanContent}`);
+      const author = user;
+      const member = message.guild.member(author);
+      const msg = { author:author, member:member, guild: message.guild };
+      if (client.permlevel(msg) > 1)
+        await message.pin();
+      else
+        await user.send(`Here is the message you pinned:\n${message.cleanContent}`);
     } catch (e) {
       if (e.message === 'Cannot send messages to this user') {
         await message.channel.send(`I cannot send you that message ${user}, as it appears you have **Direct Messages's** disabled.`);
