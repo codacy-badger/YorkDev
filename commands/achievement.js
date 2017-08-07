@@ -18,7 +18,7 @@ const getAchievement = async (text, person) => {
 };
 
 exports.run = async (client, message, args, level) => { // eslint-disable-line no-unused-vars
-  const person = (message.mentions.users.first() || client.user).displayAvatarURL;
+  const person = (message.mentions.users.first() || message.author).displayAvatarURL;
   let text = args.join(' ');
   if (message.mentions.users.first()) text = text.replace(/<@!?\d+>/, '').replace(/\n/g, ' ').trim();
   if (text.length < 1) return message.reply('You must give an achievement description.');
