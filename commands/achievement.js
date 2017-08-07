@@ -31,7 +31,7 @@ exports.conf = {
   hidden: false,
   guildOnly: false,
   aliases: ['get','achieveget', 'achievementget'],
-  permLevel: 2
+  permLevel: 0
 };
 
 exports.help = {
