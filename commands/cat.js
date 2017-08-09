@@ -2,7 +2,7 @@ const snek = require('snekfetch');
 exports.run = async (client, message, args, level) => { // eslint-disable-line no-unused-vars
   const msg = await message.channel.send('`Fetching random cat...`');
   const {body} = await snek.get('http://random.cat/meow');
-  await message.channel.send({files: [{attachment: body.file, name: 'cat.jpg'}]});
+  await message.channel.send({files: [{attachment: body.file, name: `cat.${body.file.split('.')[2]}`}]});
   await msg.delete();
 };
 
