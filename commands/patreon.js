@@ -12,6 +12,7 @@ exports.run = async (client, message, args, level) => { // eslint-disable-line n
   .addField('Early Access', 'You get early access to regular content!\n**Click [here](https://www.patreon.com/bePatron?c=639896&rid=1374922) to pledge $2.50**\n', true)
   .addField('Making Music', 'You get access to the ongoing music bot tutorial!\n**Click [here](https://www.patreon.com/bePatron?c=639896&rid=1374923) to pledge $5.00**\n', true)
   .addField('Supporter', 'You can get help from me directly via Direct Messages, subject to availability!\n**Click [here](https://www.patreon.com/bePatron?c=639896&rid=1722818) to pledge $10.00**\n', true)
+  .addField('Code Monkey', 'I will code you a single feature rich Discord Bot, subject to availability and complexity.\n**Click [here](https://www.patreon.com/bePatron?c=639896&rid=1915007) to pledge $10.00**\n', true)
   .addField('Link', 'If you want to help out and support me, you can do so by pledging at [Patreon](https://www.patreon.com/anidiotsguide)\n');
   message.channel.send({embed});
 };
