@@ -1,4 +1,4 @@
-async function announcer(message, roleName, text) {
+async function announcer(client, message, roleName, text) {
   try {
     const role = message.guild.roles.find('name', `${roleName} Subscribers`);
     if (!role) return message.reply(`Cannot find ${roleName} Subscribers`);
@@ -8,13 +8,14 @@ async function announcer(message, roleName, text) {
     await channel.send(`${role}\n${text}`);
     await role.edit({mentionable: false});
     await message.delete().catch(console.error);
+    return message.channel.send('Successfully posted announcement.');
   } catch (e) {
-    console.log(e);
+    client.sendError(e);
   }
 }
 
 exports.run = async (client, message, args, level) => { // eslint-disable-line no-unused-vars
-  announcer(message, args[0], args.slice(1).join(' '));
+  announcer(client, message, args[0], args.slice(1).join(' '));
 };
 
 exports.conf = {

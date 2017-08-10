@@ -102,6 +102,16 @@ module.exports = (client) => {
     return myArr;
   };
 
+  client.sendError = async (error) => {
+    const fetchOwner = await client.fetchApplication();
+    const hasteURL = await require('snekfetch')
+      .post('http://york.ban-hammered.me/documents')
+      .send(error).catch(e => {
+        throw new Error(`Error posting data: ${e}`);
+      });
+    return fetchOwner.owner.send(`http://york.ban-hammered.me/raw/${hasteURL.body.key}`);
+  };
+
   process.on('uncaughtException', (err) => {
     const errorMsg = err.stack.replace(new RegExp(`${__dirname}/`, 'g'), './');
     console.error('Uncaught Exception: ', errorMsg);
