@@ -4,7 +4,7 @@
 
 # File Extensions
 *.log
-
+*.ttf
 
 # Specific Files
 settings.json
@@ -17,3 +17,4 @@ commands/meme.js
 commands/meme_old.js
 commands/selfie.js
 commands/triggered.js
+package-lock.json
