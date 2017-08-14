@@ -2,6 +2,7 @@ exports.run = async (client, message, [action, key], level) => {
   const blacklist = client.blacklist.get(message.guild.id);
   const author = message.mentions.users.first() || client.users.get(key);
   const member = message.guild.member(author);
+
   if (action === 'add') {
     if (!author) return message.channel.send('You must supply a user id or mention to blacklist them.');
     if (blacklist.includes(author.id)) return message.reply('That user is already blacklisted.');
@@ -25,7 +26,7 @@ exports.run = async (client, message, [action, key], level) => {
     if (blacklist.length < 1) return message.channel.send('No one is blacklisted.');
     const a = blacklist;
     const fetch = Promise.all(a.map(r => client.fetchUser(r).then(u => u.tag)));
-    fetch().then(r => message.channel.send(`**❯ Blacklisted:**\n${r.join('\n')}`));
+    fetch.then(r => message.channel.send(`**❯ Blacklisted:**\n${r.join('\n')}`));
   }
 
 };
