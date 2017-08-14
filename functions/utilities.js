@@ -92,15 +92,8 @@ module.exports = (client) => {
     return this;
   };
 
-  global.wait = require('util').promisify(setTimeout);
-
-  global.range = (count, start = 0) => {
-    const myArr = [];
-    for (var i = 0; i<count; i++) {
-      myArr[i] = i+start;
-    }
-    return myArr;
-  };
+  // `await client.wait(1000);` to "pause" for 1 second.
+  client.wait = require('util').promisify(setTimeout);
 
   client.sendError = async (error) => {
     const fetchOwner = await client.fetchApplication();
