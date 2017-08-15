@@ -13,7 +13,8 @@ exports.run = async (client, message, args, level) => { // eslint-disable-line n
 • Servers    :: ${client.guilds.size.toLocaleString()}
 • Channels   :: ${client.channels.size.toLocaleString()}
 • Discord.js :: v${version}
-• Node       :: ${process.version}`, {code: 'asciidoc'});
+• Node       :: ${process.version}
+• Source     :: 'https://github.com/YorkAARGH/York-Dev'`, {code: 'asciidoc'});
 };
 
 exports.conf = {

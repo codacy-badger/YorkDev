@@ -5,7 +5,7 @@ exports.run = async (client, message, args, level) => { // eslint-disable-line n
 exports.conf = {
   hidden: true,
   guildOnly: true,
-  aliases: [],
+  aliases: ['ads', 'adcheck'],
   permLevel: 2
 };
 
