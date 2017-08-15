@@ -22,8 +22,10 @@ const blame = async (person) => { // eslint-disable-line no-unused-vars
 };
 exports.run = async (client, message, args, level) => { // eslint-disable-line no-unused-vars
   const person = message.mentions.members.first();
+  const msg = message.channel.send(`\`Assigning blame to ${person.displayName}\``);
   if (!person) return message.reply('You must mention someone to blame them.');
   const result = await blame(person);
+  await msg.delete();
   await message.channel.send({files: [{attachment: result, name: 'blame.png'}]});
 };
 

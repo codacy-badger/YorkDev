@@ -1,19 +1,12 @@
-const {
-  Canvas
-} = require('canvas-constructor');
+const { Canvas } = require('canvas-constructor');
 const snek = require('snekfetch');
-const {
-  resolve,
-  join
-} = require('path');
+const { resolve, join } = require('path');
 const fsn = require('fs-nextra');
 
 const getAchievement = async (text, person) => {
   const plate = await fsn.readFile('./assets/plate_achievement.png');
   const png = person.replace(/\.gif.+/g, '.png');
-  const {
-    body
-  } = await snek.get(png);
+  const { body } = await snek.get(png);
   return new Canvas(320, 64).addImage(plate, 0, 0, 320, 64)
     .addImage(body, 16, 16, 32, 32, { type: 'round', radius: 16 })
     .restore()
@@ -25,6 +18,7 @@ const getAchievement = async (text, person) => {
 };
 
 exports.run = async (client, message, args, level) => { // eslint-disable-line no-unused-vars
+  const msg = await message.channel.send('`Achievement Getting...`');
   const person = (message.mentions.users.first() || message.author).displayAvatarURL;
   let text = args.join(' ');
   if (message.mentions.users.first()) text = text.replace(/<@!?\d+>/, '').replace(/\n/g, ' ').trim();
@@ -33,6 +27,7 @@ exports.run = async (client, message, args, level) => { // eslint-disable-line n
   try {
     const result = await getAchievement(text, person);
     await message.channel.send({ files: [{ attachment: result, name: 'achievementGet.png' }] });
+    await msg.delete();
   } catch (e) {
     client.sendError(e);
   }
