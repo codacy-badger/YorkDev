@@ -18,11 +18,9 @@ exports.run = async (client, message, args, level) => { // eslint-disable-line n
     .addField('I agree, your life sucks', updoot.childNodes[0].text, true)
     .addField('You deserved it:', downdoot.childNodes[0].text, true);
   if (article.childNodes[0].text.length < 5 ) {
-    await msg.delete();
-    return message.channel.send('Today, something went wrong, so you\'ll have to try again in a few moments. FML');
+    return msg.edit('Today, something went wrong, so you\'ll have to try again in a few moments. FML');
   }
-  await msg.delete();
-  return message.channel.send({embed});
+  return msg.edit({embed});
 };
 
 exports.conf = {

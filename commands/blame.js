@@ -26,8 +26,8 @@ exports.run = async (client, message, args, level) => { // eslint-disable-line n
     const msg = await message.channel.send(`\`Assigning blame to ${person.displayName}\``);
     if (!person) return message.reply('You must mention someone to blame them.');
     const result = await blame(person);
-    await msg.delete();
     await message.channel.send({files: [{attachment: result, name: 'blame.png'}]});
+    await msg.delete();
   } catch (e) {
     client.sendError(e);
   }
