@@ -1,7 +1,7 @@
 const snek = require('snekfetch');
 exports.run = async (client, message, args, level) => { // eslint-disable-line no-unused-vars
   const msg = await message.channel.send('`Fetching random dog...`');
-  const {body} = await snek.get('http://thedogapi.co.uk/api/v1/dog');
+  const {body} = await snek.get('https://api.thedogapi.co.uk/v2/dog.php?limit=1');
   await message.channel.send({files: [{attachment: body.data[0].url, name: `${body.data[0].id}.jpg`}]});
   await msg.delete();
 };

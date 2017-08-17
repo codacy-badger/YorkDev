@@ -6,9 +6,10 @@ exports.run = async (client, message, args, level) => { // eslint-disable-line n
     await message.channel.send({files: [{attachment: body.file, name: `cat.${body.file.split('.')[2]}`}]});
     await msg.delete();
   } catch (e) {
-    if (!e.message.includes('Must be 2000 or fewer in length.')) {
-      client.sendError(e);
-    }
+    console.log(e);
+    // if (!e.message.includes('Must be 2000 or fewer in length.')) {
+    //   client.sendError(e);
+    // }
   }
 };
 
