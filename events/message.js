@@ -1,9 +1,10 @@
 const errorChecks = require('../functions/parseText.js');
+const monitor = require('../monitors/afk.js');
 module.exports = (client, message) => {
   if (message.author.bot) return;
   if (message.channel.type === 'dm' && message.author.id !== client.user.id)
     console.log(`[${message.author.id}] DM received from ${message.author.tag}: ${message.content}`);
-
+  monitor.checkAFK(client, message);
   errorChecks(message, message.content);
 
   if (message.guild) {
