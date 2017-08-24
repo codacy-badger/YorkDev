@@ -51,11 +51,12 @@ class PersistentDB extends PersistentCollection {
       pageExport[p] = {url: s.url, snippet: s.snippet};
     });
     const hasteURL = await require('snekfetch')
-      .post('http://york.ban-hammered.me/documents')
+      .post('https://hastebin.com/documents')
       .send(pageExport).catch(e => {
         throw new Error(`Error posting data: ${e}`);
       });
-    return `http://york.ban-hammered.me/raw/${hasteURL.body.key}`;
+    console.log(hasteURL);
+    return `https://hastebin.com/raw/${hasteURL.body.key}`;
   }
 
   async import(url) {

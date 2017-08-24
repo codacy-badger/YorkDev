@@ -4,17 +4,13 @@
 
 # File Extensions
 *.log
-*.ttf
 
 # Specific Files
 settings.json
 config.json
 tagsbot.sqlite
-assets/selfie.jpg
-assets/selfie_meme.jpg
-assets/selfie_triggered.jpg
-commands/meme.js
+assets/selfies/selfie.jpg
+assets/selfies/selfie_meme.jpg
+assets/selfies/selfie_triggered.jpg
 commands/meme_old.js
-commands/selfie.js
-commands/triggered.js
 package-lock.json

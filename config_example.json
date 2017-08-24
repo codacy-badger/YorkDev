@@ -4,6 +4,8 @@
   "token": "",
   "defaultSettings" : {
     "prefix": "?",
+    "afk": "false",
+    "afkMessage": "is currently AFK, they will be back soon.",
     "modLogChannel": "mod-log",
     "modRole": "Moderator",
     "adminRole": "Administrator"
