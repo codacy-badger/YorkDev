@@ -1,5 +1,43 @@
 module.exports = (client) => {
 
+  client.supportMsg = (message, msg) => {
+    const {RichEmbed} = require('discord.js');
+    const embed = new RichEmbed()
+      .setAuthor(message.author.username, message.author.displayAvatarURL)
+      .setDescription(msg)
+      .setTimestamp();
+    return embed;
+  };
+
+  client.checkConsent = async (client, message, msg) => {
+    const embed = client.supportMsg(message, msg);
+    const validAnswers = ['yes', 'y', 'no', 'n', 'cancel'];
+    const consent = client.consent.get(message.author.id);
+    const channel = client.guilds.get('351448068257742868').channels.exists('name', message.author.id);
+    if (!consent) client.consent.set(message.author.id, false);
+    if (consent && channel) {
+      client.channels.find('name', message.author.id).send({embed}).then(() => message.channel.send('Sent Successfully'));
+    } else {
+      message.channel.send('```By submitting the support ticket below, you authorise the bot, the bot creator, and other bot support members ("the Staff") to store and use your Username, Discriminator, Message Content, and any other End User Data in matters relative to usage of the bot, record keeping, and support. You also agree not to hold the Staff responsible for any actions that are taken, that also comply with these terms.```\n\nDo you wish to send this message? (**y**es | **n**o)\n\n\nReply with \`cancel\` to cancel the message. The message will timeout after 60 seconds.\n\n\n', { embed });
+      return message.channel.awaitMessages(m => m.author.id === message.author.id, { 'errors': ['time'], 'max': 1, time: 60000 }).then(resp => {
+        if (!resp) return;
+        resp = resp.array()[0];
+        if (validAnswers.includes(resp.content.toLowerCase())) {
+          if (resp.content === 'cancel' || resp.content === 'no' || resp.content === 'n') {
+            return message.channel.send('Cancelled Message.');
+          } else if (resp.content === 'yes' || resp.content === 'y') {
+            client.consent.set(message.author.id, true);
+            client.guilds.get('351448068257742868').createChannel(message.author.id, 'text').then((c) => c.send({embed}));          }
+        } else {
+          message.channel.send(`Only \`${validAnswers.join('`, `')}\` are valid, please supply one of those.`).catch(() => console.error);
+        }
+      }).catch(() => {
+        console.error;
+        message.channel.send('Message timed out.');
+      });
+    }
+  };
+
   client.permlevel = message => {
     let permlvl = 0;
     if (client.config.ownerId.includes(message.author.id)) return permlvl = 10;

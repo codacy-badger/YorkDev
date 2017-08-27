@@ -11,6 +11,7 @@ class YorkDev extends Client {
     this.db = require('./functions/PersistentDB.js');
     this.config = require('./config.json');
     this.settings = new PersistentCollection({name: 'settings'});
+    this.consent = new PersistentCollection({name: 'consent'});
     this.blacklist = new PersistentCollection({name: 'blacklist'});
     this.commands = new Collection();
     this.aliases = new Collection();
