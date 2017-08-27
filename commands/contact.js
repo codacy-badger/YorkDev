@@ -9,9 +9,18 @@ exports.run = async (client, message, args, level) => { // eslint-disable-line n
   const embed = new RichEmbed()
   .setAuthor(message.author.username, message.author.displayAvatarURL)
   .setDescription(msg)
-  .addField('To Reply', `?dm ${message.author.id} Your Message Here`);
-  const target = await client.fetchUser(id);
-  await target.send({embed});
+  .addField('To Reply', message.author.id === '146048938242211840' ? '?dm Your Message Here' : `?dm ${message.author.id} Your Message Here`);
+  try {
+    const target = await client.fetchUser(id);
+    await target.send({embed});
+    await message.channel.send('Sent Successfully');
+  } catch (e) {
+    if (e.message === 'Cannot send messages to this user') {
+      await message.channel.send(`I cannot send that message ${message.author.username}, as it appears they have **Direct Messages's** disabled.`);
+    } else {
+      console.log(e);
+    }
+  }
 };
 
 exports.conf = {
