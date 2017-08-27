@@ -1,4 +1,5 @@
 async function checkAFK(client, message) {
+  if (!message.guild) return;
   const settings = client.settings.get(message.guild.id);
   const person = message.mentions.members.first();
   if (!person) return;

@@ -2,11 +2,6 @@ const errorChecks = require('../functions/parseText.js');
 const monitor = require('../monitors/afk.js');
 module.exports = (client, message) => {
   if (message.author.bot) return;
-  if (message.channel.type === 'dm' && message.author.id !== client.user.id)
-    console.log(`[${message.author.id}] DM received from ${message.author.tag}: ${message.content}`);
-  monitor.checkAFK(client, message);
-  errorChecks(message, message.content);
-
   if (message.guild) {
     const blacklist = client.blacklist.get(message.guild.id);
     if (blacklist.includes(message.author.id)) return;
@@ -14,6 +9,13 @@ module.exports = (client, message) => {
 
   const defaults = client.config.defaultSettings;
   const settings = message.guild ? client.settings.get(message.guild.id) : defaults;
+
+  if (message.channel.type === 'dm' && message.author.id !== client.user.id && !message.content.startsWith(defaults.prefix))
+    console.log(`[${message.author.id}] DM received from ${message.author.tag}: ${message.content}`);
+  monitor.checkAFK(client, message);
+  const level = client.permlevel(message);
+  if (level < 2) errorChecks(message, message.content);
+
 
   const prefixes = [settings.prefix, defaults.prefix];
   let prefix = false;
@@ -33,7 +35,6 @@ module.exports = (client, message) => {
 
   const args = message.content.slice(prefix.length).trim().split(/ +/g);
   const command = args.shift().toLowerCase();
-  const level = client.permlevel(message);
   const cmd = client.commands.get(command) || client.commands.get(client.aliases.get(command));
   if (cmd && !message.guild && cmd.conf.guildOnly)
     return message.channel.send('This command is unavailable via private message. Please run this command in a guild.');
