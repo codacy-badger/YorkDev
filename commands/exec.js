@@ -1,12 +1,11 @@
-const { promisify } = require('util');
-const exec = promisify(require('child_process').exec);
-exports.run = async function(client, message, args) {
-
-  const response = await exec(args.join(' '));
-  if (response.length > 2000) {
-    client.sendError(response);
-  }
-  await message.channel.send(response);
+const exec = require('child_process').exec;
+exports.run = function(client, message, args) {
+  exec(`${args.join(' ')}`, (error, stdout) => {
+    const response = (error || stdout);
+    message.channel.send(`Ran: ${message.content}\n\`\`\`${response}\`\`\``, {split: true})
+      // .then(m => m.delete(30000))
+      .catch(console.error);
+  });
 };
 
 exports.conf = {
