@@ -18,7 +18,7 @@ module.exports = (client) => {
     if (consent && channel) {
       client.channels.find('name', message.author.id).send({embed}).then(() => message.channel.send('Sent Successfully'));
     } else {
-      message.channel.send('```By submitting the support ticket below, you authorise the bot, the bot creator, and other bot support members ("the Staff") to store and use your Username, Discriminator, Message Content, and any other End User Data in matters relative to usage of the bot, record keeping, and support. You also agree not to hold the Staff responsible for any actions that are taken, that also comply with these terms.```\n\nDo you wish to send this message? (**y**es | **n**o)\n\n\nReply with \`cancel\` to cancel the message. The message will timeout after 60 seconds.\n\n\n', { embed });
+      message.channel.send('```By submitting the support ticket below, you authorise the bot, the bot creator, and other bot support members ("the Staff") to store and use your Username, Discriminator, Message Content, and any other End User Data in matters relative to usage of the bot, record keeping, and support. You also agree not to hold the Staff responsible for any actions that are taken, that also comply with these terms.```\n\nDo you wish to send this message? (**y**es | **n**o)\n\n\nReply with `cancel` to cancel the message. The message will timeout after 60 seconds.\n\n\n', { embed });
       return message.channel.awaitMessages(m => m.author.id === message.author.id, { 'errors': ['time'], 'max': 1, time: 60000 }).then(resp => {
         if (!resp) return;
         resp = resp.array()[0];
