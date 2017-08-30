@@ -1,5 +1,6 @@
 const errorChecks = require('../functions/parseText.js');
-const monitor = require('../monitors/afk.js');
+const monitorAFK = require('../monitors/afk.js');
+const monitorPoints = require('../monitors/points.js');
 module.exports = (client, message) => {
   if (message.author.bot) return;
   if (message.guild) {
@@ -10,9 +11,8 @@ module.exports = (client, message) => {
   const defaults = client.config.defaultSettings;
   const settings = message.guild ? client.settings.get(message.guild.id) : defaults;
 
-  if (message.channel.type === 'dm' && message.author.id !== client.user.id && !message.content.startsWith(defaults.prefix))
-    console.log(`[${message.author.id}] DM received from ${message.author.tag}: ${message.content}`);
-  monitor.checkAFK(client, message);
+  monitorAFK.checkAFK(client, message);
+  monitorPoints.givePoints(client, message);
   const level = client.permlevel(message);
   if (level < 2) errorChecks(message, message.content);
 
@@ -44,7 +44,7 @@ module.exports = (client, message) => {
       message.flags.push(args.shift().slice(1));
     }
     // client.log("log", `${message.author.username} (${message.author.id}) ran command ${cmd.help.name}`, "CMD");
-    cmd.run(client, message, args, level);
+    cmd.run(message, args, level);
   } else if (client.tags.has(command)) {
     message.channel.send(`${args.join(' ')} ${client.tags.get(command).contents}`);
   }

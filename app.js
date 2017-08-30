@@ -13,6 +13,7 @@ class YorkDev extends Client {
     this.settings = new PersistentCollection({name: 'settings'});
     this.consent = new PersistentCollection({name: 'consent'});
     this.blacklist = new PersistentCollection({name: 'blacklist'});
+    this.points = new PersistentCollection({name: 'points'});
     this.commands = new Collection();
     this.aliases = new Collection();
   }
@@ -31,7 +32,7 @@ const init = async () => {
   client.log('log', `Loading a total of ${cmdFiles.length} commands.`);
   cmdFiles.forEach(f => {
     try {
-      const props = require(`./commands/${f}`);
+      const props = new (require(`./commands/${f}`))(client);
       if (f.split('.').slice(-1)[0] !== 'js') return;
       client.log('log', `Loading Command: ${props.help.name}. ✔`);
       client.commands.set(props.help.name, props);

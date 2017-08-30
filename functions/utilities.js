@@ -13,10 +13,10 @@ module.exports = (client) => {
     const embed = client.supportMsg(message, msg);
     const validAnswers = ['yes', 'y', 'no', 'n', 'cancel'];
     const consent = client.consent.get(message.author.id);
-    const channel = client.guilds.get('351448068257742868').channels.exists('name', message.author.id);
+    const channel = client.guilds.get('351448068257742868').channels.exists('topic', message.author.id);
     if (!consent) client.consent.set(message.author.id, false);
     if (consent && channel) {
-      client.channels.find('name', message.author.id).send({embed}).then(() => message.channel.send('Sent Successfully'));
+      client.channels.find('topic', message.author.id).send({embed}).then(() => message.channel.send('Sent Successfully'));
     } else {
       message.channel.send('```By submitting the support ticket below, you authorise the bot, the bot creator, and other bot support members ("the Staff") to store and use your Username, Discriminator, Message Content, and any other End User Data in matters relative to usage of the bot, record keeping, and support. You also agree not to hold the Staff responsible for any actions that are taken, that also comply with these terms.```\n\nDo you wish to send this message? (**y**es | **n**o)\n\n\nReply with `cancel` to cancel the message. The message will timeout after 60 seconds.\n\n\n', { embed });
       return message.channel.awaitMessages(m => m.author.id === message.author.id, { 'errors': ['time'], 'max': 1, time: 60000 }).then(resp => {
@@ -27,7 +27,11 @@ module.exports = (client) => {
             return message.channel.send('Cancelled Message.');
           } else if (resp.content === 'yes' || resp.content === 'y') {
             client.consent.set(message.author.id, true);
-            client.guilds.get('351448068257742868').createChannel(message.author.id, 'text').then((c) => c.send({embed}));          }
+            client.guilds.get('351448068257742868').createChannel(message.author.tag.replace('#', '-').toLowerCase(), 'text').then((c) => {
+              c.edit({ topic: message.author.id });
+              c.send({ embed });
+            });
+          }
         } else {
           message.channel.send(`Only \`${validAnswers.join('`, `')}\` are valid, please supply one of those.`).catch(() => console.error);
         }
@@ -132,16 +136,6 @@ module.exports = (client) => {
 
   // `await client.wait(1000);` to "pause" for 1 second.
   client.wait = require('util').promisify(setTimeout);
-
-  client.sendError = async (error) => {
-    const fetchOwner = await client.fetchApplication();
-    const hasteURL = await require('snekfetch')
-      .post('http://york.ban-hammered.me/documents')
-      .send(error).catch(e => {
-        throw new Error(`Error posting data: ${e}`);
-      });
-    return fetchOwner.owner.send(`http://york.ban-hammered.me/raw/${hasteURL.body.key}`);
-  };
 
   process.on('uncaughtException', (err) => {
     const errorMsg = err.stack.replace(new RegExp(`${__dirname}/`, 'g'), './');

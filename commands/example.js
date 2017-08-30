@@ -1,55 +1,61 @@
-exports.run = async (client, message, args, level) => {
-  if (!args[0] && !message.flags.length) message.flags.push('list');
+module.exports = class {
+  constructor(client) {
+    this.client = client;
 
-  if (!message.flags.length) {
-    const [name, ...msg] = args;
-    if (!this.db.has(name)) return message.channel.send(`The example \`${name}\` does not exist.`);
-    const example = this.db.get(name).contents;
-    return message.channel.send(`${msg.join(' ')}${example}`,{code:'js'});
+    this.init = client => {
+      this.db = new client.db(client, 'examples');
+      this.db.extendedHelp = this.help.extended;
+      client.examples = this.db;
+    };
+
+    this.conf = {
+      hidden: false,
+      guildOnly: false,
+      aliases: ['ex', 'examples'],
+      permLevel: 0
+    };
+
+    this.help = {
+      name: 'example',
+      description: 'Displays an example.',
+      usage: 'example <action> [examplename] <contents>.',
+      category: 'Support',
+      extended: `-add newExampleName This is your new example contents
+              -del exampleName
+              -edit existingExampleName This is new example edited contents
+              -list`
+    };
   }
 
-  if (message.flags[0] === 'list') return message.channel.send(this.db.list());
-  if (level < 2) return;
+  async run(message, args, level) { // eslint-disable-line no-unused-vars
+    if (!args[0] && !message.flags.length) message.flags.push('list');
 
-  const [name, ...extra] = args;
+    if (!message.flags.length) {
+      const [name, ...msg] = args;
+      if (!this.db.has(name)) return message.channel.send(`The example \`${name}\` does not exist.`);
+      const example = this.db.get(name).contents;
+      return message.channel.send(`${msg.join(' ')}${example}`,{code:'js'});
+    }
 
-  let data = null;
-  switch (message.flags[0]) {
-    case ('add') :
-      data = {contents: extra.join(' ')};
-      break;
-    default :
-      data = extra.join(' ');
+    if (message.flags[0] === 'list') return message.channel.send(this.db.list());
+    if (level < 2) return;
+
+    const [name, ...extra] = args;
+
+    let data = null;
+    switch (message.flags[0]) {
+      case ('add') :
+        data = {contents: extra.join(' ')};
+        break;
+      default :
+        data = extra.join(' ');
+    }
+
+    try {
+      const response = await this.db[message.flags[0]](name, data);
+      message.channel.send(response);
+    } catch (e) {
+      console.log(e);
+    }
   }
-
-  try {
-    const response = await this.db[message.flags[0]](name, data);
-    message.channel.send(response);
-  } catch (e) {
-    console.log(e);
-  }
-};
-
-exports.init = client => {
-  this.db = new client.db(client, 'examples');
-  this.db.extendedHelp = this.help.extended;
-  client.examples = this.db;
-};
-
-exports.conf = {
-  hidden: false,
-  guildOnly: false,
-  aliases: ['ex', 'examples'],
-  permLevel: 0
-};
-
-exports.help = {
-  name: 'example',
-  description: 'Displays an example.',
-  usage: 'example <action> [examplename] <contents>.',
-  category: 'Support',
-  extended: `-add newExampleName This is your new example contents
-          -del exampleName
-          -edit existingExampleName This is new example edited contents
-          -list`
 };

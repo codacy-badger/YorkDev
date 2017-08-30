@@ -96,7 +96,7 @@ function parse(input) {
     };
   } else
 
-  if (input.includes('Error: FFMPEG was not found on your system, so audio cannot be played. Please make sure FFMPEG is installed and in your PATH.')) {
+  if (input.includes('Error: FFMPEG not found')) {
     return {
       message: issue.responses.ffmpeg.message,
       info: issue.responses.ffmpeg.info,

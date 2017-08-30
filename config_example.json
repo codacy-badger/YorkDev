@@ -6,6 +6,7 @@
     "prefix": "?",
     "afk": "false",
     "afkMessage": "is currently AFK, they will be back soon.",
+    "social": "false",
     "modLogChannel": "mod-log",
     "modRole": "Moderator",
     "adminRole": "Administrator"

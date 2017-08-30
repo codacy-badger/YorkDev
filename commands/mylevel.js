@@ -7,21 +7,28 @@ function levelText(level) {
     default: return 'Guild Member';
   }
 }
-exports.run = async (client, message, args, level) => {
-  message.reply(`Your permission level is: **${level}** | ${levelText(level)}`);
-};
 
-exports.conf = {
-  hidden: false,
-  guildOnly: true,
-  aliases: ['perms', 'privilege'],
-  permLevel: 0
-};
+module.exports = class {
+  constructor(client) {
+    this.client = client;
 
-exports.help = {
-  name: 'mylevel',
-  category: 'General',
-  description: 'Tells you your permission level for the current guild.',
-  usage: 'mylevel',
-  extended: 'This will display your permission level, in both numerical and plain English styles.'
+    this.conf = {
+      hidden: false,
+      guildOnly: true,
+      aliases: ['perms', 'privilege'],
+      permLevel: 0
+    };
+
+    this.help = {
+      name: 'mylevel',
+      category: 'General',
+      description: 'Tells you your permission level for the current guild.',
+      usage: 'mylevel',
+      extended: 'This will display your permission level, in both numerical and plain English styles.'
+    };
+  }
+
+  async run(message, args, level) { // eslint-disable-line no-unused-vars
+    message.reply(`Your permission level is: **${level}** | ${levelText(level)}`);
+  }
 };
