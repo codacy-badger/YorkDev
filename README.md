@@ -36,7 +36,6 @@ Once finished:
 ```json
 {
   "ownerId": ["146048938242211840","203089110397747200"],
-  "clientId": "316144713222586368",
   "token": "NO TOKEN FOR YOU",
   "defaultSettings" : {
     "prefix": "?",
