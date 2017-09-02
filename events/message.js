@@ -10,7 +10,8 @@ module.exports = (client, message) => {
 
   const defaults = client.config.defaultSettings;
   const settings = message.guild ? client.settings.get(message.guild.id) : defaults;
-
+  message.settings = settings;
+  
   monitorAFK.checkAFK(client, message);
   monitorPoints.givePoints(client, message);
   const level = client.permlevel(message);
@@ -31,7 +32,6 @@ module.exports = (client, message) => {
   }
 
   if (!prefix) return;
-  message.settings = settings;
 
   const args = message.content.slice(prefix.length).trim().split(/ +/g);
   const command = args.shift().toLowerCase();
