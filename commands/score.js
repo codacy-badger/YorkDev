@@ -24,9 +24,7 @@ module.exports = class {
     if (!match) return message.channel.send('Not a valid user id.');
     const id = match[1];
     const score = this.client.points.get(id);
-    let YouThey, YouThem = '';
-    id === message.author ? YouThey = 'You' : 'They';
-    id === message.author ? YouThem = 'You' : 'them';
-    !score ? message.channel.send(`${YouThey} have no points, or levels yet.`) : message.channel.send(`${YouThey} currently have ${score.points} points, which makes ${YouThem} level ${score.level}!`);
-  }
+    const YouThey = id === message.author.id ? 'You' : 'They';
+    const YouThem = YouThey.length > 3 ? 'them' : 'you';
+    message.channel.send(score ? `${YouThey} currently have ${score.points} points, which makes ${YouThem} level ${score.level}!` : `${YouThey} have no points, or levels yet.`);  }
 };
