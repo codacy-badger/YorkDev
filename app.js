@@ -49,8 +49,8 @@ const init = async () => {
   client.log('log', `Loading a total of ${evtFiles.length} events.`);
   evtFiles.forEach(file => {
     const eventName = file.split('.')[0];
-    const event = require(`./events/${file}`);
-    client.on(eventName, event.bind(null, client));
+    const event = new (require(`./events/${file}`))(client);
+    client.on(eventName, (...args) => event.execute(...args));
     client.log('log', `Loading Event: ${eventName}. ✔`);
     delete require.cache[require.resolve(`./events/${file}`)];
   });

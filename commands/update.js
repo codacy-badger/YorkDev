@@ -32,7 +32,7 @@ module.exports = class {
     if (stderr) out.push(stderr);
     await message.channel.send(out.join('---\n'), { code: true });
     if (!stdout.toString().includes('Already up-to-date.')) {
-      return reboot(message, args, level);
+      return new reboot(this.client).run(message, args, level);
     }
   }
 };

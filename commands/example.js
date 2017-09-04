@@ -21,9 +21,9 @@ module.exports = class {
       usage: 'example <action> [examplename] <contents>.',
       category: 'Support',
       extended: `-add newExampleName This is your new example contents
-              -del exampleName
-              -edit existingExampleName This is new example edited contents
-              -list`
+      -del exampleName
+      -edit existingExampleName This is new example edited contents
+      -list`
     };
   }
 

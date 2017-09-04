@@ -19,7 +19,7 @@ module.exports = class {
   }
 
   async run(message, [action, key], level) { // eslint-disable-line no-unused-vars
-    const blacklist = this.client.blacklist.get(message.guild.id);
+    const blacklist = this.client.blacklist.get('list');
     const author = message.mentions.users.first() || this.client.users.get(key);
     const member = message.guild.member(author);
 
@@ -30,7 +30,7 @@ module.exports = class {
       const msg = { author:author, member:member, guild: message.guild };
       if (level <= this.client.permlevel(msg)) return message.reply('You cannot black list someone of equal, or a higher permission level.');
       blacklist.push(author.id);
-      this.client.blacklist.set(message.guild.id, blacklist);
+      this.client.blacklist.set('list', blacklist);
       message.channel.send('User successfully added to blacklist.');
     }
 
@@ -38,14 +38,14 @@ module.exports = class {
       if (!author) return message.channel.send('You must supply a user id or mention to blacklist them.');
       if (!blacklist.includes(author.id)) return message.reply('That user is not blacklisted.');
       blacklist.remove(author.id);
-      this.client.blacklist.set(message.guild.id, blacklist);
+      this.client.blacklist.set('list', blacklist);
       message.channel.send('User successfully removed from blacklist.');
     }
 
     if (action === 'view') {
       if (blacklist.length < 1) return message.channel.send('No one is blacklisted.');
       const a = blacklist;
-      const fetch = Promise.all(a.map(r => this.client.fetchUser(r).then(u => u.tag)));
+      const fetch = Promise.all(a.map(r => this.client.fetchUser(r).then(u => `${u.tag} (${u.id})`)));
       fetch.then(r => message.channel.send(`**❯ Blacklisted:**\n${r.join('\n')}`));
     }
   }

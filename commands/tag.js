@@ -21,9 +21,9 @@ module.exports = class {
       category: 'Support',
       usage: 'tag <action> [tagname] <contents>.',
       extended: `-add newTagName This is your new tag contents
-              -del tagName
-              -edit existingtagName This is new new edited contents
-              -list`
+      -del tagName
+      -edit existingtagName This is new new edited contents
+      -list`
     };
   }
 

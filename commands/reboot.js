@@ -32,9 +32,3 @@ module.exports = class {
     }
   }
 };
-
-exports.conf = {
-};
-
-exports.help = {
-};
