@@ -30,7 +30,6 @@ module.exports = (client) => {
             client.guilds.get('351448068257742868').createChannel(message.author.tag.replace('#', '-').toLowerCase(), 'text').then((c) => {
               c.edit({ topic: message.author.id });
               c.send({ embed });
-              message.channel.send('Support Channel Opened.');
             });
           }
         } else {
