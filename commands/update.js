@@ -2,8 +2,6 @@ const { promisify } = require('util');
 const exec = promisify(require('child_process').exec);
 const path = require('path');
 
-const { run: reboot } = require('./reboot');
-
 module.exports = class {
   constructor(client) {
     this.client = client;
@@ -32,7 +30,7 @@ module.exports = class {
     if (stderr) out.push(stderr);
     await message.channel.send(out.join('---\n'), { code: true });
     if (!stdout.toString().includes('Already up-to-date.')) {
-      return new reboot(this.client).run(message, args, level);
+      this.client.commands.get('reboot').run(message, args, level);
     }
   }
 };
