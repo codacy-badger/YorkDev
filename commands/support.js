@@ -13,7 +13,7 @@ module.exports = class {
       name: 'support',
       description: 'Contact Bot Support',
       usage: 'support <message>',
-      category: 'System',
+      category: 'Support',
       extended: 'This command will forward your Support DM to the Support Guild, your consent is **required** to use this command.'
     };
   }
