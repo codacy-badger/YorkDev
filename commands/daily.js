@@ -32,7 +32,6 @@ class Daily extends Command {
 
     const receiver = this.client.guilds.get(message.guild.id).members.get(id);
 
-
     if (donateTo === donateFrom) {
       if (Date.now() > donateFrom.daily) {
         const msg = await message.channel.send(`You have claimed your daily 50 ${pointEmoji} points. Ain't that dandy?`);

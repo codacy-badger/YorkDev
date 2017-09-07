@@ -1,6 +1,8 @@
 # York Dev
 This bot serves as one of the backbones of the Idiot's Guide Community, using the communities [Guide Bot](https://github.com/An-Idiots-Guide/guidebot) as a base framework, York Dev expands on it's functionalities with common error detection with solution, fun commands, as well as a tag and example command!
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/aecd644228534158bbdcc94064b3da75)](https://www.codacy.com/app/YorkAARGH/York-Dev?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=YorkAARGH/York-Dev&amp;utm_campaign=Badge_Grade)
+
 ## Requirements
 
 - `git` command line ([Windows](https://git-scm.com/download/win)|[Linux](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)|[MacOS](https://git-scm.com/download/mac)) installed
