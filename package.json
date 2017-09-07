@@ -19,7 +19,7 @@
   },
   "dependencies": {
     "canvas-constructor": "github:kyranet/canvasConstructor#2.0",
-    "discord.js": "github:hydrabolt/discord.js#11.2",
+    "discord.js": "^11.2.1",
     "enmap": "^0.1.2",
     "fast-html-parser": "^1.0.1",
     "fs-nextra": "^0.2.0",
