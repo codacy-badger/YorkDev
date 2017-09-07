@@ -1,6 +1,5 @@
 const errorChecks = require('../functions/parseText.js');
-const monitorAFK = require('../monitors/afk.js');
-const monitorPoints = require('../monitors/points.js');
+const monitor = require('../monitors/monitor.js');
 
 module.exports = class {
   constructor(client) {
@@ -8,7 +7,7 @@ module.exports = class {
   }
 
   async execute(message) {
-    // if (message.author.bot) return;
+    if (message.author.bot) return;
     if (message.guild) {
       const blacklist = this.client.blacklist.get('list');
       if (blacklist.includes(message.author.id)) return;
@@ -18,8 +17,7 @@ module.exports = class {
     const settings = message.guild ? this.client.settings.get(message.guild.id) : defaults;
     message.settings = settings;
     
-    monitorAFK.checkAFK(this.client, message);
-    monitorPoints.givePoints(this.client, message);
+    monitor.run(this.client, message);
     const level = this.client.permlevel(message);
     if (level < 2) errorChecks(message, message.content);
   

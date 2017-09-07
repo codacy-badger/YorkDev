@@ -8,27 +8,24 @@ function levelText(level) {
   }
 }
 
-module.exports = class {
+const Command = require('../base/Command.js');
+
+class MyLevel extends Command {
   constructor(client) {
-    this.client = client;
-
-    this.conf = {
-      hidden: false,
-      guildOnly: true,
-      aliases: ['perms', 'privilege'],
-      permLevel: 0
-    };
-
-    this.help = {
+    super(client, {
       name: 'mylevel',
       category: 'General',
       description: 'Tells you your permission level for the current guild.',
       usage: 'mylevel',
-      extended: 'This will display your permission level, in both numerical and plain English styles.'
-    };
+      extended: 'This will display your permission level, in both numerical and plain English styles.',
+      guildOnly: true,
+      aliases: ['perms', 'privilege']
+    });
   }
-
   async run(message, args, level) { // eslint-disable-line no-unused-vars
     message.reply(`Your permission level is: **${level}** | ${levelText(level)}`);
   }
-};
+
+}
+
+module.exports = MyLevel;

@@ -1,3 +1,4 @@
+const Command = require('../base/Command.js');
 const baseUrl = 'https://anidiots.guide';
 
 /*
@@ -7,24 +8,10 @@ client.pages = new PersistentCollection({name: 'guidepages'});
 Want all the pages? run this:
 /guide -import http://how.evie-banned.me/raw/linelipajo
 */
-module.exports = class {
+
+class Page extends Command {
   constructor(client) {
-    this.client = client;
-
-    this.init = client => {
-      this.db = new client.db(client, 'guides');
-      this.db.extendedHelp = this.help.extended;
-      client.guides = this.db;
-    };
-
-    this.conf = {
-      hidden: false,
-      guildOnly: false,
-      aliases: ['guide', 'guides', 'g', 'pages', 'p'],
-      permLevel: 0
-    };
-
-    this.help = {
+    super(client, {
       name: 'page',
       description: 'Returns page details from the awesome bot guide.',
       usage: 'page [-list] [name]',
@@ -35,23 +22,30 @@ module.exports = class {
       -rename pageName newName
       -export // exports and returns URL
       -import http://url-to-import/
-      -list`
+      -list`,
+      aliases: ['guide', 'guides', 'g', 'pages', 'p'],
+    });
+
+    this.init = client => {
+      this.db = new client.db(client, 'guides');
+      this.db.extendedHelp = this.help.extended;
+      client.guides = this.db;
     };
   }
 
   async run(message, args, level) { // eslint-disable-line no-unused-vars
     if (!args[0]) args[0] = 'home';
-
+    
     if (!message.flags.length) {
       let name = args[0];
       if (!this.db.has(name)) name = 'home';
       const details = this.db.get(name);
       return message.channel.send(`${details.snippet}\n**Read More**: <${baseUrl}${details.url}>`);
     }
-
+    
     if (message.flags[0] === 'list') return message.channel.send(this.db.list());
     if (level < 2) return;
-
+    
     const [name, ...extra] = args.slice(0);
     let data = null;
     switch (message.flags[0]) {
@@ -67,7 +61,7 @@ module.exports = class {
       default :
         data = extra.join(' ');
     }
-
+    
     try {
       const response = await this.db[message.flags[0]](name, data);
       message.channel.send(response);
@@ -75,4 +69,6 @@ module.exports = class {
       console.log(e);
     }
   }
-};
+}
+
+module.exports = Page;

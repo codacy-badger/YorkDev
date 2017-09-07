@@ -1,8 +1,8 @@
-const PersistentCollection = require('djs-collection-persistent');
+const Enmap = require('enmap');
 
-class PersistentDB extends PersistentCollection {
+class EnmapDB extends Enmap {
   constructor(client, PCName, editable = 'contents') {
-    super({name: PCName});
+    super({name: PCName, persistent: true});
     this.client = client;
     this.type = PCName.toLowerCase().slice(0, -1);
     this.editable = editable;
@@ -79,4 +79,4 @@ class PersistentDB extends PersistentCollection {
   // }
 }
 
-module.exports = PersistentDB;
+module.exports = EnmapDB;

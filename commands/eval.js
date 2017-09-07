@@ -1,21 +1,16 @@
-module.exports = class {
+const Command = require('../base/Command.js');
+
+class Eval extends Command {
   constructor(client) {
-    this.client = client;
-
-    this.conf = {
-      hidden: false,
-      guildOnly: false,
-      aliases: ['ev'],
-      permLevel: 10
-    };
-
-    this.help = {
+    super(client, {
       name: 'eval',
       description: 'Evaluates arbitrary Javascript.',
+      category: 'System',
       usage: 'eval <expression>',
-      category:'System',
-      extended: 'This is an extremely dangerous command, use with caution and never eval stuff strangers tell you.'
-    };
+      extended: 'This is an extremely dangerous command, use with caution and never eval stuff strangers tell you.',
+      aliases: ['ev'],
+      permLevel: 10
+    });
   }
 
   async run(message, args, level) { // eslint-disable-line no-unused-vars
@@ -28,4 +23,6 @@ module.exports = class {
       message.channel.send(`\`ERROR\` \`\`\`xl\n${await this.client.clean(this.client, err)}\n\`\`\``);
     }
   }
-};
+}
+
+module.exports = Eval;

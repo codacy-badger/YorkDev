@@ -1,21 +1,14 @@
-module.exports = class {
+const Command = require('../base/Command.js');
+
+class Ping extends Command {
   constructor(client) {
-    this.client = client;
-
-    this.conf = {
-      hidden: false,
-      guildOnly: false,
-      aliases: ['pong'],
-      permLevel: 0
-    };
-
-    this.help = {
+    super(client, {
       name: 'ping',
       description: 'Latency and API response times.',
       usage: 'ping',
-      category:'General',
-      extended: 'This command is a response test, it helps gauge if there is any latency (lag) in either the bots connection, or the API.'
-    };
+      extended: 'This command is a response test, it helps gauge if there is any latency (lag) in either the bots connection, or the API.',
+      aliases: ['pong']
+    });
   }
 
   async run(message, args, level) { // eslint-disable-line no-unused-vars
@@ -26,4 +19,6 @@ module.exports = class {
       console.log(e);
     }
   }
-};
+}
+
+module.exports = Ping;

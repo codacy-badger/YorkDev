@@ -1,21 +1,16 @@
-module.exports = class {
+const Command = require('../base/Command.js');
+
+class Reboot extends Command {
   constructor(client) {
-    this.client = client;
-
-    this.conf = {
-      hidden: false,
-      guildOnly: false,
-      aliases: ['restart'],
-      permLevel: 10
-    };
-
-    this.help = {
+    super(client, {
       name: 'reboot',
       description: 'This reboots the bot.',
       usage: 'reboot',
       category: 'System',
-      extended: 'This will make the bot logout and destroy the client instance before exiting cleanly.'
-    };
+      extended: 'This will make the bot logout and destroy the client instance before exiting cleanly.',
+      aliases: ['restart'],
+      permLevel: 10
+    });
   }
 
   async run(message, args, level) { // eslint-disable-line no-unused-vars
@@ -31,4 +26,6 @@ module.exports = class {
       console.log(e);
     }
   }
-};
+}
+
+module.exports = Reboot;

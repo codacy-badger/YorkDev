@@ -1,21 +1,14 @@
-module.exports = class {
+const Command = require('../base/Command.js');
+
+class Blacklist extends Command {
   constructor(client) {
-    this.client = client;
-
-    this.conf = {
-      hidden: false,
-      guildOnly: true,
-      aliases: [],
-      permLevel: 2
-    };
-
-    this.help = {
+    super(client, {
       name: 'blacklist',
-      description: 'blacklists mentioned user',
+      description: 'blacklists mentioned user.',
       usage: 'blacklist <mention/userid>',
-      category: 'Moderation',
-      extended: 'Blacklist members from using the bot via mention or user id.'
-    };
+      extended: 'Blacklist members from using the bot via mention or user id.',
+      permLevel: 2
+    });
   }
 
   async run(message, [action, key], level) { // eslint-disable-line no-unused-vars
@@ -49,4 +42,6 @@ module.exports = class {
       fetch.then(r => message.channel.send(`**❯ Blacklisted:**\n${r.join('\n')}`));
     }
   }
-};
+}
+
+module.exports = Blacklist;

@@ -1,3 +1,4 @@
+const Command = require('../base/Command.js');
 const { Canvas } = require('canvas-constructor');
 const { resolve, join} = require('path');
 Canvas.registerFont(resolve(join(__dirname, '../assets/fonts/NotoEmoji-Regular.ttf')), 'Roboto');
@@ -20,24 +21,16 @@ const blame = async (person) => {
     .toBuffer();
 };
 
-module.exports = class {
+class Blame extends Command {
   constructor(client) {
-    this.client = client;
-
-    this.conf = {
-      hidden: false,
-      guildOnly: true,
-      aliases: [],
-      permLevel: 0
-    };
-
-    this.help = {
+    super(client, {
       name: 'blame',
       description: 'Blame someone in canvas form',
       usage: 'blame <user>',
       category: 'Fun',
-      extended: 'Use canvas to blame a fellow user.'
-    };
+      extended: 'Use canvas to blame a fellow user.',
+      guildOnly: true
+    });
   }
 
   async run(message, args, level) { // eslint-disable-line no-unused-vars
@@ -51,4 +44,5 @@ module.exports = class {
       console.log(`Blame: ${e}`);
     }
   }
-};
+}
+module.exports = Blame;

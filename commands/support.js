@@ -1,21 +1,15 @@
-module.exports = class {
+const Command = require('../base/Command.js');
+
+class Support extends Command {
   constructor(client) {
-    this.client = client;
-
-    this.conf = {
-      hidden: false,
-      guildOnly: false,
-      aliases: ['dm', 'contact'],
-      permLevel: 0
-    };
-
-    this.help = {
+    super(client, {
       name: 'support',
       description: 'Contact Bot Support',
       usage: 'support <message>',
       category: 'Support',
-      extended: 'This command will forward your Support DM to the Support Guild, your consent is **required** to use this command.'
-    };
+      extended: 'This command will forward your Support DM to the Support Guild, your consent is **required** to use this command.',
+      aliases: ['dm', 'contact'],
+    });
   }
 
   async run(message, args, level) { // eslint-disable-line no-unused-vars
@@ -27,4 +21,6 @@ module.exports = class {
       console.log(e);
     }
   }
-};
+}
+
+module.exports = Support;

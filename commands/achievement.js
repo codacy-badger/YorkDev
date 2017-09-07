@@ -1,3 +1,4 @@
+const Command = require('../base/Command.js');
 const { Canvas } = require('canvas-constructor');
 const snek = require('snekfetch');
 const { resolve, join } = require('path');
@@ -19,26 +20,17 @@ const getAchievement = async (text, person) => {
     .toBuffer();
 };
 
-module.exports = class {
+class Achievement extends Command {
   constructor(client) {
-    this.client = client;
-
-    this.conf = {
-      hidden: false,
-      guildOnly: true,
-      aliases: ['get', 'achieveget', 'achievementget'],
-      permLevel: 0
-    };
-
-    this.help = {
+    super(client, {
       name: 'achievement',
       description: 'Creates a Discord Themed "Minecraft" Achievement.',
-      usage: 'achievement [user|text]',
       category: 'Fun',
-      extended: 'Either mention a user with text to give the achievement their user avatar, or just supply text for your own achievement.'
-    };
+      usage: 'achievement',
+      extended: 'Either mention a user with text to give the achievement their user avatar, or just supply text for your own achievement.',
+      aliases: ['get', 'achieveget', 'achievementget']
+    });
   }
-
   async run(message, args, level) { // eslint-disable-line no-unused-vars
     const msg = await message.channel.send('`Achievement Getting...`');
     const person = (message.mentions.users.first() || message.author).displayAvatarURL;
@@ -54,4 +46,6 @@ module.exports = class {
       console.log(e);
     }
   }
-};
+}
+
+module.exports = Achievement;

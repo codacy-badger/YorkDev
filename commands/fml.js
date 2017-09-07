@@ -4,28 +4,22 @@
   for supplying the updated code.
 
 */
+const Command = require('../base/Command.js');
 const request = require('snekfetch');
 const HTMLParser = require('fast-html-parser');
 const {RichEmbed} = require('discord.js');
 
-module.exports = class {
+class FML extends Command {
   constructor(client) {
-    this.client = client;
-
-    this.conf = {
-      hidden: false,
-      guildOnly: true,
-      aliases: ['fuckmylife', 'fuckme'],
-      permLevel: 0
-    };
-
-    this.help = {
+    super(client, {
       name: 'fml',
       description: 'Grabs a random "fuck my life" story.',
       usage: 'fml',
       category: 'Fun',
-      extended: 'This command grabs a random "fuck my life" story from fmylife.com and displays it in an organised embed.'
-    };
+      extended: 'This command grabs a random "fuck my life" story from fmylife.com and displays it in an organised embed.',
+      guildOnly: true,
+      aliases: ['fuckmylife', 'fuckme']
+    });
   }
 
   async run(message, args, level) { // eslint-disable-line no-unused-vars
@@ -61,4 +55,6 @@ module.exports = class {
     }
     reply.edit({embed});
   }
-};
+}
+
+module.exports = FML;

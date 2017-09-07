@@ -1,21 +1,17 @@
-module.exports = class {
+const Command = require('../base/Command.js');
+
+class Reply extends Command {
   constructor(client) {
-    this.client = client;
-
-    this.conf = {
-      hidden: true,
-      guildOnly: true,
-      aliases: [],
-      permLevel: 0
-    };
-
-    this.help = {
+    super(client, {
       name: 'reply',
       description: 'Support use only',
       usage: 'reply <message>',
       category: 'System',
-      extended: 'Responds to a support channel.'
-    };
+      extended: 'Responds to a support channel.',
+      hidden: true,
+      guildOnly: true,
+      permLevel: 2
+    });
   }
 
   async run(message, args, level) { // eslint-disable-line no-unused-vars
@@ -37,4 +33,6 @@ module.exports = class {
       }
     }
   }
-};
+}
+
+module.exports = Reply;

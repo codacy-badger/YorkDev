@@ -1,25 +1,19 @@
+const Command = require('../base/Command.js');
 const { promisify } = require('util');
 const exec = promisify(require('child_process').exec);
 const path = require('path');
 
-module.exports = class {
+class Update extends Command {
   constructor(client) {
-    this.client = client;
-
-    this.conf = {
-      hidden: false,
-      guildOnly: false,
-      aliases: ['git', 'pull'],
-      permLevel: 10
-    };
-
-    this.help = {
+    super(client, {
       name: 'update',
       description: 'This updates the bot from its git repo.',
       usage: 'update',
       category: 'System',
-      extended: 'This command is designed to update the bot from it\'s own repository, then reboots the bot for the changes to take effect.'
-    };
+      extended: 'This command is designed to update the bot from it\'s own repository, then reboots the bot for the changes to take effect.',
+      aliases: ['git', 'pull'],
+      permLevel: 10
+    });
   }
 
   async run(message, args, level) { // eslint-disable-line no-unused-vars
@@ -33,4 +27,6 @@ module.exports = class {
       this.client.commands.get('reboot').run(message, args, level);
     }
   }
-};
+}
+
+module.exports = Update;

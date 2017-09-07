@@ -1,22 +1,17 @@
 const snek = require('snekfetch');
-module.exports = class {
+const Command = require('../base/Command.js');
+
+class Dog extends Command {
   constructor(client) {
-    this.client = client;
-
-    this.conf = {
-      hidden: false,
-      guildOnly: true,
-      aliases: ['doggo', 'pupper'],
-      permLevel: 0
-    };
-
-    this.help = {
+    super(client, {
       name: 'dog',
       description: 'Grabs a random dog image.',
       usage: 'dog',
       category: 'Fun',
-      extended: 'This command grabs a random dog from "The DogAPI".'
-    };
+      extended: 'This command grabs a random dog from "The DogAPI".',
+      guildOnly: true,
+      aliases: ['doggo', 'pupper']
+    });
   }
 
   async run(message, args, level) { // eslint-disable-line no-unused-vars
@@ -29,4 +24,6 @@ module.exports = class {
       console.log(e);
     }
   }
-};
+}
+
+module.exports = Dog;

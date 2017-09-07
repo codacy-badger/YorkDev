@@ -1,21 +1,14 @@
-module.exports = class {
+const Command = require('../base/Command.js');
+
+class Announcement extends Command {
   constructor(client) {
-    this.client = client;
-
-    this.conf = {
-      hidden: false,
-      guildOnly: true,
-      aliases: [],
-      permLevel: 2
-    };
-
-    this.help = {
+    super(client, {
       name: 'announcement',
       description: 'Posts an announcement.',
       usage: 'announcement <Komada|Idiot> <announcement>',
-      category: 'Moderation',
-      extended: '[role] is either \'Komada\' or \'Idiot\', followed by your announcement.'
-    };
+      extended: '[role] is either \'Komada\' or \'Idiot\', followed by your announcement.',
+      permLevel: 2
+    });
   }
 
   async run(message, args, level) { // eslint-disable-line no-unused-vars
@@ -33,4 +26,6 @@ module.exports = class {
       console.log(e);
     }
   }
-};
+}
+
+module.exports = Announcement;

@@ -2,21 +2,51 @@
 // npm install body-parser ejs express express-session hbs helmet marked passport passport-discord
 const { Client, Collection } = require('discord.js');
 const {readdir} = require('fs-nextra');
-const PersistentCollection = require('djs-collection-persistent');
+const Enmap = require('enmap');
 if (process.version.slice(1).split('.')[0] < 8) throw new Error('Node 8.0.0 or higher is required. Update Node on your system.');
 
 class YorkDev extends Client {
   constructor(options) {
     super(options);
-    this.db = require('./functions/PersistentDB.js');
+    this.db = require('./functions/EnmapDB.js');
     this.config = require('./config.json');
-    this.settings = new PersistentCollection({name: 'settings'});
-    this.consent = new PersistentCollection({name: 'consent'});
-    this.blacklist = new PersistentCollection({name: 'blacklist'});
-    this.points = new PersistentCollection({name: 'points'});
+    this.settings = new Enmap({name: 'settings', persistent: true});
+    this.consent = new Enmap({name: 'consent', persistent: true});
+    this.blacklist = new Enmap({name: 'blacklist', persistent: true});
+    this.points = new Enmap({name: 'points', persistent: true});
     this.commands = new Collection();
     this.aliases = new Collection();
   }
+
+  permlevel(message) {
+    let permlvl = 0;
+    if (client.config.ownerId.includes(message.author.id)) return permlvl = 10;
+    if (!message.guild || !message.member) return 0;
+    try {
+      const modRole = message.guild.roles.find(r => r.name.toLowerCase() === message.settings.modRole.toLowerCase());
+      if (modRole && message.member.roles.has(modRole.id)) permlvl = 2;
+    } catch (e) {
+      console.log(e);
+      console.warn(`modRole (${client.settings.get(message.guild.id).modRole}) not present in guild settings for ${message.guild.name} (${message.guild.id}). Skipping Moderator (level 2) check`);
+    }
+
+    try {
+      const adminRole = message.guild.roles.find(r => r.name.toLowerCase() === message.settings.adminRole.toLowerCase());
+      if (adminRole && message.member.roles.has(adminRole.id)) permlvl = 3;
+    } catch (e) {
+      console.log(e);
+      console.warn(`adminRole (${client.settings.get(message.guild.id).adminRole}) not present in guild settings for ${message.guild.name} (${message.guild.id}). Skipping Administrator (level 3) check`);
+    }
+
+    if (message.author.id === message.guild.owner.id) permlvl = 4;
+    return permlvl;
+  }
+
+  log(type, message, title) {
+    if (!title) title = 'Log';
+    console.log(`[${type}] [${title}]${message}`);
+  }
+
 }
 
 const client = new YorkDev({

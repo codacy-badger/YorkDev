@@ -1,3 +1,5 @@
+const Command = require('../base/Command.js');
+
 const { Canvas } = require('canvas-constructor');
 const [width, height] = [400, 533];
 const { resolve, join} = require('path');
@@ -17,24 +19,17 @@ const getSnap = async (text) => {
     .toBuffer();
 };
 
-module.exports = class {
+class SnapChat extends Command {
   constructor(client) {
-    this.client = client;
-
-    this.conf = {
-      hidden: false,
-      guildOnly: true,
-      aliases: ['sc'],
-      permLevel: 0
-    };
-
-    this.help = {
+    super(client, {
       name: 'snapchat',
       description: 'Creates a meme based on the But MOOOOOM statue.',
       usage: 'snapchat <text>',
       category: 'Fun',
-      extended: 'This command uses canvas to generate a Snapchat styled image based on the well known _But MOOOOOM_ statue meme.'
-    };
+      extended: 'This command uses canvas to generate a Snapchat styled image based on the well known _But MOOOOOM_ statue meme.',
+      guildOnly: true,
+      aliases: ['sc'],
+    });
   }
 
   async run(message, args, level) { // eslint-disable-line no-unused-vars
@@ -44,4 +39,6 @@ module.exports = class {
     const result = await getSnap(text);
     await message.channel.send({ files: [{ attachment: result, name: `${text.toLowerCase().replace(' ', '-').replace('.', '-')}.png`}]});
   }
-};
+}
+
+module.exports = SnapChat;

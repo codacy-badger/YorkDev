@@ -1,25 +1,24 @@
-module.exports = class {
-  constructor(client) {
-    this.client = client;
+const Command = require('../base/Command.js');
 
-    this.conf = {
+class AdCheck extends Command {
+  constructor(client) {
+    super(client, {
+      name: 'adcheck',
+      description: 'Returns a list of users with adverts',
+      usage: 'adcheck',
+      category:'Moderation',
+      extended: 'This command will check for any discord invite links in members \'Playing\' status.',
       hidden: true,
       guildOnly: true,
-      aliases: ['ads', 'adcheck'],
+      aliases: ['ads', 'checkads'],
       permLevel: 2
-    };
-
-    this.help = {
-      name: 'checkads',
-      description: 'Returns a list of users with adverts',
-      usage: 'checkads',
-      category:'Moderation',
-      extended: 'This command will check for any discord invite links in members \'Playing\' status.'
-    };
+    });
   }
 
   async run(message, args, level) { // eslint-disable-line no-unused-vars
     const members = message.guild.members.filter(member => member.user.presence.game && /(discord\.(gg|io|me|li)\/.+|discordapp\.com\/invite\/.+)/i.test(member.user.presence.game.name));
     return message.channel.send(members.map(member => `$kick ${member.id} Discord invite link in \\\`Playing:\\\` field. (${member.user.presence.game.name})`).join('\n') || 'No invite links found.');
   }
-};
+}
+
+module.exports = AdCheck;

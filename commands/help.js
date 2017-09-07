@@ -1,21 +1,16 @@
-module.exports = class {
+const Command = require('../base/Command.js');
+
+class Help extends Command {
   constructor(client) {
-    this.client = client;
-
-    this.conf = {
-      hidden: true,
-      guildOnly: false,
-      aliases: ['h', 'halp'],
-      permLevel: 0
-    };
-
-    this.help = {
+    super(client, {
       name: 'help',
       description: 'Displays all the available commands for your permission level.',
       usage: 'help [command]',
       category: 'Support',
-      extended: 'This command will display all available commands for your permission level, with the additonal option of getting per command information when you run \'help <command name>\'.'
-    };
+      extended: 'This command will display all available commands for your permission level, with the additonal option of getting per command information when you run \'help <command name>\'.',
+      hidden: true,
+      aliases: ['h', 'halp'],
+    });
   }
 
   async run(message, args, level) { // eslint-disable-line no-unused-vars
@@ -43,5 +38,8 @@ module.exports = class {
         if (level < command.conf.permLevel) return;
         message.channel.send(`= ${command.help.name} = \n${command.help.description}\nusage:: ${command.help.usage}\nalises:: ${command.conf.aliases.join(', ')}\ndetails:: ${command.help.extended}`, {code:'asciidoc'});
       }
-    }  }
-};
+    }
+  }
+}
+
+module.exports = Help;
