@@ -9,7 +9,8 @@ class Cat extends Command {
       category: 'Fun',
       extended: 'This command grabs a random cat from "http://random.cat/meow".',
       guildOnly: true,
-      aliases: ['kitten']
+      aliases: ['kitten'],
+      botPerms: ['ATTACH_FILES']
     });
   }
 

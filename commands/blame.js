@@ -29,7 +29,8 @@ class Blame extends Command {
       usage: 'blame <user>',
       category: 'Fun',
       extended: 'Use canvas to blame a fellow user.',
-      guildOnly: true
+      guildOnly: true,
+      botPerms: ['ATTACH_FILES']
     });
   }
 

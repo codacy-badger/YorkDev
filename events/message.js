@@ -48,6 +48,11 @@ module.exports = class {
         message.flags.push(args.shift().slice(1));
       }
       this.client.log('log', `${message.author.username} (${message.author.id}) ran command ${cmd.help.name}`, 'CMD');
+
+      const mPerms = this.client.permCheck(message, cmd.conf.botPerms);
+
+      if (mPerms.length) return message.channel.send(`The bot does not have the following permissions \`${mPerms.join(', ')}\``);
+
       cmd.run(message, args, level);
     } else if (this.client.tags.has(command)) {
       message.channel.send(`${args.join(' ')} ${this.client.tags.get(command).contents}`);

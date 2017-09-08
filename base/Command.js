@@ -8,11 +8,12 @@ class Command {
     hidden = false, 
     guildOnly = false, 
     aliases = [], 
+    botPerms = [],
     permLevel = 0
   }) {
     this.client = client;
-    this.conf = { hidden, guildOnly, aliases, permLevel };
-    this.help = { name, description, category, usage, extended };
+    this.conf   = { hidden, guildOnly, aliases, botPerms, permLevel };
+    this.help   = { name, description, category, usage, extended };
   }
 }
 module.exports = Command;

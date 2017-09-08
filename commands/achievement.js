@@ -28,7 +28,8 @@ class Achievement extends Command {
       category: 'Fun',
       usage: 'achievement',
       extended: 'Either mention a user with text to give the achievement their user avatar, or just supply text for your own achievement.',
-      aliases: ['get', 'achieveget', 'achievementget']
+      aliases: ['get', 'achieveget', 'achievementget'],
+      botPerms: ['ATTACH_FILES']
     });
   }
   async run(message, args, level) { // eslint-disable-line no-unused-vars

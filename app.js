@@ -47,6 +47,10 @@ class YorkDev extends Client {
     console.log(`[${type}] [${title}]${message}`);
   }
 
+  permCheck(message, perms) {
+    return message.channel.permissionsFor(message.guild.me).missing(perms);
+  }
+
 }
 
 const client = new YorkDev({

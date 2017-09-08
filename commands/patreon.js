@@ -9,7 +9,8 @@ class Patreon extends Command {
       usage: 'patreon',
       category: 'General',
       extended: 'Pulls up a list of current Patreon tiers to support York.',
-      aliases: ['donate', 'pledge', 'patron']
+      aliases: ['donate', 'pledge', 'patron'],
+      botPerms: ['EMBED_LINKS']
     });
   }
 

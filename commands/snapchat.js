@@ -29,6 +29,7 @@ class SnapChat extends Command {
       extended: 'This command uses canvas to generate a Snapchat styled image based on the well known _But MOOOOOM_ statue meme.',
       guildOnly: true,
       aliases: ['sc'],
+      botPerms: ['ATTACH_FILES']
     });
   }
 

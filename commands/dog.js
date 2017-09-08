@@ -10,7 +10,8 @@ class Dog extends Command {
       category: 'Fun',
       extended: 'This command grabs a random dog from "The DogAPI".',
       guildOnly: true,
-      aliases: ['doggo', 'pupper']
+      aliases: ['doggo', 'pupper'],
+      botPerms: ['ATTACH_FILES']
     });
   }
 

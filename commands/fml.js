@@ -18,7 +18,8 @@ class FML extends Command {
       category: 'Fun',
       extended: 'This command grabs a random "fuck my life" story from fmylife.com and displays it in an organised embed.',
       guildOnly: true,
-      aliases: ['fuckmylife', 'fuckme']
+      aliases: ['fuckmylife', 'fuckme'],
+      botPerms: ['EMBED_LINKS']
     });
   }
 
