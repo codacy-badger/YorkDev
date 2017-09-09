@@ -15,5 +15,13 @@ class Command {
     this.conf   = { hidden, guildOnly, aliases, botPerms, permLevel };
     this.help   = { name, description, category, usage, extended };
   }
+
+  async verifyUser(user) {
+    const match = /(?:<@!?)?([0-9]{17,20})>?/gi.exec(user);
+    if (!match) throw 'Invalid user';
+    const id = match[1];
+    const check = await this.client.fetchUser(id);
+    if (check.username !== undefined) return id;
+  }
 }
 module.exports = Command;

@@ -49,7 +49,7 @@ module.exports = (client) => {
   message.reply(`Oh, I really love ${response} too!`);
 
   */
-  client.awaitReply = async (message, question, limit = 60000, embed) => {
+  client.awaitReply = async (message, question, limit = 60000, embed = {}) => {
     const filter = m => m.author.id = message.author.id;
     await message.channel.send(question, {embed});
     try {

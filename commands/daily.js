@@ -1,24 +1,21 @@
-const Command = require('../base/Command.js');
+const Social = require('../base/Social.js');
 
 const moment = require('moment');
 require('moment-duration-format');
 
-class Daily extends Command {
+class Daily extends Social {
   constructor(client) {
     super(client, {
       name: 'daily',
       description: 'Claim or give your daily 50 G points.',
       usage: 'daily [user]',
-      extended: 'You can either claim or donate your daily points. (Giving coming soon)',
-      category: 'Fun',
-      guildOnly: true
+      extended: 'You can either claim or donate your daily points.',
     });
   }
 
   async run(message, args, level) { // eslint-disable-line no-unused-vars
     const settings = this.client.settings.get(message.guild.id);
-    const pointEmoji = settings.customEmoji ? this.client.emojis.get(settings.gEmojiID) :  settings.uEmoji;
-
+    const pointEmoji = this.emoji(message.guild.id);
     const user = args.join(' ') || message.author.id;
     const match = /(?:<@!?)?([0-9]{17,20})>?/gi.exec(user);
     if (!match) return message.channel.send('Not a valid user id.');

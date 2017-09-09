@@ -53,7 +53,9 @@ module.exports = class {
 
       if (mPerms.length) return message.channel.send(`The bot does not have the following permissions \`${mPerms.join(', ')}\``);
 
-      cmd.run(message, args, level);
+      cmd.run(message, args, level).catch(error => {
+        message.channel.send(error);
+      });
     } else if (this.client.tags.has(command)) {
       message.channel.send(`${args.join(' ')} ${this.client.tags.get(command).contents}`);
     }
