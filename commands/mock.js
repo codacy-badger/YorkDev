@@ -16,6 +16,8 @@ class Mock extends Command {
       description: 'Mocks the previous person that sent a message.',
       usage: 'mock',
       extended: 'Based on the popular Spongebob Squarepants mocking meme.',
+      hidden: true, 
+      guildOnly: true,
       aliases: []
     });
   }
