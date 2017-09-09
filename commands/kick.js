@@ -16,7 +16,7 @@ class Kick extends Moderation {
 
     const target = message.mentions.members.first();
     if (!target) return message.reply('|`❌`| Invalid command usage, You must mention someone to use this command.');
-    if (!target.kickable) return message.reply('|`❗`| This member cannot be kicked.');
+    if (!target.kickable) return message.reply('');
     
     const modLevel = this.modCheck(message, args, level);
     if (typeof modLevel === 'string') return message.reply(modLevel);
