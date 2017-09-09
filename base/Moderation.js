@@ -12,18 +12,30 @@ class Moderation extends Command {
     }));
 
     this.actions = {
-      warn:    { color: 0xFFFF00, display: 'Warn'    },
-      mute:    { color: 0xFF9900, display: 'Mute'    },
-      kick:    { color: 0xFF3300, display: 'Kick'    },
-      ban:     { color: 0xFF0000, display: 'Ban'     },
-      unban:   { color: 0x006699, display: 'Unban'   },
-      softban: { color: 0xFF2F00, display: 'Softban' }
+      w: { color: 0xFFFF00, display: 'Warn'    },
+      m: { color: 0xFF9900, display: 'Mute'    },
+      k: { color: 0xFF3300, display: 'Kick'    },
+      s: { color: 0xFF2F00, display: 'Softban' },
+      b: { color: 0xFF0000, display: 'Ban'     },
+      u: { color: 0x006699, display: 'Unban'   },
+      l: { color: 0x7289DA, display: 'Lockdown'}
     };
     
   }
 
+  modCheck(message, args, level) {
+    const user = args.join(' ') || message.mentions.users.first();
+    const match = /(?:<@!?)?([0-9]{17,20})>?/gi.exec(user);
+    if (!match) return '|`❌`| That is not a valid user id.';
+    const id = match[1];
 
-  // Permission check placeholder
+    if (message.author.id === id) return '|`🛑`| You cannot moderate yourself.';
+    const author = message.mentions.users.first() || this.client.users.get(id);
+    const member = message.mentions.members.first() || message.guild.member(author);
+    const msg = { author:author, member:member, guild: message.guild };
+
+    if (level <= this.client.permlevel(msg)) return '|`🛑`| You cannot perform that action on someone of equal, or a higher permission level.';
+  }
 
   embedSan(embed) {
     embed.message ? delete embed.message : null;
@@ -36,19 +48,6 @@ class Moderation extends Command {
     return embed;
   }
   
-  levelCheck(message, args, level) {
-    const user = args.join(' ') || message.mentions.users.first();
-    const match = /(?:<@!?)?([0-9]{17,20})>?/gi.exec(user);
-
-    if (!match) return message.channel.send('Not a valid user id.');
-    const id = match[1];
-
-    const author = message.mentions.users.first() || this.client.users.get(id);
-    const member = message.guild.member(author);
-    const msg = { author:author, member:member, guild: message.guild };
-    if (level <= this.client.permlevel(msg)) return true;
-  }
-
   async caseNumber(client, modlog) {
     const messages = await modlog.fetchMessages({limit: 5});
     const log = messages.filter(m => m.author.id === client.user.id
