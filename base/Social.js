@@ -49,7 +49,8 @@ class Social extends Command {
 
   async donate(message, payer, payee, amount) {
     try {
-      if (payer === payee) return message.channel.send('You cannot pay yourself, why did you even try it?');
+      if (amount < 0) throw 'You cannot pay less than zero, whatcha trying to do? rob em?';
+      if (payer === payee) throw 'You cannot pay yourself, why did you even try it?';
       // payer: The user paying.
       const getPayer = await this.client.points.get(`${message.guild.id}-${payer}`)
         || this.client.points.set(`${message.guild.id}-${payer}`, { points: 0, level: 0, user: payer, guild: message.guild.id, daily: 1504120109 }).get(`${message.guild.id}-${payer}`);
@@ -65,20 +66,22 @@ class Social extends Command {
       const response = await message.client.awaitReply(message, `Are you sure you want to pay ${message.guild.member(payee).displayName} ${parseInt(amount)} ${this.emoji(message.guild.id)}?\n\n(**y**es | **n**o)\n\nReply with \`cancel\` to cancel the message. The message will timeout after 60 seconds.`);
       
       if (response === 'yes' || response === 'y') {
-        getPayer.points -= parseInt(amount);
-        getPayee.points += parseInt(amount);
-        message.channel.send(`The payment of ${parseInt(amount)}${this.emoji(message.guild.id)} has been sent to ${message.guild.member(payee).displayName}.`);
-    
-        const PayerLevel = await this.ding(message, getPayer);
-        console.log(PayerLevel);
-        getPayer.level = PayerLevel;
-        this.client.points.set(`${message.guild.id}-${payer}`, getPayer);
-        
-        const PayeeLevel = await this.ding(message, getPayee);
-        console.log(PayeeLevel);
-        getPayee.level = PayeeLevel;
-        this.client.points.set(`${message.guild.id}-${payee}`, getPayee);
-
+        try {
+          const PayerLevel = await this.ding(message, getPayer);
+          const PayeeLevel = await this.ding(message, getPayee);
+          
+          getPayer.points -= parseInt(amount);
+          getPayee.points += parseInt(amount);
+          getPayer.level = PayerLevel;
+          getPayee.level = PayeeLevel;
+          
+          await message.channel.send(`The payment of ${parseInt(amount)}${this.emoji(message.guild.id)} has been sent to ${message.guild.member(payee).displayName}.`);
+          await this.client.points.set(`${message.guild.id}-${payer}`, getPayer);
+          await this.client.points.set(`${message.guild.id}-${payee}`, getPayee);
+   
+        } catch (error) {
+          console.log(error);
+        }
       } else
 
       if (response === 'no' || response === 'n') {
