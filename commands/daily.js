@@ -30,12 +30,11 @@ class Daily extends Social {
 
     const receiver = this.client.guilds.get(message.guild.id).members.get(id);
 
-
     if (donateTo === donateFrom) {
       if (Date.now() > donateFrom.daily) {
         const msg = await message.channel.send(`You have claimed your daily 50 ${pointEmoji} points. Ain't that dandy?`);
         donateFrom.daily = msg.createdTimestamp + (settings.dailyTime * 60 * 60 * 1000);
-        donateFrom.points += 50;
+        donateFrom.points += parseInt(settings.pointsReward);
         this.client.points.set(`${message.guild.id}-${message.author.id}`, donateFrom);
       } else {
         const fromNow = moment(donateFrom.daily).fromNow(true);
@@ -45,7 +44,7 @@ class Daily extends Social {
       if (Date.now() > donateFrom.daily) {
         const msg = await message.channel.send(`You have donated your daily 50 ${pointEmoji} points to ${receiver.displayName}. Ain't that dandy?`);
         donateFrom.daily = msg.createdTimestamp + (settings.dailyTime * 60 * 60 * 1000);
-        donateTo.points += 50;
+        donateTo.points += parseInt(settings.pointsReward);
         this.client.points.set(`${message.guild.id}-${id}`, donateTo);
         this.client.points.set(`${message.guild.id}-${message.author.id}`, donateFrom);
       } else {
