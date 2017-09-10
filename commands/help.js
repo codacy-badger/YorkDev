@@ -21,7 +21,8 @@ class Help extends Command {
       const longest = commandNames.reduce((long, str) => Math.max(long, str.length), 0);
       let currentCategory = '';
       let output = `= Command List =\n\n[Use ${this.client.config.defaultSettings.prefix}help <commandname> for details]\n`;
-      const sorted = myCommands.sort((p, c) => p.help.category > c.help.category ? 1 : -1);
+      // const sorted = myCommands.sort((p, c) => p.help.category > c.help.category ? 1 : -1);
+      const sorted = myCommands.sort((p, c) => p.help.category > c.help.category ? 1 :  p.help.name > c.help.name && p.help.category === c.help.category ? 1 : -1 );
       sorted.forEach( c => {
         const cat = c.help.category.toProperCase();
         if (currentCategory !== cat) {
@@ -36,7 +37,7 @@ class Help extends Command {
       if (this.client.commands.has(command)) {
         command = this.client.commands.get(command);
         if (level < command.conf.permLevel) return;
-        message.channel.send(`= ${command.help.name} = \n${command.help.description}\nusage:: ${command.help.usage}\nalises:: ${command.conf.aliases.join(', ')}\ndetails:: ${command.help.extended}`, {code:'asciidoc'});
+        message.channel.send(`= ${command.help.name} = \n${command.help.description}\ncost:: ${command.help.cost} points\nusage:: ${command.help.usage}\nalises:: ${command.conf.aliases.join(', ')}\ndetails:: ${command.help.extended}\npermissions:: ${command.conf.botPerms.join(', ')}`, {code:'asciidoc'});
       }
     }
   }

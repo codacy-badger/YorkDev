@@ -1,4 +1,4 @@
-const Command = require('../base/Command.js');
+const Social = require('../base/Social.js');
 
 const { Canvas } = require('canvas-constructor');
 const [width, height] = [400, 533];
@@ -19,14 +19,15 @@ const getSnap = async (text) => {
     .toBuffer();
 };
 
-class SnapChat extends Command {
+class SnapChat extends Social {
   constructor(client) {
     super(client, {
       name: 'snapchat',
       description: 'Creates a meme based on the But MOOOOOM statue.',
       usage: 'snapchat <text>',
       category: 'Fun',
-      extended: 'This command uses canvas to generate a Snapchat styled image based on the well known _But MOOOOOM_ statue meme.',
+      extended: 'This Social uses canvas to generate a Snapchat styled image based on the well known _But MOOOOOM_ statue meme.',
+      cost: 25,
       guildOnly: true,
       aliases: ['sc'],
       botPerms: ['ATTACH_FILES']
@@ -34,11 +35,19 @@ class SnapChat extends Command {
   }
 
   async run(message, args, level) { // eslint-disable-line no-unused-vars
-    const text = args.join(' ');
-    if (text.length < 1) return message.reply('You must give the snap some text.');
-    if (text.length > 28) return message.reply('I can only handle a maximum of 28 characters');
-    const result = await getSnap(text);
-    await message.channel.send({ files: [{ attachment: result, name: `${text.toLowerCase().replace(' ', '-').replace('.', '-')}.png`}]});
+    try {
+      if (level < 2) {
+        const payMe = await this.pay(message, message.author.id, this.help.cost);
+        if (!payMe) return;  
+      }
+      const text = args.join(' ');
+      if (text.length < 1) return message.reply('You must give the snap some text.');
+      if (text.length > 28) return message.reply('I can only handle a maximum of 28 characters');
+      const result = await getSnap(text);
+      await message.channel.send({ files: [{ attachment: result, name: `${text.toLowerCase().replace(' ', '-').replace('.', '-')}.png`}]});
+    } catch (error) {
+      console.log(error);
+    }
   }
 }
 

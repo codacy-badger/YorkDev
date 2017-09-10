@@ -37,11 +37,8 @@ class Moderation extends Command {
     if (!target.kickable) return '|`❗`| This member cannot be kicked.';
 
     const author = message.mentions.users.first() || this.client.users.get(id);
-    console.log(author.id);
     const member = message.mentions.members.first() || target;
-    console.log(member.id);
     const msg = { author:author, member:member, guild: message.guild };
-    console.log(msg);
 
     if (level <= this.client.permlevel(msg)) return '|`🛑`| You cannot perform that action on someone of equal, or a higher permission level.';
 

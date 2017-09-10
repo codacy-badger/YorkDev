@@ -6,8 +6,7 @@ class Leaderboard extends Command {
       name: 'leaderboard',
       description: 'Displays the top 10 active users.',
       usage: 'leaderboard',
-      category: 'Fun',
-      guildOnly: true,
+      category: 'Social',
       aliases: ['top10', 'top', 'leader', 'lb']
     });
   }

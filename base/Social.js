@@ -4,24 +4,25 @@ class Social extends Command {
   
   constructor(client, options) {
     super(client, Object.assign(options, {
-      category: 'Social',
       guildOnly: true
     }));
 
     
   }
 
-  async dingUp(message, user) {
+  async ding(message, user, noticeOveride = 'false') {
+    const name = await message.guild.member(user.user).displayName;
     const curLevel = Math.floor(0.1 * Math.sqrt(user.points));
     if (user.level < curLevel) {
+      if (message.settings.levelNotice === 'true' && noticeOveride === 'true')
+        message.channel.send(`DING! ${name} you've leveled up to level **${curLevel}**! Ain't that dandy?`);
       user.level = curLevel;
       return user.level;
-    }
-  }
-
-  async dingDown(message, user) {
-    const curLevel = Math.floor(0.1 * Math.sqrt(user.points));
+    } else
+    
     if (user.level > curLevel) {
+      if (message.settings.levelNotice === 'true' && noticeOveride === 'true')
+        message.channel.send(`DONG! ${name} you've leveled down to level **${curLevel}**! Ain't that a shame?`);
       user.level = curLevel;
       return user.level;
     }
@@ -46,7 +47,7 @@ class Social extends Command {
     return pointEmoji;
   }
 
-  async pay(message, payer, payee, amount) {
+  async donate(message, payer, payee, amount) {
     try {
       if (payer === payee) return message.channel.send('You cannot pay yourself, why did you even try it?');
       // payer: The user paying.
@@ -68,12 +69,12 @@ class Social extends Command {
         getPayee.points += parseInt(amount);
         message.channel.send(`The payment of ${parseInt(amount)}${this.emoji(message.guild.id)} has been sent to ${message.guild.member(payee).displayName}.`);
     
-        const PayerLevel = await this.dingDown(message, getPayer);
+        const PayerLevel = await this.ding(message, getPayer);
         console.log(PayerLevel);
         getPayer.level = PayerLevel;
         this.client.points.set(`${message.guild.id}-${payer}`, getPayer);
         
-        const PayeeLevel = await this.dingUp(message, getPayee);
+        const PayeeLevel = await this.ding(message, getPayee);
         console.log(PayeeLevel);
         getPayee.level = PayeeLevel;
         this.client.points.set(`${message.guild.id}-${payee}`, getPayee);
@@ -86,6 +87,19 @@ class Social extends Command {
     } catch (error) {
       console.log(error);
     }
+  }
+
+  async pay(message, payer, cost) {
+    if (isNaN(cost)) throw 'Not a valid amount.';
+    const amount = parseInt(cost);
+    const guild = message.guild.id;
+    const score = this.client.points.get(`${guild}-${payer}`);
+    if (amount > score.points) throw `Insufficient funds, you have ${score.points}${this.emoji(guild)}`;
+    score.points -= amount;
+    const level = await this.ding(message, score, 'true');
+    score.level = level;
+    this.client.points.set(`${guild}-${payer}`, score);
+    return true;
   }
 
 }

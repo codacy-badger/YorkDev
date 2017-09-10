@@ -9,6 +9,7 @@ class Daily extends Social {
       name: 'daily',
       description: 'Claim or give your daily 50 G points.',
       usage: 'daily [user]',
+      category: 'Social',
       extended: 'You can either claim or donate your daily points.',
     });
   }

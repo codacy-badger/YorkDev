@@ -6,6 +6,7 @@ class Score extends Social {
       name: 'score',
       description: 'Displays your current activity level and G points.',
       usage: 'score',
+      category: 'Social',
       aliases: ['points', 'level', 'bal', 'balance']
     });
   }

@@ -1,4 +1,4 @@
-const Command = require('../base/Command.js');
+const Social = require('../base/Social.js');
 const { Canvas } = require('canvas-constructor');
 const { resolve, join} = require('path');
 Canvas.registerFont(resolve(join(__dirname, '../assets/fonts/NotoEmoji-Regular.ttf')), 'Roboto');
@@ -21,7 +21,7 @@ const blame = async (person) => {
     .toBuffer();
 };
 
-class Blame extends Command {
+class Blame extends Social {
   constructor(client) {
     super(client, {
       name: 'blame',
@@ -29,6 +29,7 @@ class Blame extends Command {
       usage: 'blame <user>',
       category: 'Fun',
       extended: 'Use canvas to blame a fellow user.',
+      cost: 25,
       guildOnly: true,
       botPerms: ['ATTACH_FILES']
     });
@@ -36,6 +37,10 @@ class Blame extends Command {
 
   async run(message, args, level) { // eslint-disable-line no-unused-vars
     try {
+      if (level < 2) {
+        const payMe = await this.pay(message, message.author.id, this.help.cost);
+        if (!payMe) return;  
+      }
       const person = message.mentions.members.first() || message.member;
       const msg = await message.channel.send(`\`Assigning blame to ${person.displayName}\``);
       const result = await blame(person);
