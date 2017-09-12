@@ -27,7 +27,7 @@ class Magic8 extends Social {
         await msg.edit(`${answers[Math.floor(Math.random() * answers.length)]}`);
       }, Math.random() * (1 - 5) + 1 * 2000);
     } catch (error) {
-      console.log(error);
+      throw error;
     }
   }
 }

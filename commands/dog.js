@@ -26,8 +26,8 @@ class Dog extends Social {
       const {body} = await snek.get('https://api.thedogapi.co.uk/v2/dog.php?limit=1');
       await message.channel.send({files: [{attachment: body.data[0].url, name: `${body.data[0].id}.jpg`}]});
       await msg.delete();
-    } catch (e) {
-      console.log(e);
+    } catch (error) {
+      throw error;
     }
   }
 }

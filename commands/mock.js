@@ -37,7 +37,7 @@ class Mock extends Social {
       if (mock.author.bot) return message.reply('|`❌`| You cannot mock bots.');
       await message.channel.send(alternateCase(mock.cleanContent), {files: [{attachment: mockBob, name: 'mock.png'}]});
     } catch (error) {
-      console.log(error);
+      throw error;
     }
   }
 }

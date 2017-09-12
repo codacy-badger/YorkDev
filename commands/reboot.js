@@ -22,8 +22,8 @@ class Reboot extends Command {
       await message.channel.send('Rebooting now...');
       await this.client.destroy();
       process.exit();
-    } catch (e) {
-      console.log(e);
+    } catch (error) {
+      throw error;
     }
   }
 }

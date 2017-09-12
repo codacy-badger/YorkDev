@@ -49,8 +49,8 @@ class Tag extends Command {
       let response = await this.db[message.flags[0]](name, data);
       response < 1 ? response = 'There appears to be no tags saved at this time.' : response;
       message.channel.send(response);
-    } catch (e) {
-      console.log(e);
+    } catch (error) {
+      throw error;
     }
   }
 }

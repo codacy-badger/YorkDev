@@ -18,7 +18,7 @@ class Pay extends Social {
       await this.donate(message, message.author.id, user, parseInt(args[1]));
       // message.channel.send(points);
     } catch (error) {
-      console.log(error);
+      throw error;
     }
   }
 }

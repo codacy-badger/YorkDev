@@ -17,8 +17,8 @@ class Support extends Command {
     const msg = args.join(' ');
     try {
       this.client.checkConsent(this.client, message, msg);
-    } catch (e) {
-      console.log(e);
+    } catch (error) {
+      throw error;
     }
   }
 }

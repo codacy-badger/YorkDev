@@ -62,7 +62,7 @@ class FML extends Social {
       }
       reply.edit({embed});
     } catch (error) {
-      console.log(error);
+      throw error;
     }
   }
 }

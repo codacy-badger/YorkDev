@@ -25,17 +25,17 @@ class YorkDev extends Client {
     try {
       const modRole = message.guild.roles.find(r => r.name.toLowerCase() === message.settings.modRole.toLowerCase());
       if (modRole && message.member.roles.has(modRole.id)) permlvl = 2;
-    } catch (e) {
-      console.log(e);
+    } catch (error) {
       console.warn(`modRole (${client.settings.get(message.guild.id).modRole}) not present in guild settings for ${message.guild.name} (${message.guild.id}). Skipping Moderator (level 2) check`);
+      throw error;
     }
 
     try {
       const adminRole = message.guild.roles.find(r => r.name.toLowerCase() === message.settings.adminRole.toLowerCase());
       if (adminRole && message.member.roles.has(adminRole.id)) permlvl = 3;
-    } catch (e) {
-      console.log(e);
+    } catch (error) {
       console.warn(`adminRole (${client.settings.get(message.guild.id).adminRole}) not present in guild settings for ${message.guild.name} (${message.guild.id}). Skipping Administrator (level 3) check`);
+      throw error;
     }
 
     if (message.author.id === message.guild.owner.id) permlvl = 4;
@@ -74,7 +74,7 @@ const init = async () => {
       props.conf.aliases.forEach(alias => {
         client.aliases.set(alias, props.help.name);
       });
-    } catch (e) {
+    } catch (error) {
       client.log(`Unable to load command ${f}: ${e}`);
     }
   });

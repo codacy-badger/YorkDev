@@ -48,8 +48,8 @@ class Achievement extends Social {
       const result = await getAchievement(text, person);
       await message.channel.send({ files: [{ attachment: result, name: 'achievementGet.png' }] });
       await msg.delete();
-    } catch (e) {
-      console.log(e);
+    } catch (error) {
+      throw error;
     }
   }
 }

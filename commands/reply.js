@@ -25,11 +25,11 @@ class Reply extends Command {
     try {
       const consent = this.client.consent.get(id);
       !consent ? message.channel.send('You cannot contact this user until they consent.') : target.send({embed});
-    } catch (e) {
-      if (e.message === 'Cannot send messages to this user') {
+    } catch (error) {
+      if (error.message === 'Cannot send messages to this user') {
         await message.channel.send(`I cannot send that message ${message.author.username}, as it appears they may have **Direct Messages's** disabled.`);
       } else {
-        console.log(e);
+        throw error;
       }
     }
   }

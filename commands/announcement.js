@@ -22,8 +22,8 @@ class Announcement extends Command {
       await role.edit({mentionable: false});
       await message.delete().catch(console.error);
       return message.channel.send('Successfully posted announcement.');
-    } catch (e) {
-      console.log(e);
+    } catch (error) {
+      throw error;
     }
   }
 }

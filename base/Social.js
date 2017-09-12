@@ -1,13 +1,13 @@
 const Command = require('./Command.js');
 
 class Social extends Command {
-  
+
   constructor(client, options) {
     super(client, Object.assign(options, {
       guildOnly: true
     }));
 
-    
+
   }
 
   async ding(message, user, noticeOveride = 'false') {
@@ -19,7 +19,7 @@ class Social extends Command {
       user.level = curLevel;
       return user.level;
     } else
-    
+
     if (user.level > curLevel) {
       if (message.settings.levelNotice === 'true' && noticeOveride === 'true')
         message.channel.send(`DONG! ${name} you've leveled down to level **${curLevel}**! Ain't that a shame?`);
@@ -38,7 +38,7 @@ class Social extends Command {
     const YouThey = id === message.author.id ? 'You' : 'They';
     const YouThem = YouThey.length > 3 ? 'them' : 'you';
 
-    return score ? `${YouThey} currently have ${score.points} ${pointEmoji}'s, which makes ${YouThem} level ${score.level}!` : `${YouThey} have no ${pointEmoji}'s, or levels yet.`; 
+    return score ? `${YouThey} currently have ${score.points} ${pointEmoji}'s, which makes ${YouThem} level ${score.level}!` : `${YouThey} have no ${pointEmoji}'s, or levels yet.`;
   }
 
   emoji(guild) {
@@ -50,45 +50,59 @@ class Social extends Command {
   async donate(message, payer, payee, amount) {
     try {
       if (amount < 0) throw 'You cannot pay less than zero, whatcha trying to do? rob em?';
+      else if (amount < 1) throw 'You paying \'em with air? boi don\'t make me slap you 👋';
       if (payer === payee) throw 'You cannot pay yourself, why did you even try it?';
+
       // payer: The user paying.
-      const getPayer = await this.client.points.get(`${message.guild.id}-${payer}`)
-        || this.client.points.set(`${message.guild.id}-${payer}`, { points: 0, level: 0, user: payer, guild: message.guild.id, daily: 1504120109 }).get(`${message.guild.id}-${payer}`);
-    
+      const getPayer = await this.client.points.get(`${message.guild.id}-${payer}`) ||
+        this.client.points.set(`${message.guild.id}-${payer}`, {
+          points: 0,
+          level: 0,
+          user: payer,
+          guild: message.guild.id,
+          daily: 1504120109
+        }).get(`${message.guild.id}-${payer}`);
+
       // payee: The user getting paid
-      const getPayee = await this.client.points.get(`${message.guild.id}-${payee}`)
-        || this.client.points.set(`${message.guild.id}-${payee}`, { points: 0, level: 0, user: payee, guild: message.guild.id, daily: 1504120109 }).get(`${message.guild.id}-${payee}`);
+      const getPayee = await this.client.points.get(`${message.guild.id}-${payee}`) ||
+        this.client.points.set(`${message.guild.id}-${payee}`, {
+          points: 0,
+          level: 0,
+          user: payee,
+          guild: message.guild.id,
+          daily: 1504120109
+        }).get(`${message.guild.id}-${payee}`);
 
       if (getPayer.points < parseInt(amount)) {
         throw `Insufficient funds, you have ${getPayer.points}${this.emoji(message.guild.id)}`;
       }
 
       const response = await message.client.awaitReply(message, `Are you sure you want to pay ${message.guild.member(payee).displayName} ${parseInt(amount)} ${this.emoji(message.guild.id)}?\n\n(**y**es | **n**o)\n\nReply with \`cancel\` to cancel the message. The message will timeout after 60 seconds.`);
-      
+
       if (response === 'yes' || response === 'y') {
         try {
           const PayerLevel = await this.ding(message, getPayer);
           const PayeeLevel = await this.ding(message, getPayee);
-          
+
           getPayer.points -= parseInt(amount);
           getPayee.points += parseInt(amount);
           getPayer.level = PayerLevel;
           getPayee.level = PayeeLevel;
-          
+
           await message.channel.send(`The payment of ${parseInt(amount)}${this.emoji(message.guild.id)} has been sent to ${message.guild.member(payee).displayName}.`);
           await this.client.points.set(`${message.guild.id}-${payer}`, getPayer);
           await this.client.points.set(`${message.guild.id}-${payee}`, getPayee);
-   
+
         } catch (error) {
-          console.log(error);
+          throw error;
         }
       } else
 
       if (response === 'no' || response === 'n') {
         message.channel.send('Payment cancelled');
-      } 
+      }
     } catch (error) {
-      console.log(error);
+      throw error;
     }
   }
 
@@ -105,7 +119,7 @@ class Social extends Command {
       this.client.points.set(`${guild}-${payer}`, score);
       return true;
     } catch (error) {
-      console.log(error);
+      throw error;
     }
   }
 

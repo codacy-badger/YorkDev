@@ -46,8 +46,8 @@ class Blame extends Social {
       const result = await blame(person);
       await message.channel.send({files: [{attachment: result, name: 'blame.png'}]});
       await msg.delete();
-    } catch (e) {
-      console.log(`Blame: ${e}`);
+    } catch (error) {
+      throw error;
     }
   }
 }

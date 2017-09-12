@@ -25,8 +25,8 @@ class Cat extends Social {
       const {body} = await snek.get('http://random.cat/meow');
       await message.channel.send({files: [{attachment: body.file, name: `cat.${body.file.split('.')[2]}`}]});
       await msg.delete();
-    } catch (e) {
-      console.log(e);
+    } catch (error) {
+      throw error;
     }
   }
 }
