@@ -93,16 +93,20 @@ class Social extends Command {
   }
 
   async pay(message, payer, cost) {
-    if (isNaN(cost)) throw 'Not a valid amount.';
-    const amount = parseInt(cost);
-    const guild = message.guild.id;
-    const score = this.client.points.get(`${guild}-${payer}`);
-    if (amount > score.points) throw `Insufficient funds, you have ${score.points}${this.emoji(guild)}`;
-    score.points -= amount;
-    const level = await this.ding(message, score, 'true');
-    score.level = level;
-    this.client.points.set(`${guild}-${payer}`, score);
-    return true;
+    try {
+      if (isNaN(cost)) throw 'Not a valid amount.';
+      const amount = parseInt(cost);
+      const guild = message.guild.id;
+      const score = this.client.points.get(`${guild}-${payer}`);
+      if (amount > score.points) throw `Insufficient funds, you have ${score.points}${this.emoji(guild)}`;
+      score.points -= amount;
+      const level = await this.ding(message, score, 'true');
+      score.level = level;
+      this.client.points.set(`${guild}-${payer}`, score);
+      return true;
+    } catch (error) {
+      console.log(error);
+    }
   }
 
 }
