@@ -60,7 +60,7 @@ class Social extends Command {
         || this.client.points.set(`${message.guild.id}-${payee}`, { points: 0, level: 0, user: payee, guild: message.guild.id, daily: 1504120109 }).get(`${message.guild.id}-${payee}`);
 
       if (getPayer.points < parseInt(amount)) {
-        return message.reply(`Insufficient funds, you have ${getPayer.points}${this.emoji(message.guild.id)}`);
+        throw `Insufficient funds, you have ${getPayer.points}${this.emoji(message.guild.id)}`;
       }
 
       const response = await message.client.awaitReply(message, `Are you sure you want to pay ${message.guild.member(payee).displayName} ${parseInt(amount)} ${this.emoji(message.guild.id)}?\n\n(**y**es | **n**o)\n\nReply with \`cancel\` to cancel the message. The message will timeout after 60 seconds.`);
