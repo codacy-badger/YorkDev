@@ -12,7 +12,7 @@
     "dailyTime": 24,
     "pointsReward": 50,
     "customEmoji": "false",
-    "gEmojiID": "",
+    "gEmojiID": "replace-this-with-valid-id",
     "uEmoji": "💲"
   }
 }
