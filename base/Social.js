@@ -46,13 +46,13 @@ class Social extends Command {
     const pointsReward = parseInt(settings.pointsReward);
 
     try {
+      // payee: The user getting paid
+      const getPayee = this.client.points.get(`${message.guild.id}-${payee}`) ||
+      this.client.points.set(`${message.guild.id}-${payee}`, { points: 0, level: 0, user: payee, guild: message.guild.id, daily: 1504120109 }).get(`${message.guild.id}-${payee}`);
+
       // payer: The user paying.
       const getPayer = this.client.points.get(`${message.guild.id}-${payer}`) ||
       this.client.points.set(`${message.guild.id}-${payer}`, { points: 0, level: 0, user: payer, guild: message.guild.id, daily: 1504120109 }).get(`${message.guild.id}-${payer}`);
-
-    // payee: The user getting paid
-      const getPayee = this.client.points.get(`${message.guild.id}-${payee}`) ||
-      this.client.points.set(`${message.guild.id}-${payee}`, { points: 0, level: 0, user: payee, guild: message.guild.id, daily: 1504120109 }).get(`${message.guild.id}-${payee}`);
 
       if (Date.now() > getPayer.daily) {
         if (payer === payee) {

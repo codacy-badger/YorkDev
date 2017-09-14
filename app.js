@@ -75,7 +75,7 @@ const init = async () => {
         client.aliases.set(alias, props.help.name);
       });
     } catch (error) {
-      client.log(`Unable to load command ${f}: ${e}`);
+      client.log(`Unable to load command ${f}: ${error}`);
     }
   });
 
