@@ -40,7 +40,7 @@ class Social extends Command {
   }
 
   async usrDay(message, payer, payee) {
-    this.verifySocialUser(payee);
+    await this.verifySocialUser(payee);
     const settings = this.client.settings.get(message.guild.id);
     const dailyTime = parseInt(settings.dailyTime);
     const pointsReward = parseInt(settings.pointsReward);
@@ -78,7 +78,7 @@ class Social extends Command {
   }
 
   async usrPay(message, payer, payee, amount) {
-    this.verifySocialUser(payee);
+    await this.verifySocialUser(payee);
     try {
       // payer: The user paying.
       const getPayer = this.client.points.get(`${message.guild.id}-${payer}`) ||
