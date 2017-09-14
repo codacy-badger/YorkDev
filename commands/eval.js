@@ -1,4 +1,5 @@
 const Command = require('../base/Command.js');
+const util = require('util');
 
 class Eval extends Command {
   constructor(client) {
@@ -17,7 +18,7 @@ class Eval extends Command {
     const code = args.join(' ');
     try {
       const evaled = eval(code);
-      const clean = await this.client.clean(this.client, evaled);
+      const clean = await this.client.clean(this.client, util.inspect(evaled, { depth:2 }));
       message.channel.send(`\`\`\`js\n${clean}\n\`\`\``);
     } catch (err) {
       message.channel.send(`\`ERROR\` \`\`\`xl\n${await this.client.clean(this.client, err)}\n\`\`\``);
