@@ -14,7 +14,8 @@ class Fix extends Social {
   async run(message, args, level) { // eslint-disable-line no-unused-vars
     await message.channel.send('Fixing now...');
     message.guild.members.forEach(member => {
-      const stats = this.client.points.get(`${message.guild.id}-${member.id}`);
+      const stats = this.client.points.get(`${message.guild.id}-${member.id}`) ||
+      this.client.points.set(`${message.guild.id}-${member.id}`, { points: 0, level: 0, user: member.id, guild: message.guild.id, daily: 1504120109 }).get(`${message.guild.id}-${member.id}`);
       stats.level = 0;
       this.client.points.set(`${message.guild.id}-${member.id}`, stats);
     });
