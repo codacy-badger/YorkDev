@@ -50,7 +50,7 @@ module.exports = (client) => {
 
   */
   client.awaitReply = async (message, question, limit = 60000, embed = {}) => {
-    const filter = m => m.author.id = message.author.id;
+    const filter = m => m.author.id === message.author.id;
     await message.channel.send(question, {embed});
     try {
       const collected = await message.channel.awaitMessages(filter, { max: 1, time: limit, errors: ['time'] });

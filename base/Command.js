@@ -1,20 +1,33 @@
 class Command {
   constructor(client, {
-    name = null, 
-    description = 'No description provided.', 
-    category = 'General', 
-    usage = 'No usage provided.', 
-    extended = 'No information provided.', 
+    name = null,
+    description = 'No description provided.',
+    category = 'General',
+    usage = 'No usage provided.',
+    extended = 'No information provided.',
     cost = 0,
-    hidden = false, 
-    guildOnly = false, 
-    aliases = [], 
+    hidden = false,
+    guildOnly = false,
+    aliases = [],
     botPerms = [],
     permLevel = 0
   }) {
     this.client = client;
-    this.conf   = { hidden, guildOnly, aliases, botPerms, permLevel };
-    this.help   = { name, description, category, usage, extended, cost };
+    this.conf = {
+      hidden,
+      guildOnly,
+      aliases,
+      botPerms,
+      permLevel
+    };
+    this.help = {
+      name,
+      description,
+      category,
+      usage,
+      extended,
+      cost
+    };
   }
 
   async verifyUser(user) {

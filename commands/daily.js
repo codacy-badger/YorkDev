@@ -1,8 +1,4 @@
 const Social = require('../base/Social.js');
-
-const moment = require('moment');
-require('moment-duration-format');
-
 class Daily extends Social {
   constructor(client) {
     super(client, {
@@ -15,43 +11,8 @@ class Daily extends Social {
   }
 
   async run(message, args, level) { // eslint-disable-line no-unused-vars
-    const settings = this.client.settings.get(message.guild.id);
-    const pointEmoji = this.emoji(message.guild.id);
-    const user = args.join(' ') || message.author.id;
-    const match = /(?:<@!?)?([0-9]{17,20})>?/gi.exec(user);
-    if (!match) return message.channel.send('Not a valid user id.');
-    const id = match[1];
-
-    const donateTo = this.client.points.get(`${message.guild.id}-${id}`) 
-    || this.client.points.set(`${message.guild.id}-${id}`, { points: 0, level: 0, user: id, guild: message.guild.id, daily: 1504120109 }).get(`${message.guild.id}-${id}`);
-    
-    const donateFrom = this.client.points.get(`${message.guild.id}-${message.author.id}`) 
-    || this.client.points.set(`${message.guild.id}-${message.author.id}`, { points: 0, level: 0, user: message.author.id, guild: message.guild.id, daily: 1504120109 }).get(`${message.guild.id}-${message.author.id}`);
-
-    const receiver = this.client.guilds.get(message.guild.id).members.get(id);
-
-    if (donateTo === donateFrom) {
-      if (Date.now() > donateFrom.daily) {
-        const msg = await message.channel.send(`You have claimed your daily ${parseInt(settings.pointsReward)} ${pointEmoji} points. Ain't that dandy?`);
-        donateFrom.daily = msg.createdTimestamp + (settings.dailyTime * 60 * 60 * 1000);
-        donateFrom.points += parseInt(settings.pointsReward);
-        this.client.points.set(`${message.guild.id}-${message.author.id}`, donateFrom);
-      } else {
-        const fromNow = moment(donateFrom.daily).fromNow(true);
-        message.channel.send(`You cannot claim your points yet, please try again in ${fromNow}.`);
-      }
-    } else {
-      if (Date.now() > donateFrom.daily) {
-        const msg = await message.channel.send(`You have donated your daily ${parseInt(settings.pointsReward)} ${pointEmoji} points to ${receiver.displayName}. Ain't that dandy?`);
-        donateFrom.daily = msg.createdTimestamp + (settings.dailyTime * 60 * 60 * 1000);
-        donateTo.points += parseInt(settings.pointsReward);
-        this.client.points.set(`${message.guild.id}-${id}`, donateTo);
-        this.client.points.set(`${message.guild.id}-${message.author.id}`, donateFrom);
-      } else {
-        const fromNow = moment(donateFrom.daily).fromNow(true);
-        message.channel.send(`You cannot donate your points yet, please try again in ${fromNow}.`);
-      }
-    }
+    const payee = args.join(' ') || message.author.id;
+    this.usrDay(message, message.author.id, payee);
   }
 }
 

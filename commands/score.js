@@ -13,7 +13,7 @@ class Score extends Social {
 
   async run(message, args, level) { // eslint-disable-line no-unused-vars
     const user = args.join(' ') || message.author.id;
-    const points = await this.balance(message, user);
+    const points = await this.chkBal(message, user);
     return await message.channel.send(points);
   }
 }

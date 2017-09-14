@@ -27,7 +27,7 @@ class FML extends Social {
   async run(message, args, level) { // eslint-disable-line no-unused-vars
     try {
       if (level < 2) {
-        const payMe = await this.pay(message, message.author.id, this.help.cost);
+        const payMe = await this.cmdPay(message, message.author.id, this.help.cost);
         if (!payMe) return;  
       }
       const reply = await message.channel.send('```Searching for a random FML card (this can take a few seconds)```');
