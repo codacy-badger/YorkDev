@@ -1,6 +1,6 @@
-const Command = require('../base/Command.js');
+const Social = require('../base/Social.js');
 
-class Leaderboard extends Command {
+class Leaderboard extends Social {
   constructor(client) {
     super(client, {
       name: 'leaderboard',
@@ -12,7 +12,17 @@ class Leaderboard extends Command {
   }
 
   async run(message, args, level) { // eslint-disable-line no-unused-vars
-    message.reply('Fuck off, not ready yet!');
+    const leaderboard = [];
+    await this.client.points.filter(p => p.guild === message.guild.id && p.points > 0)
+      .map(p => ({points:p.points, user:p.user}))
+      .sort((a, b) => b.points > a.points ? 1 : -1).slice(0, 10)
+      .map(u => {
+        this.client.fetchUser(u.user).then((f) => {
+          leaderboard.push(`❯ ${f.username}#${f.discriminator}: ${u.points}${this.emoji(message.guild.id)}`);
+        });
+      });
+    // console.log(leaderboard);
+    await message.channel.send({embed:{description: leaderboard.join('\n')}});
   }
 }
 
