@@ -1,5 +1,6 @@
-const Social = require('../base/Social.js');
 const snek = require('snekfetch');
+const Social = require('../base/Social.js');
+
 class Cat extends Social {
   constructor(client) {
     super(client, {

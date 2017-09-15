@@ -86,7 +86,7 @@ module.exports = class {
         }
         client.invspam.set(spammer, { count });
       });
-      message.channel.send(`${message.author} |\`🛑\`| Your message contained a server invite link, which this server prohibits.`);
+      message.channel.send(`${message.author} |\`⛔\`| Your message contained a server invite link, which this server prohibits.`);
     }
   }
 };
