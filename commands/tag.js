@@ -21,7 +21,7 @@ class Tag extends Command {
     };
   }
 
-  async run(message, args, level) { // eslint-disable-line no-unused-vars
+  async run(message, args, level) {
     if (!args[0] && !message.flags.length) message.flags.push('list');
     
     if (!message.flags.length) {

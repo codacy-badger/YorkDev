@@ -13,7 +13,7 @@ class Help extends Command {
     });
   }
 
-  async run(message, args, level) { // eslint-disable-line no-unused-vars
+  async run(message, args, level) {
     if (!args[0]) {
       const settings = message.guild ? this.client.settings.get(message.guild.id) : this.client.config.defaultSettings;
       const myCommands = message.guild ? this.client.commands.filter(cmd => cmd.conf.permLevel <= level && cmd.conf.hidden !== true) : this.client.commands.filter(cmd => cmd.conf.permLevel <= level && cmd.conf.hidden !== true &&  cmd.conf.guildOnly !== true);

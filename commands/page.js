@@ -33,7 +33,7 @@ class Page extends Command {
     };
   }
 
-  async run(message, args, level) { // eslint-disable-line no-unused-vars
+  async run(message, args, level) {
     if (!args[0]) args[0] = 'home';
     
     if (!message.flags.length) {

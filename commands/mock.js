@@ -25,7 +25,7 @@ class Mock extends Social {
     });
   }
 
-  async run(message, args, level) { // eslint-disable-line no-unused-vars
+  async run(message, args, level) {
     try {
       const mockBob = await fsn.readFile('./assets/images/spongebob.png');
       const grabMock = await message.channel.fetchMessages({ limit:1, before: message.id});

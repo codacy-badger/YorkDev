@@ -7,6 +7,7 @@ class Announcement extends Command {
       description: 'Posts an announcement.',
       usage: 'announcement <Komada|Idiot> <announcement>',
       extended: '[role] is either \'Komada\' or \'Idiot\', followed by your announcement.',
+      guildOnly: true,
       permLevel: 2
     });
   }

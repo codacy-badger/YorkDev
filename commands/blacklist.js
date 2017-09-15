@@ -12,7 +12,7 @@ class Blacklist extends Command {
     });
   }
 
-  async run(message, [action, key], level) { // eslint-disable-line no-unused-vars
+  async run(message, [action, key], level) {
     const blacklist = this.client.blacklist.get('list');
     const author = message.mentions.users.first() || this.client.users.get(key);
     const member = message.guild.member(author);

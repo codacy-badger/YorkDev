@@ -15,13 +15,14 @@ class Magic8 extends Social {
     });
   }
 
-  async run(message, args, level) { // eslint-disable-line no-unused-vars
+  async run(message, args, level) {
     try {
+      if (!message.content.endsWith('?')) return message.reply('That does not look like a question, (hint, end your question with a `?`.)');
+      if (!message.content.length < 2) return message.reply('You need to actually ask a question...');
       if (level < 2) {
         const payMe = await this.cmdPay(message, message.author.id, this.help.cost);
         if (!payMe) return;  
       }
-      if (!message.content.endsWith('?')) return message.reply('That does not look like a question, (hint, end your question with a `?`.)');
       const msg = await message.channel.send('`Thinking...`');
       setTimeout( async () => {
         await msg.edit(`${answers[Math.floor(Math.random() * answers.length)]}`);

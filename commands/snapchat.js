@@ -34,7 +34,7 @@ class SnapChat extends Social {
     });
   }
 
-  async run(message, args, level) { // eslint-disable-line no-unused-vars
+  async run(message, args, level) {
     try {
       if (level < 2) {
         const payMe = await this.cmdPay(message, message.author.id, this.help.cost);
