@@ -78,7 +78,7 @@ module.exports = class {
           count: 0
         }).get(spammer);
         if (list) count = list.count + 1;
-        if (count >= client.settings.get(message.guild.id).inviteLimit) {
+        if (count >= parseInt(client.settings.get(message.guild.id).inviteLimit)) {
           message.member.ban({
             days: 2,
             reason: 'Automatic ban, invite spam threshold exceeded.'
