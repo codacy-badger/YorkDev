@@ -1,6 +1,6 @@
 // For dashboard stuff.
 // npm install body-parser ejs express express-session hbs helmet marked passport passport-discord
-const { Client, Collection } = require('discord.js');
+const { Client } = require('discord.js');
 const {readdir} = require('fs-nextra');
 const Enmap = require('enmap');
 if (process.version.slice(1).split('.')[0] < 8) throw new Error('Node 8.0.0 or higher is required. Update Node on your system.');
@@ -14,8 +14,9 @@ class YorkDev extends Client {
     this.consent = new Enmap({name: 'consent', persistent: true});
     this.blacklist = new Enmap({name: 'blacklist', persistent: true});
     this.points = new Enmap({name: 'points', persistent: true});
-    this.commands = new Collection();
-    this.aliases = new Collection();
+    this.commands = new Enmap();
+    this.aliases = new Enmap();
+    this.invspam = new Enmap();
   }
 
   permlevel(message) {
