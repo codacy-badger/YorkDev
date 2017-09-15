@@ -17,8 +17,8 @@ module.exports = class {
     const settings = message.guild ? this.client.settings.get(message.guild.id) : defaults;
     message.settings = settings;
     
-    monitor.run(this.client, message);
     const level = this.client.permlevel(message);
+    monitor.run(this.client, message, level);
     if (level < 2) errorChecks(message, message.content);
   
   
@@ -49,10 +49,10 @@ module.exports = class {
       }
       this.client.log('log', `${message.author.username} (${message.author.id}) ran command ${cmd.help.name}`, 'CMD');
 
-      const mPerms = this.client.permCheck(message, cmd.conf.botPerms);
-
-      if (mPerms.length) return message.channel.send(`The bot does not have the following permissions \`${mPerms.join(', ')}\``);
-
+      if (message.channel.type === 'text') {      
+        const mPerms = this.client.permCheck(message, cmd.conf.botPerms);
+        if (mPerms.length) return message.channel.send(`The bot does not have the following permissions \`${mPerms.join(', ')}\``);
+      }
       cmd.run(message, args, level).catch(error => {
         message.channel.send(error);
       });

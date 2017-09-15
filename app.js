@@ -49,6 +49,7 @@ class YorkDev extends Client {
   }
 
   permCheck(message, perms) {
+    if (message.channel.type !== 'text') return;
     return message.channel.permissionsFor(message.guild.me).missing(perms);
   }
 
