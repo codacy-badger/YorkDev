@@ -27,14 +27,14 @@ class Mock extends Social {
 
   async run(message, args, level) { // eslint-disable-line no-unused-vars
     try {
-      if (level < 2) {
-        const payMe = await this.cmdPay(message, message.author.id, this.help.cost);
-        if (!payMe) return;  
-      }
       const mockBob = await fsn.readFile('./assets/images/spongebob.png');
       const grabMock = await message.channel.fetchMessages({ limit:1, before: message.id});
       const mock = grabMock.first();
       if (mock.author.bot) return message.reply('|`❌`| You cannot mock bots.');
+      if (level < 2) {
+        const payMe = await this.cmdPay(message, message.author.id, this.help.cost);
+        if (!payMe) return;  
+      }
       await message.channel.send(alternateCase(mock.cleanContent), {files: [{attachment: mockBob, name: 'mock.png'}]});
     } catch (error) {
       throw error;
