@@ -34,6 +34,9 @@ class Achievement extends Social {
     });
   }
   async run(message, args, level) {
+    let text = args.join(' ');
+    if (text.length < 1) return message.reply('You must give an achievement description.');
+    if (text.length > 22) return message.reply('I can only handle a maximum of 22 characters');
     try {
       if (level < 2) {
         const payMe = await this.cmdPay(message, message.author.id, this.help.cost);
@@ -41,10 +44,7 @@ class Achievement extends Social {
       }
       const msg = await message.channel.send('`Achievement Getting...`');
       const person = (message.mentions.users.first() || message.author).displayAvatarURL;
-      let text = args.join(' ');
       if (message.mentions.users.first()) text = text.replace(/<@!?\d+>/, '').replace(/\n/g, ' ').trim();
-      if (text.length < 1) return message.reply('You must give an achievement description.');
-      if (text.length > 22) return message.reply('I can only handle a maximum of 22 characters');
       const result = await getAchievement(text, person);
       await message.channel.send({ files: [{ attachment: result, name: 'achievementGet.png' }] });
       await msg.delete();
