@@ -56,7 +56,7 @@ class YorkDev extends Client {
 }
 
 const client = new YorkDev({
-  messageCacheMaxSize: 1,
+  messageCacheLifetime: 120,
   fetchAllMembers: true,
   disabledEvents:['TYPING_START']
 });
