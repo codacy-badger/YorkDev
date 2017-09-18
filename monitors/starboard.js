@@ -3,9 +3,9 @@ const { RichEmbed } = require('discord.js');
 class Starboard {
   static async run(client, reaction, user) {
     const message = reaction.message;
+    if (message.channel.type !== 'text' || reaction.emoji.name !== '⭐') return;
     const settings = client.settings.get(message.guild.id);
     const starboard = settings.starboardChannel;
-    if (message.channel.type !== 'text' || reaction.emoji.name !== '⭐') return;
     if (message.author.id === user.id) {
       return message.channel.send(`${user}, you cannot star your own messages.`).then(() => {
         reaction.remove(user.id);
