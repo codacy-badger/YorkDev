@@ -13,7 +13,7 @@ module.exports = class {
   static givePoints(client, message, level) { // eslint-disable-line no-unused-vars
     if (message.channel.type !== 'text') return;
     const settings = client.settings.get(message.guild.id);
-    if (message.content.startsWith(settings.prefix) || message.channel.type !== 'text') return;
+    if (message.content.startsWith(settings.prefix) || message.content.startsWith('docs, ')) return;
     const score = client.points.get(`${message.guild.id}-${message.author.id}`) || { points: 0, level: 0, user: message.author.id, guild: message.guild.id, daily: 1504120109 };
     score.points++;
     const curLevel = Math.floor(0.1 * Math.sqrt(score.points));
