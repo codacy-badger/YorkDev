@@ -42,11 +42,11 @@ class Starboard {
 
     if (starChannel.messages.size < 100) await starChannel.fetchMessages({ limit: 100 });
     if (message.channel.type !== 'text' || reaction.emoji.name !== '⭐') return;
-    // if (message.author.id === user.id) {
-    //   return message.channel.send(`${user}, you cannot star your own messages.`).then(() => {
-    //     reaction.remove(user.id);
-    //   });
-    // }
+    if (message.author.id === user.id) {
+      return message.channel.send(`${user}, you cannot star your own messages.`).then(() => {
+        reaction.remove(user.id);
+      });
+    }
     if (message.author.bot) {
       return message.channel.send(`${user}, you cannot star bot messages.`).then(() => {
         reaction.remove(user.id);
