@@ -5,7 +5,7 @@ module.exports = class {
   }
 
   async execute(r, user) {
-    reactMonitor.run(this.client, r, user);
+    this.client.starQueue.push(() => reactMonitor.run(this.client, r, user));
     const message = r.message;
     const validEmojis = ['📌', '📍'];
     if (validEmojis.includes(r.emoji.name)) {

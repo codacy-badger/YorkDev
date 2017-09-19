@@ -3,12 +3,14 @@
 const { Client } = require('discord.js');
 const {readdir} = require('fs-nextra');
 const Enmap = require('enmap');
+const Queue = require('./queue.js');
 if (process.version.slice(1).split('.')[0] < 8) throw new Error('Node 8.0.0 or higher is required. Update Node on your system.');
 
 class YorkDev extends Client {
   constructor(options) {
     super(options);
     this.db = require('./functions/EnmapDB.js');
+    this.starQueue = new Queue();
     this.config = require('./config.json');
     this.settings = new Enmap({name: 'settings', persistent: true});
     this.consent = new Enmap({name: 'consent', persistent: true});
