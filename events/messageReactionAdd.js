@@ -1,11 +1,9 @@
-const reactMonitor = require('../monitors/starboard.js');
 module.exports = class {
   constructor(client) {
     this.client = client;
   }
 
   async execute(r, user) {
-    this.client.starQueue.push(() => reactMonitor.run(this.client, r, user));
     const message = r.message;
     const validEmojis = ['📌', '📍'];
     if (validEmojis.includes(r.emoji.name)) {
