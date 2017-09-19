@@ -3,7 +3,7 @@
 const { Client } = require('discord.js');
 const {readdir} = require('fs-nextra');
 const Enmap = require('enmap');
-const Queue = require('./queue.js');
+const Queue = require('./functions/queue.js');
 if (process.version.slice(1).split('.')[0] < 8) throw new Error('Node 8.0.0 or higher is required. Update Node on your system.');
 
 class YorkDev extends Client {
