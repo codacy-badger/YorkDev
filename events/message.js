@@ -42,7 +42,7 @@ module.exports = class {
     const cmd = this.client.commands.get(command) || this.client.commands.get(this.client.aliases.get(command));
 
     if (this.client.tags.has(command)) {
-      message.channel.send(`${args.join(' ')} ${this.client.tags.get(command).contents}`);
+      return message.channel.send(`${args.join(' ')} ${this.client.tags.get(command).contents}`);
     }
 
     if (!cmd) return;
