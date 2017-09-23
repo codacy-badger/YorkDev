@@ -23,7 +23,6 @@ class Page extends Command {
       -export // exports and returns URL
       -import http://url-to-import/
       -list`,
-      hidden: true,
       aliases: ['guide', 'guides', 'g', 'pages', 'p'],
     });
 
