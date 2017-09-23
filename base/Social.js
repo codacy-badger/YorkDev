@@ -12,12 +12,16 @@ class Social extends Command {
   }
 
   async verifySocialUser(user) {
-    const match = /(?:<@!?)?([0-9]{17,20})>?/gi.exec(user);
-    if (!match) throw 'Invalid user id.';
-    const id = match[1];
-    const check = await this.client.fetchUser(id);
-    if (check.bot) throw 'Bot\'s cannot accumulate points or levels.';
-    if (check.username !== undefined) return id;
+    try {
+      const match = /(?:<@!?)?([0-9]{17,20})>?/gi.exec(user);
+      if (!match) throw 'Invalid user id.';
+      const id = match[1];
+      const check = await this.client.fetchUser(id);
+      if (check.bot) throw 'Bot\'s cannot accumulate points or levels.';
+      if (check.username !== undefined) return id;
+    } catch (error) {
+      throw error;
+    }
   }
 
 

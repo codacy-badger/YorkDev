@@ -31,11 +31,15 @@ class Command {
   }
 
   async verifyUser(user) {
-    const match = /(?:<@!?)?([0-9]{17,20})>?/gi.exec(user);
-    if (!match) throw 'Invalid user';
-    const id = match[1];
-    const check = await this.client.fetchUser(id);
-    if (check.username !== undefined) return id;
+    try {
+      const match = /(?:<@!?)?([0-9]{17,20})>?/gi.exec(user);
+      if (!match) throw 'Invalid user';
+      const id = match[1];
+      const check = await this.client.fetchUser(id);
+      if (check.username !== undefined) return id;
+    } catch (error) {
+      throw error;
+    }
   }
 }
 module.exports = Command;
