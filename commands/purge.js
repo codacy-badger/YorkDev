@@ -6,7 +6,7 @@ class Purge extends Command {
       name: 'purge',
       description: 'It purges between 2 and 99 messages.',
       usage: 'purge [user] <number',
-      category:'System',
+      category: 'Moderation',
       extended: 'This command will either purge a mentioned users messages (between 2 and 99), or the bots own messages.',
       guildOnly: true,
       aliases: ['prune'],

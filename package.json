@@ -1,6 +1,6 @@
 {
   "name": "york_dev",
-  "version": "5.0.3",
+  "version": "5.0.4",
   "description": "Enmap based Development Bot",
   "main": "app.js",
   "scripts": {
