@@ -7,7 +7,7 @@ class Reboot extends Command {
       description: 'Shuts down the bot.',
       category: 'System',
       usage: 'reboot',
-      aliases: []
+      permLevel: 'Moderator'
     });
   }
 
