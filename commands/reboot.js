@@ -1,29 +1,31 @@
 const Command = require('../base/Command.js');
 
+let hasPM2; // eslint-disable-line no-unused-vars
+
+try {
+  require.resolve('pm2');
+  hasPM2 = 'PM2 is installed, hopefully that means this bot will reboot in a moment!';
+} catch (e) {
+  hasPM2 = 'Cannot find PM2. You must restart this bot manually from the command prompt.';
+}
+
 class Reboot extends Command {
   constructor(client) {
     super(client, {
       name: 'reboot',
-      description: 'This reboots the bot.',
-      usage: 'reboot',
+      description: 'Shuts down the bot.',
       category: 'System',
-      extended: 'This will make the bot logout and destroy the client instance before exiting cleanly.',
-      aliases: ['restart'],
-      permLevel: 10
+      usage: 'reboot',
+      aliases: []
     });
   }
 
   async run(message, args, level) { // eslint-disable-line no-unused-vars
     try {
-      const commandUnloads = this.client.commands.filter(c => !!c.db).array();
-      for (const c of commandUnloads) {
-        await c.db.close();
-      }
-      await message.channel.send('Rebooting now...');
-      await this.client.destroy();
-      process.exit();
-    } catch (error) {
-      throw error;
+      await message.reply('Bot is shutting down.');
+      process.exit(1);
+    } catch (e) {
+      console.log(e);
     }
   }
 }

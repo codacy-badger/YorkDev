@@ -11,7 +11,7 @@ class Purge extends Command {
       guildOnly: true,
       aliases: ['prune'],
       botPerms: ['MANAGE_MESSAGES'],
-      permLevel: 2
+      permLevel: 'Moderator'
     });
   }
 

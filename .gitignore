@@ -8,6 +8,7 @@
 # Specific Files
 settings.json
 config.json
+config.js
 tagsbot.sqlite
 assets/selfies/selfie.jpg
 assets/selfies/selfie_meme.jpg

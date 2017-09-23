@@ -11,7 +11,7 @@ class AdCheck extends Command {
       hidden: true,
       guildOnly: true,
       aliases: ['ads', 'checkads'],
-      permLevel: 2
+      permLevel: 'Moderator'
     });
   }
 

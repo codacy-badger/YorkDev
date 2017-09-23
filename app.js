@@ -9,7 +9,7 @@ class YorkDev extends Client {
   constructor(options) {
     super(options);
     this.db = require('./functions/EnmapDB.js');
-    this.config = require('./config.json');
+    this.config = require('./config.js');
     this.settings = new Enmap({name: 'settings', persistent: true});
     this.consent = new Enmap({name: 'consent', persistent: true});
     this.blacklist = new Enmap({name: 'blacklist', persistent: true});
@@ -21,25 +21,15 @@ class YorkDev extends Client {
 
   permlevel(message) {
     let permlvl = 0;
-    if (client.config.ownerId.includes(message.author.id)) return permlvl = 10;
-    if (!message.guild || !message.member) return 0;
-    try {
-      const modRole = message.guild.roles.find(r => r.name.toLowerCase() === message.settings.modRole.toLowerCase());
-      if (modRole && message.member.roles.has(modRole.id)) permlvl = 2;
-    } catch (error) {
-      console.warn(`modRole (${client.settings.get(message.guild.id).modRole}) not present in guild settings for ${message.guild.name} (${message.guild.id}). Skipping Moderator (level 2) check`);
-      throw error;
+    const permOrder = client.config.permLevels.slice(0).sort((p, c) => p.level < c.level ? 1 : -1);
+    while (permOrder.length) {
+      const currentLevel = permOrder.shift();
+      if (message.guild && currentLevel.guildOnly) continue;
+      if (currentLevel.check(message)) {
+        permlvl = currentLevel.level;
+        break;
+      }
     }
-
-    try {
-      const adminRole = message.guild.roles.find(r => r.name.toLowerCase() === message.settings.adminRole.toLowerCase());
-      if (adminRole && message.member.roles.has(adminRole.id)) permlvl = 3;
-    } catch (error) {
-      console.warn(`adminRole (${client.settings.get(message.guild.id).adminRole}) not present in guild settings for ${message.guild.name} (${message.guild.id}). Skipping Administrator (level 3) check`);
-      throw error;
-    }
-
-    if (message.author.id === message.guild.owner.id) permlvl = 4;
     return permlvl;
   }
 
@@ -56,10 +46,11 @@ class YorkDev extends Client {
 }
 
 const client = new YorkDev({
-  messageCacheLifetime: 120,
   fetchAllMembers: true,
   disabledEvents:['TYPING_START']
 });
+
+console.log(client.config.permLevels.map(p=>`${p.level} : ${p.name}`));
 
 require('./functions/utilities.js')(client);
 
@@ -90,6 +81,12 @@ const init = async () => {
     client.log('log', `Loading Event: ${eventName}. ✔`);
     delete require.cache[require.resolve(`./events/${file}`)];
   });
+
+  client.levelCache = {};
+  for (let i = 0; i < client.config.permLevels.length; i++) {
+    const thisLevel = client.config.permLevels[i];
+    client.levelCache[thisLevel.name] = thisLevel.level;
+  }
 
   client.login(client.config.token);
 };
