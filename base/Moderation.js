@@ -8,7 +8,7 @@ class Moderation extends Command {
     super(client, Object.assign(options, {
       category: 'Moderation',
       guildOnly: true,
-      permLevel: 2
+      permLevel: 'Moderator'
     }));
 
     this.actions = {

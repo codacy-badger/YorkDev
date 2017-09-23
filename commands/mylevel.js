@@ -1,13 +1,3 @@
-function levelText(level) {
-  switch (level) {
-    case 2: return 'Guild Moderator';
-    case 3: return 'Guild Administrator';
-    case 4: return 'Guild Owner';
-    case 10: return 'Bot Owner';
-    default: return 'Guild Member';
-  }
-}
-
 const Command = require('../base/Command.js');
 
 class MyLevel extends Command {
@@ -23,9 +13,8 @@ class MyLevel extends Command {
     });
   }
   async run(message, args, level) {
-    message.reply(`Your permission level is: **${level}** | ${levelText(level)}`);
-  }
-
+    const friendly = this.client.config.permLevels.find(l => l.level === level).name;
+    message.reply(`Your permission level is: ${level} - ${friendly}`);  }
 }
 
 module.exports = MyLevel;

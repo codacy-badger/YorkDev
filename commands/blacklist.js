@@ -8,7 +8,7 @@ class Blacklist extends Command {
       usage: 'blacklist <mention/userid>',
       category: 'Moderation',
       extended: 'Blacklist members from using the bot via mention or user id.',
-      permLevel: 2
+      permLevel: 'Moderator'
     });
   }
 

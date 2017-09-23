@@ -9,7 +9,7 @@ class Exec extends Command {
       usage: 'exec <expression>',
       category: 'System',
       extended: 'This will spawn a child process and execute the given command.',
-      permLevel: 10
+      permLevel: 'Bot Owner'
     });
   }
 

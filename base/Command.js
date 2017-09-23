@@ -10,7 +10,7 @@ class Command {
     guildOnly = false,
     aliases = [],
     botPerms = [],
-    permLevel = 0
+    permLevel = 'User'
   }) {
     this.client = client;
     this.conf = {
