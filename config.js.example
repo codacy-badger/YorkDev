@@ -21,6 +21,7 @@ const config = {
     'modRole': 'Moderator',
     'adminRole': 'Administrator',
     'levelNotice': 'false',
+    'systemNotice': 'true'
     'inviteLimit': '10',
     'dailyTime': 24,
     'pointsReward': 50,
