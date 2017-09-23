@@ -53,10 +53,6 @@ Your permission level is ${level} (${this.client.config.permLevels.find(l => l.l
 This command requires level ${this.client.levelCache[cmd.conf.permLevel]} (${cmd.conf.permLevel})`);
     }
 
-    this.client.log('log', `${this.client.config.permLevels.find(l => l.level === level).name} ${message.author.username} (${message.author.id}) ran command ${cmd.help.name}`, 'CMD');
-    cmd.run(message, args, level);
-
-
     if (cmd && level >= cmd.conf.permLevel) {
       message.flags = [];
       while (args[0] && args[0][0] === '-') {
