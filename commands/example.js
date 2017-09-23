@@ -11,6 +11,7 @@ class Example extends Command {
       -del exampleName
       -edit existingExampleName This is new example edited contents
       -list`,
+      hidden: true,
       aliases: ['ex', 'examples']
     });
     this.init = client => {

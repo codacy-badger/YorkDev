@@ -11,6 +11,7 @@ class Tag extends Command {
       -del tagName
       -edit existingtagName This is new new edited contents
       -list`,
+      hidden: true,
       aliases: ['t', 'tags']
     });
 

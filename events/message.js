@@ -53,23 +53,23 @@ Your permission level is ${level} (${this.client.config.permLevels.find(l => l.l
 This command requires level ${this.client.levelCache[cmd.conf.permLevel]} (${cmd.conf.permLevel})`);
     }
 
-    if (cmd && level >= cmd.conf.permLevel) {
-      message.flags = [];
-      while (args[0] && args[0][0] === '-') {
-        message.flags.push(args.shift().slice(1));
-      }
-      this.client.log('log', `${this.client.config.permLevels.find(l => l.level === level).name} ${message.author.username} (${message.author.id}) ran command ${cmd.help.name}`, 'CMD');
+    // if (cmd && level >= cmd.conf.permLevel) {
+    //   message.flags = [];
+    //   while (args[0] && args[0][0] === '-') {
+    //     message.flags.push(args.shift().slice(1));
+    //   }
+    this.client.log('log', `${this.client.config.permLevels.find(l => l.level === level).name} ${message.author.username} (${message.author.id}) ran command ${cmd.help.name}`, 'CMD');
 
-      if (message.channel.type === 'text') {      
-        const mPerms = this.client.permCheck(message, cmd.conf.botPerms);
-        if (mPerms.length) return message.channel.send(`The bot does not have the following permissions \`${mPerms.join(', ')}\``);
-      }
-
-      cmd.run(message, args, level).catch(error => {
-        message.channel.send(error);
-      });
-    } else if (this.client.tags.has(command)) {
-      message.channel.send(`${args.join(' ')} ${this.client.tags.get(command).contents}`);
+    if (message.channel.type === 'text') {      
+      const mPerms = this.client.permCheck(message, cmd.conf.botPerms);
+      if (mPerms.length) return message.channel.send(`The bot does not have the following permissions \`${mPerms.join(', ')}\``);
     }
+
+    cmd.run(message, args, level).catch(error => {
+      message.channel.send(error);
+    });
+    // } else if (this.client.tags.has(command)) {
+    //   message.channel.send(`${args.join(' ')} ${this.client.tags.get(command).contents}`);
+    // }
   }
 };
