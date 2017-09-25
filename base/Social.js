@@ -132,7 +132,19 @@ class Social extends Command {
       const score = this.client.points.get(`${message.guild.id}-${user}`);
       score.points += amount;
       this.client.points.set(`${message.guild.id}-${user}`, score);
-      await message.channel.send(`The payment of ${parseInt(amount)}${this.emoji(message.guild.id)} has been sent to ${message.guild.member(user).displayName}.`);
+      await message.channel.send(`Awarded ${parseInt(amount)}${this.emoji(message.guild.id)} points to ${message.guild.member(user).displayName}.`);
+      return;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async cmdPun(message, user, amount) {
+    try {
+      const score = this.client.points.get(`${message.guild.id}-${user}`);
+      score.points -= amount;
+      this.client.points.set(`${message.guild.id}-${user}`, score);
+      await message.channel.send(`Deducted ${parseInt(amount)}${this.emoji(message.guild.id)} points from ${message.guild.member(user).displayName}.`);
       return;
     } catch (error) {
       throw error;

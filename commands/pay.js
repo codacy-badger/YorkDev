@@ -7,7 +7,7 @@ class Pay extends Social {
       description: 'Pay another user your activity points.',
       usage: 'pay',
       category: 'Social',
-      aliases: ['give', 'loan', 'donate']
+      aliases: ['loan', 'donate']
     });
   }
 

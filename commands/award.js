@@ -1,15 +1,16 @@
 const Social = require('../base/Social.js');
 
-class Reward extends Social {
+class Award extends Social {
   constructor(client) {
     super(client, {
-      name: 'reward',
+      name: 'award',
       description: 'Gives a mentioned user (or userid) a reward',
-      usage: 'reward <@mention|userid>',
+      usage: 'award <@mention|userid> <amount>',
       category:'Moderation',
       extended: 'This will give a mentioned user (or userid) a reward set via the command.',
       hidden: true,
       guildOnly: true,
+      aliases: ['reward', 'give'],
       permLevel: 'Moderator'
     });
   }
@@ -28,4 +29,4 @@ class Reward extends Social {
   }
 }
 
-module.exports = Reward;
+module.exports = Award;
