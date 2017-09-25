@@ -19,8 +19,8 @@ class IsNowIllegal extends Social {
   async run(message, args, level) {
     if (inUse.get('true')) throw 'Trump is currently making something illegal, please wait.';
     inUse.set('true', {user: message.author.id});
-    const word = args.join(' ');
-    const wordMatch = /\b[a-z]{1,10}\b/gi.exec(word);
+    const word = args.join(' ').replace('.', '');
+    const wordMatch = /^[a-z\s]{1,10}$/gi.exec(word);
     if (word.length < 1 || word.length > 10) {
       inUse.delete('true');
       throw 'Cannot be longer than 10 characters or shorter than 1 character.';
@@ -44,6 +44,8 @@ class IsNowIllegal extends Social {
       await msg.delete();
       inUse.delete('true');
     } catch (error) {
+      inUse.delete('true');
+      message.channel.stopTyping({force:true});
       throw error;
     }
   }
