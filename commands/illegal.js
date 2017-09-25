@@ -20,7 +20,7 @@ class IsNowIllegal extends Social {
     if (inUse.get('true')) throw 'Trump is currently making something illegal, please wait.';
     inUse.set('true', {user: message.author.id});
     const word = args.join(' ').replace('.', '');
-    const wordMatch = /^[a-z\s]{1,10}$/gi.exec(word);
+    const wordMatch = /^[a-zA-Z\s]{1,10}$/.exec(word);
     if (word.length < 1 || word.length > 10) {
       inUse.delete('true');
       throw 'Cannot be longer than 10 characters or shorter than 1 character.';
