@@ -19,7 +19,7 @@ class IsNowIllegal extends Social {
   async run(message, args, level) {
     if (inUse.get('true')) throw 'Trump is currently making something illegal, please wait.';
     inUse.set('true', {user: message.author.id});
-    const word = args.join(' ').replace('.', '');
+    const word = args.join(' ');
     const wordMatch = /^[a-zA-Z\s]{1,10}$/.exec(word);
     if (word.length < 1 || word.length > 10) {
       inUse.delete('true');
