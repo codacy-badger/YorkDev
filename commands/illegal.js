@@ -29,6 +29,7 @@ class IsNowIllegal extends Social {
       const msg = await message.channel.send(`Convincing Trump that ${word} should be illegal...`);
       message.channel.startTyping();
       await post('https://is-now-illegal.firebaseio.com/queue/tasks.json').send({ task: 'gif', word: word.toUpperCase() });
+      await this.client.wait(2000);
       const result = await get(`https://is-now-illegal.firebaseio.com/gifs/${word.toUpperCase()}.json`);
       await message.channel.send({ 'files': [result.body.url] });
       message.channel.stopTyping({force:true});
