@@ -9,7 +9,7 @@ class IsNowIllegal extends Social {
       description: 'Get US President Trump to make something illegal.',
       usage: 'illegal <thing>',
       category:'Fun',
-      extended: 'Powered by IsNowIllega.com, get US President Trump to make anything illegal.',
+      extended: 'Powered by IsNowIllegal.com, get US President Trump to make anything illegal.',
       cost: 100,
       guildOnly: true,
       permLevel: 'User'
@@ -19,7 +19,6 @@ class IsNowIllegal extends Social {
   async run(message, args, level) {
     if (inUse.get('true')) throw 'Trump is currently making something illegal, please wait.';
     inUse.set('true', {user: message.author.id});
-    console.log(inUse);
     const word = args.join(' ');
     const wordMatch = /\b[a-z]{1,10}\b/gi.exec(word);
     if (word.length < 1 || word.length > 10) {
