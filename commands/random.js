@@ -1,10 +1,10 @@
 const Social = require('../base/Social.js');
-const { get : fetch } = require('snekfetch');
+const { get: fetch } = require('snekfetch');
 const { Attachment } = require('discord.js');
 
 const animals = {
   'cat': {
-    fetch: async () => fetch ('http://random.cat/meow'),
+    fetch: async () => fetch('http://random.cat/meow'),
     get: async (resp) => resp.body.file
   },
   'dog': {
@@ -38,6 +38,10 @@ class Random extends Social {
     }
     const api = animals[args[0]];
     try {
+      if (level < 2) {
+        const payMe = await this.cmdPay(message, message.author.id, this.help.cost);
+        if (!payMe) return;
+      }
       if (!api) {
         const resp = await fetch(`http://loremflickr.com/400/300/${args[0]}`);
         console.log(typeof resp.body);
@@ -46,10 +50,11 @@ class Random extends Social {
     } catch (e) {
       return message.reply('Sorry I couldn\'t find any valid API for that keyword, try again!');
     }
-  
+
     const response = await api.fetch(args);
     const image = await api.get(response);
-    message.channel.send({files: [image]});  }
+    message.channel.send({ files: [image] });
+  }
 }
 
 module.exports = Random;
