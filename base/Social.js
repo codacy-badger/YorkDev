@@ -127,6 +127,18 @@ class Social extends Command {
     }
   }
 
+  async cmdRew(message, user, amount) {
+    try {
+      const score = this.client.points.get(`${message.guild.id}-${user}`);
+      score.points += amount;
+      this.client.points.set(`${message.guild.id}-${user}`, score);
+      await message.channel.send(`The payment of ${parseInt(amount)}${this.emoji(message.guild.id)} has been sent to ${message.guild.member(user).displayName}.`);
+      return;
+    } catch (error) {
+      throw error;
+    }
+  }
+
   async chkBal(message, user) {
     const id = await this.verifySocialUser(user);
     const score = this.client.points.get(`${message.guild.id}-${id}`) || this.client.points.set(`${message.guild.id}-${id}`, { points: 0, level: 0, user: id,guild: message.guild.id, daily: 1504120109 }).get(`${message.guild.id}-${id}`);

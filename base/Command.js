@@ -41,5 +41,16 @@ class Command {
       throw error;
     }
   }
+  async verifyMessage(message, msgid) {
+    try {
+      const match = /([0-9]{17,20})/.exec(msgid);
+      if (!match) throw 'Invalid message id.';
+      const id = match[1];
+      const check = await message.channel.fetchMessage(id);
+      if (check.cleanContent !== undefined) return id;
+    } catch (error) {
+      throw error;
+    }
+  }
 }
 module.exports = Command;
