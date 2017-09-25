@@ -1,6 +1,6 @@
 const Social = require('../base/Social.js');
-
 const { get, post } = require('snekfetch');
+const inUse = new Map();
 
 class IsNowIllegal extends Social {
   constructor(client) {
@@ -17,10 +17,19 @@ class IsNowIllegal extends Social {
   }
 
   async run(message, args, level) {
+    if (inUse.get('true')) throw 'Trump is currently making something illegal, please wait.';
+    inUse.set('true', {user: message.author.id});
+    console.log(inUse);
     const word = args.join(' ');
     const wordMatch = /\b[a-z]{1,10}\b/gi.exec(word);
-    if (word.length < 1 || word.length > 10) throw 'Cannot be longer than 10 characters or shorter than 1 character.';
-    if (!wordMatch) throw 'oops! Non-standard unicode characters are now illegal.';
+    if (word.length < 1 || word.length > 10) {
+      inUse.delete('true');
+      throw 'Cannot be longer than 10 characters or shorter than 1 character.';
+    }
+    if (!wordMatch) {
+      inUse.delete('true');
+      throw 'oops! Non-standard unicode characters are now illegal.';
+    }
     try {
       if (level < 2) {
         const payMe = await this.cmdPay(message, message.author.id, this.help.cost);
@@ -29,11 +38,12 @@ class IsNowIllegal extends Social {
       const msg = await message.channel.send(`Convincing Trump that ${word} should be illegal...`);
       message.channel.startTyping();
       await post('https://is-now-illegal.firebaseio.com/queue/tasks.json').send({ task: 'gif', word: word.toUpperCase() });
-      await this.client.wait(2000);
+      await this.client.wait(5000);
       const result = await get(`https://is-now-illegal.firebaseio.com/gifs/${word.toUpperCase()}.json`);
       await message.channel.send({ 'files': [result.body.url] });
       message.channel.stopTyping({force:true});
       await msg.delete();
+      inUse.delete('true');
     } catch (error) {
       throw error;
     }
