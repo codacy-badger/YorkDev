@@ -10,7 +10,7 @@ module.exports = class {
       try {
         const author = user;
         const member = message.guild.member(author);
-        const msg = { author:author, member:member, guild: message.guild };
+        const msg = { author:author, member:member, guild: message.guild, client: this.client, channel: message.channel };
         if (this.client.permlevel(msg) > 1)
           await message.pin();
         else

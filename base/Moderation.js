@@ -23,26 +23,22 @@ class Moderation extends Command {
     
   }
 
-  modCheck(message, args, level) {
-
-    const user = args.join(' ') || message.mentions.users.first();
-    const match = /(?:<@!?)?([0-9]{17,20})>?/gi.exec(user);
-    if (!match) return '|`❌`| That is not a valid user id.';
-
-    const id = match[1];
-    const target = message.guild.member(id);
-
-    if (message.author.id === id) return '|`🛑`| You cannot moderate yourself.';
-    if (!target.bannable) return '|`❗`| This member cannot be banned.';
-    if (!target.kickable) return '|`❗`| This member cannot be kicked.';
-
-    const author = message.mentions.users.first() || this.client.users.get(id);
-    const member = message.mentions.members.first() || target;
-    const msg = { author:author, member:member, guild: message.guild };
-
-    if (level <= this.client.permlevel(msg)) return '|`🛑`| You cannot perform that action on someone of equal, or a higher permission level.';
-
-    console.log(message.cleanContent);
+  async modCheck(message, args, level) {
+    try {
+      const modBot = message.guild.me;
+      const user = args.join(' ');
+      const id = await this.verifyUser(user);
+      const target = await message.guild.fetchMember(id).catch(() => { throw `${message.author}, |\`❓\`| Cannot find member in guild.`; });
+      if (target.highestRole.position >= modBot.highestRole.position) throw `${message.author}, |\`🛑\`| You cannot perform that action on someone of equal, or higher role.`;
+      if (message.author.id === id) throw `${message.author}, |\`🛑\`| You cannot moderate yourself.`;
+      const author = target.user;
+      const member = target;
+      const msg = { author:author, member:member, guild: message.guild, client: this.client, channel: message.channel };
+      if (level <= this.client.permlevel(msg)) throw `${message.author}, |\`🛑\`| You cannot perform that action on someone of equal, or a higher permission level.`;
+      return target;
+    } catch (error) {
+      throw error;
+    }
   }
 
   embedSan(embed) {

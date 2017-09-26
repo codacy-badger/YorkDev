@@ -21,7 +21,7 @@ class Blacklist extends Command {
       if (!author) return message.channel.send('You must supply a user id or mention to blacklist them.');
       if (blacklist.includes(author.id)) return message.reply('That user is already blacklisted.');
       if (message.author.id === author.id) return message.reply('You cannot blacklist yourself. ~~idiot~~');
-      const msg = { author:author, member:member, guild: message.guild };
+      const msg = { author:author, member:member, guild: message.guild, client: this.client, channel: message.channel };
       if (level <= this.client.permlevel(msg)) return message.reply('You cannot black list someone of equal, or a higher permission level.');
       blacklist.push(author.id);
       this.client.blacklist.set('list', blacklist);
