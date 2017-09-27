@@ -17,7 +17,6 @@ class Mock extends Social {
       usage: 'mock',
       category: 'Fun',
       extended: 'Based on the popular Spongebob Squarepants mocking meme.',
-      cost: 50,
       hidden: false, 
       guildOnly: true,
       aliases: [],
@@ -25,16 +24,14 @@ class Mock extends Social {
     });
   }
 
-  async run(message, args, level) {
+  async run(message, args, level) { // eslint-disable-line no-unused-vars 
     try {
       const grabMock = args.length === 0 ? await message.channel.fetchMessages({ limit:1, before: message.id}) : await message.channel.fetchMessage(await this.verifyMessage(message, args[0]));
       const mockBob = await fsn.readFile('./assets/images/spongebob.png');
       const mock = grabMock.size === 1 ? grabMock.first() : grabMock;
       if (mock.author.bot) return message.reply('|`❌`| You cannot mock bots.');
-      if (level < 2) {
-        const payMe = await this.cmdPay(message, message.author.id, this.help.cost);
-        if (!payMe) return;  
-      }
+      const payMe = await this.cmdPay(message, message.author.id, this.help.cost, this.conf.botPerms);
+      if (!payMe) return;  
       await message.channel.send(alternateCase(mock.cleanContent), {files: [{attachment: mockBob, name: 'mock.png'}]});
     } catch (error) {
       throw error;

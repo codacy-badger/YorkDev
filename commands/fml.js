@@ -17,19 +17,16 @@ class FML extends Social {
       usage: 'fml',
       category: 'Fun',
       extended: 'This command grabs a random "fuck my life" story from fmylife.com and displays it in an organised embed.',
-      cost: 50,
       guildOnly: true,
       aliases: ['fuckmylife', 'fuckme'],
       botPerms: ['EMBED_LINKS']
     });
   }
 
-  async run(message, args, level) {
+  async run(message, args, level) { // eslint-disable-line no-unused-vars 
     try {
-      if (level < 2) {
-        const payMe = await this.cmdPay(message, message.author.id, this.help.cost);
-        if (!payMe) return;  
-      }
+      const payMe = await this.cmdPay(message, message.author.id, this.help.cost, this.conf.botPerms);
+      if (!payMe) return;  
       const reply = await message.channel.send('```Searching for a random FML card (this can take a few seconds)```');
       const res = await request.get('http://www.fmylife.com/random');
       const root = HTMLParser.parse(res.text);

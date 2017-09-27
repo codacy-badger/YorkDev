@@ -27,7 +27,6 @@ class Random extends Social {
       description: 'Grabs a random image from some internet API.',
       category: 'Fun',
       usage: 'random <thing> []',
-      cost: 10,
       botPerms: ['ATTACH_FILES']
     });
   }
@@ -39,7 +38,7 @@ class Random extends Social {
     const api = animals[args[0]];
     try {
       if (level < 2) {
-        const payMe = await this.cmdPay(message, message.author.id, this.help.cost);
+        const payMe = await this.cmdPay(message, message.author.id, this.help.cost, this.conf.botPerms);
         if (!payMe) return;
       }
       if (!api) {

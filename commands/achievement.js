@@ -28,7 +28,6 @@ class Achievement extends Social {
       category: 'Fun',
       usage: 'achievement',
       extended: 'Either mention a user with text to give the achievement their user avatar, or just supply text for your own achievement.',
-      cost: 25,
       aliases: ['get', 'achieveget', 'achievementget'],
       botPerms: ['ATTACH_FILES']
     });
@@ -39,7 +38,7 @@ class Achievement extends Social {
     if (text.length > 22) return message.reply('I can only handle a maximum of 22 characters');
     try {
       if (level < 2) {
-        const payMe = await this.cmdPay(message, message.author.id, this.help.cost);
+        const payMe = await this.cmdPay(message, message.author.id, this.help.cost, this.conf.botPerms);
         if (!payMe) return;  
       }
       const msg = await message.channel.send('`Achievement Getting...`');

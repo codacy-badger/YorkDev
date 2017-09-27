@@ -5,7 +5,8 @@ class Social extends Command {
 
   constructor(client, options) {
     super(client, Object.assign(options, {
-      guildOnly: true
+      guildOnly: true,
+      cost: 5
     }));
 
 
@@ -115,11 +116,12 @@ class Social extends Command {
 
   }
 
-  async cmdPay(message, user, cost) {
+  async cmdPay(message, user, cost, perms) {
+    const amount = parseInt(cost) * parseInt(perms.length + 1) * Math.floor(parseInt(this.client.settings.get(message.guild.id).costMulti));
     try {
       const score = this.client.points.get(`${message.guild.id}-${user}`);
-      if (cost > score.points) throw `Insufficient funds, you need ${cost}${this.emoji(message.guild.id)}. Your current balance: ${score.points}${this.emoji(message.guild.id)}`;
-      score.points -= cost;
+      if (amount > score.points) throw `Insufficient funds, you need ${amount}${this.emoji(message.guild.id)}. Your current balance: ${score.points}${this.emoji(message.guild.id)}`;
+      score.points -= amount;
       this.client.points.set(`${message.guild.id}-${user}`, score);
       return true;
     } catch (error) {

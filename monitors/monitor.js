@@ -1,21 +1,33 @@
-// const slowmode = new Map();
-// const ratelimit = 7000;
+const timeout = new Map();
+function giveRandomPoints(min, max) {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min)) + min;
+}
 
 module.exports = class {
 
   static run(client, message, level) {
     this.givePoints(client, message, level),
     this.checkAFK(client, message, level),
-    // this.mentions(client, message),
     this.antiInvite(client, message, level);
   }
 
   static givePoints(client, message, level) { // eslint-disable-line no-unused-vars
     if (message.channel.type !== 'text') return;
-    const settings = client.settings.get(message.guild.id);
+    const settings = message.settings;
     if (message.content.startsWith(settings.prefix) || message.content.startsWith('docs, ')) return;
-    const score = client.points.get(`${message.guild.id}-${message.author.id}`) || { points: 0, level: 0, user: message.author.id, guild: message.guild.id, daily: 1504120109 };
-    score.points++;
+    const score = client.points.get(`${message.guild.id}-${message.author.id}`) || { points: 200, level: 1, user: message.author.id, guild: message.guild.id, daily: 1504120109 };
+    const timedOut = timeout.get(`${message.guild.id}-${message.author.id}`);
+    if (timedOut) return;
+    timeout.set(`${message.guild.id}-${message.author.id}`, true);
+    const points = giveRandomPoints(parseInt(settings.minPoints), parseInt(settings.maxPoints));
+    setTimeout(() => {
+      timeout.set(`${message.guild.id}-${message.author.id}`, false);
+      score.points += points;
+      console.log(`Awarded ${points} to ${message.author.username}`);
+    }, parseInt(settings.scoreTime) * 1000);
+
     const curLevel = Math.floor(0.1 * Math.sqrt(score.points));
     if (score.level < curLevel) {
       if (settings.levelNotice === 'true')
@@ -35,39 +47,6 @@ module.exports = class {
       message.reply(`${person.displayName} ${settings.afkMessage}`);
     }
   }
-
-
-  // // Not ready yet.
-  // static mentions(client, message, level) { // eslint-disable-line no-unused-vars
-  //   if (message.mentions.users.size === 1 && message.mentions.users.first().bot || !message.guild.member(client.user).hasPermission('BAN_MEMBERS')) return;
-  //   try {
-  //     let entry = slowmode.get(message.author.id);
-  //     if (!entry) {
-  //       entry = 0;
-  //       slowmode.set(message.author.id, entry);
-  //     }
-  //     entry += message.mentions.users.size + message.mentions.roles.size;
-
-  //     if (entry > 5) {
-  //       message.member.ban({
-  //         days: 7,
-  //         reason: 'Mention Spam'
-  //       }).then(member => {
-  //         message.channel.send(`:no_entry_sign: User ${member.displayName} has just been banned for mentioning too many users. :hammer:\nUsers that have been mentioned, we apologize for the annoyance. Please don't be mad!`);
-  //       }).catch(error => {
-  //         if (error.message === 'Privilege is too low...') throw `I am unable to ban ${message.member.displayName}, either I do not have the \`BAN_MEMBERS\` permission or they have a higher role.`;
-  //       });
-  //     } else {
-  //       setTimeout(() => {
-  //         entry -= message.mentions.users.size;
-  //         if (entry <= 0) slowmode.delete(message.author.id);
-  //       }, ratelimit);
-  //     }
-  //   } catch (error) {
-  //     if (error.message === 'Privilege is too low...') throw `I am unable to ban ${message.member.displayName}, either I do not have the \`BAN_MEMBERS\` permission or they have a higher role.`;
-  //     throw error;
-  //   }
-  // }
 
   static antiInvite(client, message, level) {
     if (level > 0) return;

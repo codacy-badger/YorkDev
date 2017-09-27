@@ -10,13 +10,12 @@ class IsNowIllegal extends Social {
       usage: 'illegal <thing>',
       category:'Fun',
       extended: 'Powered by IsNowIllegal.com, get US President Trump to make anything illegal.',
-      cost: 100,
       guildOnly: true,
       permLevel: 'User'
     });
   }
 
-  async run(message, args, level) {
+  async run(message, args, level) { // eslint-disable-line no-unused-vars 
     if (inUse.get('true')) throw 'Trump is currently making something illegal, please wait.';
     inUse.set('true', {user: message.author.id});
     const word = args.join(' ');
@@ -30,10 +29,8 @@ class IsNowIllegal extends Social {
       throw 'oops! Non-standard unicode characters are now illegal.';
     }
     try {
-      if (level < 2) {
-        const payMe = await this.cmdPay(message, message.author.id, this.help.cost);
-        if (!payMe) return;  
-      }
+      const payMe = await this.cmdPay(message, message.author.id, this.help.cost, this.conf.botPerms);
+      if (!payMe) return;  
       const msg = await message.channel.send(`Convincing Trump that ${word} should be illegal...`);
       message.channel.startTyping();
       await post('https://is-now-illegal.firebaseio.com/queue/tasks.json').send({ task: 'gif', word: word.toUpperCase() });

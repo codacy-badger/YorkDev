@@ -29,18 +29,15 @@ class Blame extends Social {
       usage: 'blame <user>',
       category: 'Fun',
       extended: 'Use canvas to blame a fellow user.',
-      cost: 25,
       guildOnly: true,
       botPerms: ['ATTACH_FILES']
     });
   }
 
-  async run(message, args, level) {
+  async run(message, args, level) { // eslint-disable-line no-unused-vars 
     try {
-      if (level < 2) {
-        const payMe = await this.cmdPay(message, message.author.id, this.help.cost);
-        if (!payMe) return;  
-      }
+      const payMe = await this.cmdPay(message, message.author.id, this.help.cost, this.conf.botPerms);
+      if (!payMe) return;  
       const person = message.mentions.members.first() || message.member;
       const msg = await message.channel.send(`\`Assigning blame to ${person.displayName}\``);
       const result = await blame(person);

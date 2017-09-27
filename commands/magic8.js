@@ -9,7 +9,6 @@ class Magic8 extends Social {
       usage: 'magic8 <question>?',
       category: 'Fun',
       extended: 'This Social will answer any question given to it in the style of a magic 8 ball.',
-      cost: 5,
       guildOnly: true,
       aliases: ['8', '8ball']
     });
@@ -20,7 +19,7 @@ class Magic8 extends Social {
       if (!message.content.endsWith('?')) return message.reply('That does not look like a question, (hint, end your question with a `?`.)');
       if (!args) return message.reply('You need to actually ask a question...');
       if (level < 2) {
-        const payMe = await this.cmdPay(message, message.author.id, this.help.cost);
+        const payMe = await this.cmdPay(message, message.author.id, this.help.cost, this.conf.botPerms);
         if (!payMe) return;  
       }
       const msg = await message.channel.send('`Thinking...`');

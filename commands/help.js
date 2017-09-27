@@ -14,8 +14,8 @@ class Help extends Command {
   }
 
   async run(message, args, level) {
+    const settings = message.guild ? this.client.settings.get(message.guild.id) : this.client.config.defaultSettings;
     if (!args[0]) {
-      const settings = message.guild ? this.client.settings.get(message.guild.id) : this.client.config.defaultSettings;
       const myCommands = message.guild ? this.client.commands.filter(cmd => this.client.levelCache[cmd.conf.permLevel] <= level && cmd.conf.hidden !== true) : this.client.commands.filter(cmd => this.client.levelCache[cmd.conf.permLevel] <= level && cmd.conf.hidden !== true && cmd.conf.guildOnly !== true);
       // const myCommands = message.guild ? this.client.commands.filter(cmd => this.client.levelCache[cmd.conf.permLevel] <= level) : this.client.commands.filter(cmd => this.client.levelCache[cmd.conf.permLevel] <= level &&  cmd.conf.guildOnly !== true);
       const commandNames = myCommands.keyArray();
@@ -34,13 +34,13 @@ class Help extends Command {
       message.channel.send(output, {code:'asciidoc',split:true});
     } else {
       let command = args[0];
-      if (this.client.commands.has(command)) {
-        command = this.client.commands.get(command);
-        if (level < this.client.levelCache[command.conf.permLevel]) return;
-        message.channel.send(`= ${command.help.name} = \n${command.help.description}\ncost:: ${command.help.cost} points\nusage:: ${command.help.usage}\naliases:: ${command.conf.aliases.join(', ')}\ndetails:: ${command.help.extended}\npermissions:: ${command.conf.botPerms.join(', ')}`, {code:'asciidoc'});
-      }
-    }
+      
+      if (this.client.commands.has(command)) command = this.client.commands.get(command);
+      else if (this.client.aliases.has(command)) command = this.client.commands.get(this.client.aliases.get(command));
+      else return;
+
+      if (level < this.client.levelCache[command.conf.permLevel]) return;
+      message.channel.send(`= ${command.help.name} = \n${command.help.description}\ncost:: ${parseInt(command.help.cost) * parseInt(command.conf.botPerms.length + 1) * Math.floor(parseInt(settings.costMulti))} points (excluding role discounts)\nusage:: ${command.help.usage}\naliases:: ${command.conf.aliases.join(', ')}\ndetails:: ${command.help.extended}\npermissions:: ${command.conf.botPerms.join(', ')}`, {code:'asciidoc'});    }
   }
 }
-
 module.exports = Help;

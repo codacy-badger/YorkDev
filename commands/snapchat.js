@@ -27,22 +27,19 @@ class SnapChat extends Social {
       usage: 'snapchat <text>',
       category: 'Fun',
       extended: 'This Social uses canvas to generate a Snapchat styled image based on the well known _But MOOOOOM_ statue meme.',
-      cost: 25,
       guildOnly: true,
       aliases: ['sc'],
       botPerms: ['ATTACH_FILES']
     });
   }
 
-  async run(message, args, level) {
+  async run(message, args, level) { // eslint-disable-line no-unused-vars 
     const text = args.join(' ');
     if (text.length < 1) return message.reply('You must give the snap some text.');
     if (text.length > 28) return message.reply('I can only handle a maximum of 28 characters');
     try {
-      if (level < 2) {
-        const payMe = await this.cmdPay(message, message.author.id, this.help.cost);
-        if (!payMe) return;  
-      }
+      const payMe = await this.cmdPay(message, message.author.id, this.help.cost, this.conf.botPerms);
+      if (!payMe) return;  
       const result = await getSnap(text);
       await message.channel.send({ files: [{ attachment: result, name: `${text.toLowerCase().replace(' ', '-').replace('.', '-')}.png`}]});
     } catch (error) {
