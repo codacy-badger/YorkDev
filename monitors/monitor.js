@@ -26,7 +26,7 @@ module.exports = class {
       timeout.set(`${message.guild.id}-${message.author.id}`, false);
       score.points += points;
       console.log(`Awarded ${points} to ${message.author.username}`);
-    }, parseInt(settings.scoreTime) * 1000);
+    }, parseInt(settings.scoreTime) * 60 * 1000);
 
     const curLevel = Math.floor(0.1 * Math.sqrt(score.points));
     if (score.level < curLevel) {
