@@ -25,7 +25,8 @@ class FML extends Social {
 
   async run(message, args, level) { // eslint-disable-line no-unused-vars 
     try {
-      const payMe = await this.cmdPay(message, message.author.id, this.help.cost, this.conf.botPerms);
+      const cost = this.cmdDis(this.help.cost, level);
+      const payMe = await this.cmdPay(message, message.author.id, cost, this.conf.botPerms);
       if (!payMe) return;  
       const reply = await message.channel.send('```Searching for a random FML card (this can take a few seconds)```');
       const res = await request.get('http://www.fmylife.com/random');
@@ -59,6 +60,9 @@ class FML extends Social {
       }
       reply.edit({embed});
     } catch (error) {
+      if (error.message === 'Cannot send an empty message') {
+        throw 'Today, something went wrong, so you\'ll have to try again in a few moments. FML';
+      }
       throw error;
     }
   }

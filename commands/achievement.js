@@ -37,10 +37,9 @@ class Achievement extends Social {
     if (text.length < 1) return message.reply('You must give an achievement description.');
     if (text.length > 22) return message.reply('I can only handle a maximum of 22 characters');
     try {
-      if (level < 2) {
-        const payMe = await this.cmdPay(message, message.author.id, this.help.cost, this.conf.botPerms);
-        if (!payMe) return;  
-      }
+      const cost = this.cmdDis(this.help.cost, level);
+      const payMe = await this.cmdPay(message, message.author.id, cost, this.conf.botPerms);
+      if (!payMe) return;  
       const msg = await message.channel.send('`Achievement Getting...`');
       const person = (message.mentions.users.first() || message.author).displayAvatarURL;
       if (message.mentions.users.first()) text = text.replace(/<@!?\d+>/, '').replace(/\n/g, ' ').trim();

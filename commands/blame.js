@@ -36,7 +36,8 @@ class Blame extends Social {
 
   async run(message, args, level) { // eslint-disable-line no-unused-vars 
     try {
-      const payMe = await this.cmdPay(message, message.author.id, this.help.cost, this.conf.botPerms);
+      const cost = this.cmdDis(this.help.cost, level);
+      const payMe = await this.cmdPay(message, message.author.id, cost, this.conf.botPerms);
       if (!payMe) return;  
       const person = message.mentions.members.first() || message.member;
       const msg = await message.channel.send(`\`Assigning blame to ${person.displayName}\``);

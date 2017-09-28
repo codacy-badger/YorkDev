@@ -15,6 +15,7 @@ class Support extends Command {
   async run(message, args, level) { // eslint-disable-line no-unused-vars
     if (message.guild) return message.reply('This command can only be used in DM\'s');
     const msg = args.join(' ');
+    if (msg.length < 1) throw 'You must type a message to send.';
     try {
       this.client.checkConsent(this.client, message, msg);
     } catch (error) {

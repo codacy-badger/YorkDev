@@ -29,7 +29,8 @@ class IsNowIllegal extends Social {
       throw 'oops! Non-standard unicode characters are now illegal.';
     }
     try {
-      const payMe = await this.cmdPay(message, message.author.id, this.help.cost, this.conf.botPerms);
+      const cost = this.cmdDis(this.help.cost, level);
+      const payMe = await this.cmdPay(message, message.author.id, cost, this.conf.botPerms);
       if (!payMe) return;  
       const msg = await message.channel.send(`Convincing Trump that ${word} should be illegal...`);
       message.channel.startTyping();

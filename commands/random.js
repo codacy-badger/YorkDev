@@ -37,10 +37,9 @@ class Random extends Social {
     }
     const api = animals[args[0]];
     try {
-      if (level < 2) {
-        const payMe = await this.cmdPay(message, message.author.id, this.help.cost, this.conf.botPerms);
-        if (!payMe) return;
-      }
+      const cost = this.cmdDis(this.help.cost, level);
+      const payMe = await this.cmdPay(message, message.author.id, cost, this.conf.botPerms);
+      if (!payMe) return;  
       if (!api) {
         const resp = await fetch(`http://loremflickr.com/400/300/${args[0]}`);
         console.log(typeof resp.body);
