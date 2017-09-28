@@ -11,7 +11,8 @@ class IsNowIllegal extends Social {
       category:'Fun',
       extended: 'Powered by IsNowIllegal.com, get US President Trump to make anything illegal.',
       cost: 5,
-      permLevel: 'User'
+      aliases:['trump', 'sign'],
+      botPerms: ['ATTACH_FILES']
     });
   }
 
