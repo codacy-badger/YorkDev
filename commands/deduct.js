@@ -8,8 +8,8 @@ class Deduct extends Social {
       usage: 'deduct <@mention|userid> <amount>',
       category:'Moderation',
       extended: 'This will give a mentioned user (or userid) a reward set via the command.',
+      cost: 5,
       hidden: true,
-      guildOnly: true,
       aliases: ['punish', 'take'],
       permLevel: 'Moderator'
     });

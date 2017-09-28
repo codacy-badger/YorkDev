@@ -27,7 +27,7 @@ class SnapChat extends Social {
       usage: 'snapchat <text>',
       category: 'Fun',
       extended: 'This Social uses canvas to generate a Snapchat styled image based on the well known _But MOOOOOM_ statue meme.',
-      guildOnly: true,
+      cost: 5,
       aliases: ['sc'],
       botPerms: ['ATTACH_FILES']
     });

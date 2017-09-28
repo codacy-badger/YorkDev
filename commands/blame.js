@@ -29,7 +29,7 @@ class Blame extends Social {
       usage: 'blame <user>',
       category: 'Fun',
       extended: 'Use canvas to blame a fellow user.',
-      guildOnly: true,
+      cost: 5,
       botPerms: ['ATTACH_FILES']
     });
   }

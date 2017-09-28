@@ -27,6 +27,7 @@ class Random extends Social {
       description: 'Grabs a random image from some internet API.',
       category: 'Fun',
       usage: 'random <thing> []',
+      cost: 5,
       botPerms: ['ATTACH_FILES']
     });
   }

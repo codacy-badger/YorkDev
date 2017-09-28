@@ -10,7 +10,6 @@ class Award extends Social {
       extended: 'This will give a mentioned user (or userid) a reward set via the command.',
       cost: 0,
       hidden: true,
-      guildOnly: true,
       aliases: ['reward', 'give'],
       permLevel: 'Moderator'
     });

@@ -5,8 +5,7 @@ class Social extends Command {
 
   constructor(client, options) {
     super(client, Object.assign(options, {
-      guildOnly: true,
-      cost: 5
+      guildOnly: true
     }));
 
 

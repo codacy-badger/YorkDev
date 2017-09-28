@@ -17,7 +17,7 @@ class FML extends Social {
       usage: 'fml',
       category: 'Fun',
       extended: 'This command grabs a random "fuck my life" story from fmylife.com and displays it in an organised embed.',
-      guildOnly: true,
+      cost: 5,
       aliases: ['fuckmylife', 'fuckme'],
       botPerms: ['EMBED_LINKS']
     });

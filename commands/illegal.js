@@ -10,7 +10,7 @@ class IsNowIllegal extends Social {
       usage: 'illegal <thing>',
       category:'Fun',
       extended: 'Powered by IsNowIllegal.com, get US President Trump to make anything illegal.',
-      guildOnly: true,
+      cost: 5,
       permLevel: 'User'
     });
   }

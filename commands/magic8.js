@@ -9,7 +9,7 @@ class Magic8 extends Social {
       usage: 'magic8 <question>?',
       category: 'Fun',
       extended: 'This Social will answer any question given to it in the style of a magic 8 ball.',
-      guildOnly: true,
+      cost: 5,
       aliases: ['8', '8ball']
     });
   }

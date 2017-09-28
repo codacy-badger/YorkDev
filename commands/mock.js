@@ -17,8 +17,7 @@ class Mock extends Social {
       usage: 'mock',
       category: 'Fun',
       extended: 'Based on the popular Spongebob Squarepants mocking meme.',
-      hidden: false, 
-      guildOnly: true,
+      cost: 5,
       aliases: [],
       botPerms: ['ATTACH_FILES']
     });
