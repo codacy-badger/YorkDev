@@ -7,6 +7,7 @@ class Leaderboard extends Social {
       description: 'Displays the top 10 active users.',
       usage: 'leaderboard',
       category: 'Social',
+      cost: 0,
       aliases: ['top10', 'top', 'leader', 'lb']
     });
   }

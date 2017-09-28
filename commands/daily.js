@@ -7,6 +7,7 @@ class Daily extends Social {
       usage: 'daily [user]',
       category: 'Social',
       extended: 'You can either claim or donate your daily points.',
+      cost: 0,
     });
   }
 
