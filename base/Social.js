@@ -138,7 +138,7 @@ class Social extends Command {
   }
   
   async cmdPay(message, user, cost, perms) {
-    const amount = parseInt(cost) * parseInt(perms.length + 1) * Math.floor(parseInt(message.settings.costMulti));
+    const amount = parseInt(cost) * parseInt(perms.length) * Math.floor(parseInt(message.settings.costMulti));
     try {
       const score = this.client.points.get(`${message.guild.id}-${user}`);
       if (amount > score.points) throw `Insufficient funds, you need ${amount}${this.emoji(message.guild.id)}. Your current balance: ${score.points}${this.emoji(message.guild.id)}`;
