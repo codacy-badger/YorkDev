@@ -10,6 +10,7 @@ class Help extends Command {
       extended: 'This command will display all available commands for your permission level, with the additonal option of getting per command information when you run \'help <command name>\'.',
       hidden: true,
       aliases: ['h', 'halp'],
+      botPerms: ['SEND_MESSAGES']
     });
   }
 
@@ -17,7 +18,6 @@ class Help extends Command {
     const settings = message.guild ? this.client.settings.get(message.guild.id) : this.client.config.defaultSettings;
     if (!args[0]) {
       const myCommands = message.guild ? this.client.commands.filter(cmd => this.client.levelCache[cmd.conf.permLevel] <= level && cmd.conf.hidden !== true) : this.client.commands.filter(cmd => this.client.levelCache[cmd.conf.permLevel] <= level && cmd.conf.hidden !== true && cmd.conf.guildOnly !== true);
-      // const myCommands = message.guild ? this.client.commands.filter(cmd => this.client.levelCache[cmd.conf.permLevel] <= level) : this.client.commands.filter(cmd => this.client.levelCache[cmd.conf.permLevel] <= level &&  cmd.conf.guildOnly !== true);
       const commandNames = myCommands.keyArray();
       const longest = commandNames.reduce((long, str) => Math.max(long, str.length), 0);
       let currentCategory = '';

@@ -9,7 +9,8 @@ class MyLevel extends Command {
       usage: 'mylevel',
       extended: 'This will display your permission level, in both numerical and plain English styles.',
       guildOnly: true,
-      aliases: ['perms', 'privilege']
+      aliases: ['perms', 'privilege'],
+      botPerms: ['SEND_MESSAGES']
     });
   }
   async run(message, args, level) {

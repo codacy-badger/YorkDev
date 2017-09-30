@@ -28,7 +28,7 @@ class Random extends Social {
       category: 'Fun',
       usage: 'random <thing> []',
       cost: 5,
-      botPerms: ['ATTACH_FILES']
+      botPerms: ['SEND_MESSAGES', 'ATTACH_FILES']
     });
   }
 

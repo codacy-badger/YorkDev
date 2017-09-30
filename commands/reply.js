@@ -10,6 +10,7 @@ class Reply extends Command {
       extended: 'Responds to a support channel.',
       hidden: true,
       guildOnly: true,
+      botPerms: ['SEND_MESSAGES'],
       permLevel: 'Bot Owner'
     });
   }

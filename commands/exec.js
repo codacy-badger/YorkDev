@@ -9,6 +9,7 @@ class Exec extends Command {
       usage: 'exec <expression>',
       category: 'System',
       extended: 'This will spawn a child process and execute the given command.',
+      botPerms: ['SEND_MESSAGES'],
       permLevel: 'Bot Owner'
     });
   }

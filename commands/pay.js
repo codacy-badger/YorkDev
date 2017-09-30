@@ -8,7 +8,8 @@ class Pay extends Social {
       usage: 'pay',
       category: 'Social',
       cost: 0,
-      aliases: ['loan', 'donate']
+      aliases: ['loan', 'donate'],
+      botPerms: ['SEND_MESSAGES']
     });
   }
 

@@ -1,6 +1,4 @@
 const Command = require('./Command.js');
-const { RichEmbed } = require('discord.js');
-const embed = new RichEmbed();
 
 class Moderation extends Command {
   
@@ -23,10 +21,9 @@ class Moderation extends Command {
     
   }
 
-  async modCheck(message, args, level) {
+  async modCheck(message, user, level) {
     try {
       const modBot = message.guild.me;
-      const user = args.join(' ');
       const id = await this.verifyUser(user);
       const target = await message.guild.fetchMember(id).catch(() => { throw `${message.author}, |\`❓\`| Cannot find member in guild.`; });
       if (target.highestRole.position >= modBot.highestRole.position) throw `${message.author}, |\`🛑\`| You cannot perform that action on someone of equal, or higher role.`;
@@ -39,6 +36,12 @@ class Moderation extends Command {
     } catch (error) {
       throw error;
     }
+  }
+
+  async verifyMember(guild, member) {
+    const user = await this.verifyUser(member);
+    const target = await guild.fetchMember(user);
+    return target;
   }
 
   embedSan(embed) {
@@ -65,18 +68,27 @@ class Moderation extends Command {
     return thisCase ? parseInt(thisCase[1]) + 1 : 1;
   }
   
+  async caseEmbed(color, description, author, timestamp, footer) {
+    const embed = {
+      'color': color,
+      'description': description,
+      'author': {
+        'name': author
+      },
+      'timestamp': timestamp,
+      'footer': {
+        'text': footer
+      }
+    };
+    return embed;
+  }
+
   async buildModLog(client, guild, action, target, mod, reason) {
     const settings = client.settings.get(guild.id);
     const caseNumber = await this.caseNumber(client, guild.channels.find('name', settings.modLogChannel));
     const thisAction = this.actions[action];
-
     if (reason.length < 1) reason = `Awaiting moderator's input. Use ${settings.prefix}reason ${caseNumber} <reason>.`;
-
-    embed.setColor(thisAction.color)
-      .setAuthor(`${mod.tag} (${mod.id})`)
-      .setDescription(`**Action:** ${thisAction.display}\n**Target:** ${target.user.tag} (${target.id})\n**Reason:** ${reason}`)
-      .setTimestamp()
-      .setFooter(`Case ${caseNumber}`);
+    const embed = await this.caseEmbed(thisAction.color, `**Action:** ${thisAction.display}\n**Target:** ${target.user.tag} (${target.id})\n**Reason:** ${reason}`,`${mod.tag} (${mod.id})`, new Date(), `Case ${caseNumber}`);
     return guild.channels.find('name', settings.modLogChannel).send({embed});
   }
   

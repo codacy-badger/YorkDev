@@ -70,6 +70,7 @@ This command requires level ${this.client.levelCache[cmd.conf.permLevel]} (${cmd
     }
 
     cmd.run(message, args, level).catch(error => {
+      console.log(error);
       message.channel.send(error);
     });
   }

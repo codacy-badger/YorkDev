@@ -1,14 +1,14 @@
 const Moderation = require('../base/Moderation.js');
 
-class Ban extends Moderation {
+class Warn extends Moderation {
   constructor(client) {
     super(client, {
-      name: 'ban',
-      description: 'Bans a mentioned user, or a user\'s ID',
-      usage: 'ban <mention> [reason]',
-      extended: 'This bans the mentioned user, with or without a reason.',
-      aliases: ['B&', 'b&', 'banne', 'bean'],
-      botPerms: ['SEND_MESSAGES', 'BAN_MEMBERS', 'EMBED_LINKS']
+      name: 'warn',
+      description: 'Warns a mentioned user, or a user\'s ID',
+      usage: 'warn <mention> <reason>',
+      extended: 'This warns the mentioned user, with a reason.',
+      aliases: ['caution'],
+      botPerms: ['SEND_MESSAGES', 'EMBED_LINKS']
     });
   }
 
@@ -21,14 +21,14 @@ class Ban extends Moderation {
     const modLevel = this.modCheck(message, args[0], level);
     if (typeof modLevel === 'string') return message.reply(modLevel);
     const reason   = args.splice(1, args.length).join(' ');
+    if (!reason)     throw `${message.author} |\`❌\`| Invalid command usage, You must supply a reason to use this command.`;
     try {
-      await target.ban({days:0, reason: reason.length < 1 ? 'No reason supplied.': reason});
-      await this.buildModLog(this.client, message.guild, 'b', target, message.author, reason);
-      await message.channel.send(`\`${target.user.tag}\` was successfully banned.`);
+      await this.buildModLog(this.client, message.guild, 'w', target, message.author, reason);
+      await message.channel.send(`\`${target.user.tag}\` was successfully warned.`);
     } catch (error) {
       throw error;
     }
   }
 }
 
-module.exports = Ban;
+module.exports = Warn;

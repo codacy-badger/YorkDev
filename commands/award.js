@@ -11,6 +11,7 @@ class Award extends Social {
       cost: 0,
       hidden: true,
       aliases: ['reward', 'give'],
+      botPerms: ['SEND_MESSAGES'],
       permLevel: 'Moderator'
     });
   }

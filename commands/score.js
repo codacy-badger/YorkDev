@@ -8,7 +8,8 @@ class Score extends Social {
       usage: 'score',
       category: 'Social',
       cost: 0,
-      aliases: ['points', 'level', 'bal', 'balance']
+      aliases: ['points', 'level', 'bal', 'balance'],
+      botPerms: ['SEND_MESSAGES']
     });
   }
 

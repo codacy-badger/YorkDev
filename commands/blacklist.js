@@ -1,6 +1,6 @@
-const Command = require('../base/Command.js');
+const Moderation = require('../base/Moderation.js');
 
-class Blacklist extends Command {
+class Blacklist extends Moderation {
   constructor(client) {
     super(client, {
       name: 'blacklist',
@@ -8,6 +8,7 @@ class Blacklist extends Command {
       usage: 'blacklist <mention/userid>',
       category: 'Moderation',
       extended: 'Blacklist members from using the bot via mention or user id.',
+      botPerms: ['SEND_MESSAGES'],
       permLevel: 'Moderator'
     });
   }

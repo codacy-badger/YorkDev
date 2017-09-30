@@ -30,7 +30,7 @@ class Blame extends Social {
       category: 'Fun',
       extended: 'Use canvas to blame a fellow user.',
       cost: 5,
-      botPerms: ['ATTACH_FILES']
+      botPerms: ['SEND_MESSAGES', 'ATTACH_FILES']
     });
   }
 

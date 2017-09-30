@@ -7,7 +7,8 @@ class Ping extends Command {
       description: 'Latency and API response times.',
       usage: 'ping',
       extended: 'This command is a response test, it helps gauge if there is any latency (lag) in either the bots connection, or the API.',
-      aliases: ['pong']
+      aliases: ['pong'],
+      botPerms: ['SEND_MESSAGES']
     });
   }
 

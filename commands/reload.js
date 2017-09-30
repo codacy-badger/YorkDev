@@ -7,6 +7,7 @@ class Reload extends Command {
       description: 'Reloads a command that has been modified.',
       usage: 'reload [command]',
       extended: 'This command is designed to unload, then reload the command from the command & aliases collections for the changes to take effect.',
+      botPerms: ['SEND_MESSAGES'],
       permLevel: 'Bot Admin'
     });
   }

@@ -1,14 +1,13 @@
-const Command = require('../base/Command.js');
+const Moderation = require('../base/Moderation.js');
 
-class Announcement extends Command {
+class Announcement extends Moderation {
   constructor(client) {
     super(client, {
       name: 'announcement',
       description: 'Posts an announcement.',
       usage: 'announcement <Komada|Idiot> <announcement>',
       extended: '[role] is either \'Komada\' or \'Idiot\', followed by your announcement.',
-      guildOnly: true,
-      permLevel: 'Moderator'
+      botPerms: ['SEND_MESSAGES']
     });
   }
 

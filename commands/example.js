@@ -11,7 +11,8 @@ class Example extends Command {
           -del exampleName
           -edit existingExampleName This is new example edited contents
           -list`,
-      aliases: ['ex', 'examples']
+      aliases: ['ex', 'examples'],
+      botPerms: ['SEND_MESSAGES']
     });
     this.init = client => {
       this.db = new client.db(client, 'examples');

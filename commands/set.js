@@ -11,6 +11,7 @@ class Set extends Command {
       extended: 'This command is designed to change per-server-configurations for the guild the command was issued on.',
       guildOnly: true,
       aliases: ['setting', 'settings', 'conf'],
+      botPerms: ['SEND_MESSAGES'],
       permLevel: 'Bot Admin'
     });
   }

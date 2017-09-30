@@ -12,6 +12,7 @@ class Update extends Command {
       category: 'System',
       extended: 'This command is designed to update the bot from it\'s own repository, then reboots the bot for the changes to take effect.',
       aliases: ['git', 'pull'],
+      botPerms: ['SEND_MESSAGES'],
       permLevel: 'Bot Owner'
     });
   }

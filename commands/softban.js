@@ -3,11 +3,11 @@ const Moderation = require('../base/Moderation.js');
 class Ban extends Moderation {
   constructor(client) {
     super(client, {
-      name: 'ban',
-      description: 'Bans a mentioned user, or a user\'s ID',
-      usage: 'ban <mention> [reason]',
-      extended: 'This bans the mentioned user, with or without a reason.',
-      aliases: ['B&', 'b&', 'banne', 'bean'],
+      name: 'softban',
+      description: 'Bans a mentioned user, or a user\'s ID, then unbans them.',
+      usage: 'softban <mention> [reason]',
+      extended: 'A hard kick. It kicks so hard, all the user\'s messages of the last 2 days are deleted.',
+      aliases: ['gentlebann', 'hardkick'],
       botPerms: ['SEND_MESSAGES', 'BAN_MEMBERS', 'EMBED_LINKS']
     });
   }
@@ -22,9 +22,10 @@ class Ban extends Moderation {
     if (typeof modLevel === 'string') return message.reply(modLevel);
     const reason   = args.splice(1, args.length).join(' ');
     try {
-      await target.ban({days:0, reason: reason.length < 1 ? 'No reason supplied.': reason});
-      await this.buildModLog(this.client, message.guild, 'b', target, message.author, reason);
-      await message.channel.send(`\`${target.user.tag}\` was successfully banned.`);
+      await target.ban({days:2, reason: reason.length < 1 ? 'No reason supplied.': reason});
+      await message.guild.unban(target);
+      await this.buildModLog(this.client, message.guild, 's', target, message.author, reason);
+      await message.channel.send(`\`${target.user.tag}\` was successfully softbanned.`);
     } catch (error) {
       throw error;
     }

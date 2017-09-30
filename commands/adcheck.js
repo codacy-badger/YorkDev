@@ -1,17 +1,16 @@
-const Command = require('../base/Command.js');
+const Moderation = require('../base/Moderation.js');
 
-class AdCheck extends Command {
+class AdCheck extends Moderation {
   constructor(client) {
     super(client, {
       name: 'adcheck',
       description: 'Returns a list of users with adverts',
       usage: 'adcheck',
-      category:'Moderation',
       extended: 'This command will check for any discord invite links in members \'Playing\' status.',
       hidden: true,
       guildOnly: true,
       aliases: ['ads', 'checkads'],
-      permLevel: 'Moderator'
+      botPerms: ['SEND_MESSAGES']
     });
   }
 

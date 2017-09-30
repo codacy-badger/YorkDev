@@ -11,6 +11,7 @@ class Deduct extends Social {
       cost: 5,
       hidden: true,
       aliases: ['punish', 'take'],
+      botPerms: ['SEND_MESSAGES'],
       permLevel: 'Moderator'
     });
   }

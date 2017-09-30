@@ -41,6 +41,7 @@ class Command {
       throw error;
     }
   }
+
   async verifyMessage(message, msgid) {
     try {
       const match = /([0-9]{17,20})/.exec(msgid);

@@ -24,6 +24,7 @@ class Page extends Command {
           -import http://url-to-import/
           -list`,
       aliases: ['guide', 'guides', 'g', 'pages', 'p'],
+      botPerms: ['SEND_MESSAGES']
     });
 
     this.init = client => {
