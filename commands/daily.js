@@ -3,7 +3,7 @@ class Daily extends Social {
   constructor(client) {
     super(client, {
       name: 'daily',
-      description: 'Claim or give your daily 50 G points.',
+      description: 'Claim or give your daily points.',
       usage: 'daily [user]',
       category: 'Social',
       extended: 'You can either claim or donate your daily points.',

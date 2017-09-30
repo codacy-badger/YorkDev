@@ -99,7 +99,7 @@ class Social extends Command {
       const response = await message.client.awaitReply(message, `Are you sure you want to pay ${message.guild.member(payee).displayName} ${parseInt(amount)} ${this.emoji(message.guild.id)}?\n\n(**y**es | **n**o)\n\nReply with \`cancel\` to cancel the message. The message will timeout after 60 seconds.`);
 
       if (['yes', 'y', 'confirm'].includes(response.toLowerCase())) {
-        getPayer.points -= parseInt(amount + 1);
+        getPayer.points -= parseInt(amount);
         getPayee.points += parseInt(amount);
         await message.channel.send(`The payment of ${parseInt(amount)}${this.emoji(message.guild.id)} has been sent to ${message.guild.member(payee).displayName}.`);
         await this.client.points.set(`${message.guild.id}-${payer}`, getPayer);
@@ -108,6 +108,8 @@ class Social extends Command {
 
       if (['no', 'n', 'cancel'].includes(response.toLowerCase())) {
         message.channel.send('Payment cancelled');
+      } else {
+        message.channel.send('Invalid response, please try again.');
       }
     } catch (error) {
       throw error;
