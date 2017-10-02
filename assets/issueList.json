@@ -7,10 +7,10 @@
             "solution": "Go to [nodejs.org](https://nodejs.org/en/download/) and update your node version to 6.0.0 or above."
         },
         "async": {
-            "message": "It looks like you are trying to use async! To do this you need node 7.0.0 (you can check this with `node -v`) or newer and you need to use the `--harmony` flag. E.g. `node --harmony bot.js`. Go to https://nodejs.org/en/download/ if you need to update.",
-            "info": "Async needs the harmony flag and node 7.0.0 or above",
-            "problem": "Either an outdated node version, or no harmony flag",
-            "solution": "If your node version is less than 7.0.0 (you can check with `node -v`) go to [nodejs.org](https://nodejs.org/en/download/) and update your node version to 7.0.0 or above\nAlso make sure to run with the `--harmony` flag (note: this flag needs to go *before* your filename). E.g. `node --harmony bot.js`"
+            "message": "It looks like you are trying to use async! To do this you need node 7.6.0 (you can check this with `node -v`) or newer. Go to https://nodejs.org/en/download/ if you need to update.",
+            "info": "Async needs node 7.6.0 or above",
+            "problem": "Outdated node version",
+            "solution": "If your node version is less than 7.6.0 (you can check with `node -v`) go to [nodejs.org](https://nodejs.org/en/download/) and update your node version to 7.6.0 or above\nVersions as far back as 7.0.0 can also use async, but they must be run with the `--harmony` flag, so best just update to 7.6.0 or newer"
         },
         "gyperror": {
             "message": "It looks like you are having gyp errors! You want to install windows-build-tools (`npm i -g windows-build-tools`) if you are on Windows or build-essential (`sudo apt install build-essential`) if you are on Linux",
