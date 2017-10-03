@@ -7,10 +7,7 @@ class Example extends Command {
       description: 'Displays an example.',
       usage: 'example <action> [examplename] <contents>.',
       category: 'Support',
-      extended: `-add newExampleName This is your new example contents
-          -del exampleName
-          -edit existingExampleName This is new example edited contents
-          -list`,
+      extended: '-add newExampleName This is your new example contents\n          -del exampleName\n          -edit existingExampleName This is new example edited contents\n          -list',
       aliases: ['ex', 'examples'],
       botPerms: ['SEND_MESSAGES']
     });

@@ -4,7 +4,7 @@ class AdCheck extends Moderation {
   constructor(client) {
     super(client, {
       name: 'adcheck',
-      description: 'Returns a list of users with adverts',
+      description: 'Returns a list of users with invite links.',
       usage: 'adcheck',
       extended: 'This command will check for any discord invite links in members \'Playing\' status.',
       hidden: true,

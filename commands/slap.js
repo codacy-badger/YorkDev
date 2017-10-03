@@ -22,9 +22,9 @@ class Slap extends Social {
   constructor(client) {
     super(client, {
       name: 'slap',
-      description: 'Slap another user using the Batman & Robin Meme.',
+      description: 'Slap another user as Batman.',
       category: 'Fun',
-      usage: 'slap <mention>',
+      usage: 'slap <@mention>',
       extended: 'Mention another user to slap them.',
       cost: 1,
       botPerms: ['SEND_MESSAGES', 'ATTACH_FILES'],

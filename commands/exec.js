@@ -5,7 +5,7 @@ class Exec extends Command {
   constructor(client) {
     super(client, {
       name: 'exec',
-      description: 'executes a new process, very dangerous',
+      description: 'Executes a new process, very dangerous.',
       usage: 'exec <expression>',
       category: 'System',
       extended: 'This will spawn a child process and execute the given command.',

@@ -5,7 +5,7 @@ class Warn extends Moderation {
     super(client, {
       name: 'warn',
       description: 'Warns a mentioned user, or a user\'s ID',
-      usage: 'warn <mention> <reason>',
+      usage: 'warn <@mention> <reason>',
       extended: 'This warns the mentioned user, with a reason.',
       aliases: ['caution'],
       botPerms: ['SEND_MESSAGES', 'EMBED_LINKS']

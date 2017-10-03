@@ -224,16 +224,16 @@ module.exports = (client) => {
     });
   });
 
-  app.get('/docs', (req, res) => {
+  app.get('/commands', (req, res) => {
     if (req.isAuthenticated()) {
-      res.render(path.resolve(`${templateDir}${path.sep}docs.ejs`), {
+      res.render(path.resolve(`${templateDir}${path.sep}commands.ejs`), {
         bot: client,
         auth: true,
         user: req.user,
         md: md
       });
     } else {
-      res.render(path.resolve(`${templateDir}${path.sep}docs.ejs`), {
+      res.render(path.resolve(`${templateDir}${path.sep}commands.ejs`), {
         bot: client,
         auth: false,
         user: null,

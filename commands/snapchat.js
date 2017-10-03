@@ -23,10 +23,10 @@ class SnapChat extends Social {
   constructor(client) {
     super(client, {
       name: 'snapchat',
-      description: 'Creates a meme based on the But MOOOOOM statue.',
+      description: 'Creates a snapchat based meme.',
       usage: 'snapchat <text>',
       category: 'Fun',
-      extended: 'This Social uses canvas to generate a Snapchat styled image based on the well known _But MOOOOOM_ statue meme.',
+      extended: 'This command uses canvas to generate a Snapchat styled image based on the well known statue meme.',
       cost: 5,
       aliases: ['sc'],
       botPerms: ['SEND_MESSAGES', 'ATTACH_FILES']

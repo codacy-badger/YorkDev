@@ -5,7 +5,7 @@ class Patreon extends Command {
   constructor(client) {
     super(client, {
       name: 'patreon',
-      description: 'Displays patreon information',
+      description: 'Displays patreon pledge information.',
       usage: 'patreon',
       category: 'General',
       extended: 'Pulls up a list of current Patreon tiers to support York.',

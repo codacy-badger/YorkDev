@@ -25,10 +25,10 @@ class Blame extends Social {
   constructor(client) {
     super(client, {
       name: 'blame',
-      description: 'Blame someone in canvas form',
-      usage: 'blame <user>',
+      description: 'Assign the blame to someone else.',
+      usage: 'blame [mention]',
       category: 'Fun',
-      extended: 'Use canvas to blame a fellow user.',
+      extended: 'Blame someone else via this command.',
       cost: 5,
       botPerms: ['SEND_MESSAGES', 'ATTACH_FILES']
     });

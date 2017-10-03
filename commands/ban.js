@@ -4,8 +4,8 @@ class Ban extends Moderation {
   constructor(client) {
     super(client, {
       name: 'ban',
-      description: 'Bans a mentioned user, or a user\'s ID',
-      usage: 'ban <mention> [reason]',
+      description: 'Bans a nominated user.',
+      usage: 'ban <@mention> [reason]',
       extended: 'This bans the mentioned user, with or without a reason.',
       aliases: ['B&', 'b&', 'banne', 'bean'],
       botPerms: ['SEND_MESSAGES', 'BAN_MEMBERS', 'EMBED_LINKS']

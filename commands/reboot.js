@@ -4,11 +4,13 @@ class Reboot extends Command {
   constructor(client) {
     super(client, {
       name: 'reboot',
-      description: 'Shuts down the bot.',
+      description: 'Restarts the bot.',
       category: 'System',
       usage: 'reboot',
+      extended: 'Using this command with PM2 or Forever will cause the bot to exit cleanly, then the process manager will revive it.',
+      aliases: ['restart'],
       botPerms: ['SEND_MESSAGES'],
-      permLevel: 'Moderator'
+      permLevel: 'Bot Admin'
     });
   }
 

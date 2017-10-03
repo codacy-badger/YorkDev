@@ -4,14 +4,14 @@ class Reply extends Command {
   constructor(client) {
     super(client, {
       name: 'reply',
-      description: 'Support use only',
+      description: 'Support Guild use only.',
       usage: 'reply <message>',
       category: 'System',
       extended: 'Responds to a support channel.',
       hidden: true,
       guildOnly: true,
       botPerms: ['SEND_MESSAGES'],
-      permLevel: 'Bot Owner'
+      permLevel: 'Bot Support'
     });
   }
 

@@ -13,7 +13,7 @@ class Mock extends Social {
   constructor(client) {
     super(client, {
       name: 'mock',
-      description: 'Mocks the previous person that sent a message.',
+      description: 'Mocks a nominated message.',
       usage: 'mock',
       category: 'Fun',
       extended: 'Based on the popular Spongebob Squarepants mocking meme.',

@@ -4,8 +4,8 @@ class Ban extends Moderation {
   constructor(client) {
     super(client, {
       name: 'softban',
-      description: 'Bans a mentioned user, or a user\'s ID, then unbans them.',
-      usage: 'softban <mention> [reason]',
+      description: 'Bans a nominated user, then unbans them.',
+      usage: 'softban <@mention> [reason]',
       extended: 'A hard kick. It kicks so hard, all the user\'s messages of the last 2 days are deleted.',
       aliases: ['gentlebann', 'hardkick'],
       botPerms: ['SEND_MESSAGES', 'BAN_MEMBERS', 'EMBED_LINKS']

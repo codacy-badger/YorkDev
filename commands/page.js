@@ -13,16 +13,10 @@ class Page extends Command {
   constructor(client) {
     super(client, {
       name: 'page',
-      description: 'Returns page details from the awesome bot guide.',
+      description: 'Returns page details from the guidebook.',
       usage: 'page [-list] [name]',
       category:'Support',
-      extended: `-add newPageName /path/to/page.html Snippet describing the page
-          -del pageName
-          -edit pageName This is new new edited snippet
-          -rename pageName newName
-          -export // exports and returns URL
-          -import http://url-to-import/
-          -list`,
+      extended: '-add newPageName /path/to/page.html Snippet describing the page\n          -del pageName\n          -edit pageName This is new new edited snippet\n          -rename pageName newName\n          -export // exports and returns URL\n          -import http://url-to-import/\n          -list',
       aliases: ['guide', 'guides', 'g', 'pages', 'p'],
       botPerms: ['SEND_MESSAGES']
     });

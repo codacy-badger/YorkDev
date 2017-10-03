@@ -1,6 +1,6 @@
 <%- include('blocks/header', {bot: bot, user: user, auth: auth}) %>
 <div class="jumbotron">
-    <div class="col-sm-8 mx-auto">
+    <div>
       <h1><%= bot.user.username %> Dashboard</h1>
       <p>Obviously, there should be some witty, entertaining, inspired description of the bot here.</p>
       <p>
@@ -29,12 +29,6 @@
           <p><a class="btn btn-secondary" href="/login" role="button">Login »</a></p>
         </div>
       </div>
-
-      <hr>
-
-      <footer class="footer">
-        <p>© Company 2017</p>
-      </footer>
     </div>
 
 <% include ./blocks/footer %>

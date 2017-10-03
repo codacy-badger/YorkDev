@@ -4,10 +4,10 @@ class Deduct extends Social {
   constructor(client) {
     super(client, {
       name: 'deduct',
-      description: 'Takes a supplied amount of points away from the user.',
+      description: 'Takes points away from the nominated user.',
       usage: 'deduct <@mention|userid> <amount>',
       category:'Moderation',
-      extended: 'This will give a mentioned user (or userid) a reward set via the command.',
+      extended: 'This will take points away from a nominated user.',
       cost: 5,
       hidden: true,
       aliases: ['punish', 'take'],

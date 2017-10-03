@@ -6,7 +6,7 @@ class IsNowIllegal extends Social {
   constructor(client) {
     super(client, {
       name: 'illegal',
-      description: 'Get US President Trump to make something illegal.',
+      description: 'US President Trump makes something illegal.',
       usage: 'illegal <thing>',
       category:'Fun',
       extended: 'Powered by IsNowIllegal.com, get US President Trump to make anything illegal.',

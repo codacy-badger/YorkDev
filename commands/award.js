@@ -4,10 +4,10 @@ class Award extends Social {
   constructor(client) {
     super(client, {
       name: 'award',
-      description: 'Gives a mentioned user (or userid) a reward',
+      description: 'Gives a nominated user points.',
       usage: 'award <@mention|userid> <amount>',
       category:'Moderation',
-      extended: 'This will give a mentioned user (or userid) a reward set via the command.',
+      extended: 'This will give points to a nominated user.',
       cost: 0,
       hidden: true,
       aliases: ['reward', 'give'],

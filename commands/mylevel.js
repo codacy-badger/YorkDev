@@ -5,7 +5,7 @@ class MyLevel extends Command {
     super(client, {
       name: 'mylevel',
       category: 'General',
-      description: 'Tells you your permission level for the current guild.',
+      description: 'Tells you your current level for your location.',
       usage: 'mylevel',
       extended: 'This will display your permission level, in both numerical and plain English styles.',
       guildOnly: true,

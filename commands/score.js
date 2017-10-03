@@ -4,7 +4,7 @@ class Score extends Social {
   constructor(client) {
     super(client, {
       name: 'score',
-      description: 'Displays your current activity level and G points.',
+      description: 'Displays your current level and points.',
       usage: 'score',
       category: 'Social',
       cost: 0,

@@ -4,9 +4,9 @@ class Kick extends Moderation {
   constructor(client) {
     super(client, {
       name: 'kick',
-      description: 'Kicks a mentioned user, or a user\'s ID',
-      usage: 'kick <mention> [reason]',
-      extended: 'This kicks the mentioned user, with or without a reason.',
+      description: 'Kicks a nominated user.',
+      usage: 'kick <@mention|userid> [reason]',
+      extended: 'This kicks the nominated user, with or without a reason.',
       aliases: ['toss', 'boot', 'throw'],
       botPerms: ['SEND_MESSAGES', 'KICK_MEMBERS', 'EMBED_LINKS']
     });

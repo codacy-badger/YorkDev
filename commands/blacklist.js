@@ -4,12 +4,12 @@ class Blacklist extends Moderation {
   constructor(client) {
     super(client, {
       name: 'blacklist',
-      description: 'blacklists mentioned user.',
+      description: 'Blacklists a nominated user.',
       usage: 'blacklist <mention/userid>',
       category: 'Moderation',
-      extended: 'Blacklist members from using the bot via mention or user id.',
+      extended: 'This is a global blacklist, any user on this list cannot use the bot at all.',
       botPerms: ['SEND_MESSAGES'],
-      permLevel: 'Moderator'
+      permLevel: 'Bot Admin'
     });
   }
 
