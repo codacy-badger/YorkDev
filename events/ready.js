@@ -8,6 +8,6 @@ module.exports = class {
     await this.client.user.setGame(`${this.client.config.defaultSettings.prefix}help | ${this.client.guilds.size} Servers`);
     this.client.guilds.filter(g => !this.client.settings.has(g.id)).forEach(g => this.client.settings.set(g.id, this.client.config.defaultSettings));
     if (!this.client.blacklist.get('list')) this.client.blacklist.set('list', []);
-    // require('../functions/dashboard.js').init(client);
+    require('../functions/dashboard.js')(this.client);
   }
 };

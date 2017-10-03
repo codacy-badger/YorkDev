@@ -1,5 +1,5 @@
 // For dashboard stuff.
-// npm install body-parser ejs express express-session hbs helmet marked passport passport-discord
+// npm install body-parser ejs express express-passport express-session marked passport passport-discord
 const { Client } = require('discord.js');
 const {readdir} = require('fs-nextra');
 const Enmap = require('enmap');
@@ -62,8 +62,8 @@ const init = async () => {
       const props = new (require(`./commands/${f}`))(client);
       if (f.split('.').slice(-1)[0] !== 'js') return;
       client.log('log', `Loading Command: ${props.help.name}. ✔`);
-      client.commands.set(props.help.name, props);
       if (props.init) props.init(client);
+      client.commands.set(props.help.name, props);
       props.conf.aliases.forEach(alias => {
         client.aliases.set(alias, props.help.name);
       });

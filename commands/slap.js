@@ -26,7 +26,7 @@ class Slap extends Social {
       category: 'Fun',
       usage: 'slap <mention>',
       extended: 'Mention another user to slap them.',
-      cost: 3,
+      cost: 1,
       botPerms: ['SEND_MESSAGES', 'ATTACH_FILES'],
       permLevel: 'Patron'
     });
