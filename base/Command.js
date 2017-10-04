@@ -42,6 +42,12 @@ class Command {
     }
   }
 
+  async verifyMember(guild, member) {
+    const user = await this.verifyUser(member);
+    const target = await guild.fetchMember(user);
+    return target;
+  }
+
   async verifyMessage(message, msgid) {
     try {
       const match = /([0-9]{17,20})/.exec(msgid);
