@@ -34,12 +34,12 @@ class Slap extends Social {
   async run(message, args, level) {
 
     try {
+      const slapped = message.mentions.users.first();
+      const slapper = message.author;
+      if (slapped.id === slapper.id) throw 'Quit hitting yourself, quit hitting yourself, quit hitting yourself...';
       const cost = this.cmdDis(this.help.cost, level);
       const payMe = await this.cmdPay(message, message.author.id, cost, this.conf.botPerms);
       if (!payMe) return;  
-      const slapped = message.mentions.users.first().id;
-      const slapper = message.author.id;
-      if (slapper.id === slapped.id) throw 'Quit hitting yourself, quit hitting yourself, quit hitting yourself...';
       const msg = await message.channel.send('Finding Robin...');
 
       const result = await getSlapped(slapper.displayAvatarURL, slapped.displayAvatarURL);
