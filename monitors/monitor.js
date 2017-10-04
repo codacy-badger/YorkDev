@@ -13,8 +13,35 @@ module.exports = class {
     this.antiInvite(client, message, level);
   }
 
-  static givePoints(client, message, level) { // eslint-disable-line no-unused-vars
+  static async isMessageSubstantial(message) {
+    const str = message.content.toLowerCase();
+    const mentions = message.mentions;
+    // If you think about it, a lot of insubstantial messages don't have "the", "this", or "that" in them.
+    const substantialWords = [
+      'the', 'this', 'that',
+      'js', 'javascript', 'node', 'nodejs', 'code', 'pars'/*-e, -ing*/, 'script', 'clojure', 'sql',
+      'komada', 'klasa', 'dirigeants', 'discord', 'moment', 'snekfetch', 'dithcord',
+      'guide', 'video', 'york', 'evie', 'bot', 'dev', 'git'/*& github*/, 'glitch', 'heroku', 'host', 'vps',
+    ].concat(Object.keys(process.binding('natives')));
+    const insubstantialWords = ['lol', 'lul', 'lel', 'kek', 'xd', '¯\\_(ツ)_/¯', 'dicksword', 'gus'];
+    const necessarySubstance = 10;
+
+    if (mentions.everyone) return false;
+
+    let substance = 0;
+    if (str.length > 'lol xD'.length) substance += 400 * ((substance - 5) / 1995) + 7;
+    substance += substantialWords.reduce((num, word) => str.includes(word) ? num + 2 : num, 0);
+    substance -= insubstantialWords.reduce((num, word) => str.includes(word) ? num + 1 : num, 0);
+    if (mentions.users.size > 0) substance -= mentions.users.size;
+    else substance += 2;
+    const member = await message.guild.fetchMember(message.member);
+    if (member.roles && member.roles.some(r => ['272727812614651905', '260820677756452864'].includes(r.id))) substance += 2;
+    return substance >= necessarySubstance;
+  }
+
+  static async givePoints(client, message, level) { // eslint-disable-line no-unused-vars
     if (message.channel.type !== 'text') return;
+    if (!await this.isMessageSubstantial(message)) return;
     const settings = message.settings;
     if (message.content.startsWith(settings.prefix) || message.content.startsWith('docs, ')) return;
     const score = client.points.get(`${message.guild.id}-${message.author.id}`) || { points: 200, level: 1, user: message.author.id, guild: message.guild.id, daily: 1504120109 };
