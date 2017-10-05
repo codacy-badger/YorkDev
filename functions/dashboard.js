@@ -168,7 +168,7 @@ module.exports = (client) => {
       res.redirect(req.session.backURL);
       req.session.backURL = null;
     } else {
-      res.redirect('/autherror');
+      res.redirect('/');
     }
   });
 
