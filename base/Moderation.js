@@ -38,12 +38,6 @@ class Moderation extends Command {
     }
   }
 
-  async verifyMember(guild, member) {
-    const user = await this.verifyUser(member);
-    const target = await guild.fetchMember(user);
-    return target;
-  }
-
   embedSan(embed) {
     embed.message ? delete embed.message : null;
     embed.footer ? delete embed.footer.embed : null;

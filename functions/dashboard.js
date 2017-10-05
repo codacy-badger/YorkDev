@@ -72,7 +72,7 @@ module.exports = (client) => {
   See config.js.example to set these up. 
   */
   passport.use(new Strategy({
-    clientID: client.config.dashboard.clientID,
+    clientID: client.appInfo.id,
     clientSecret: client.config.dashboard.oauthSecret,
     callbackURL: client.config.dashboard.callbackURL,
     scope: ['identify', 'guilds']
@@ -191,7 +191,7 @@ module.exports = (client) => {
   });
 
 
-  app.post('/manage/:guildID', checkAuth, async (req, res) => {
+  app.post('/manage/:guildID', checkAuth, (req, res) => {
     const guild = client.guilds.get(req.params.guildID);
     if (!guild) return res.status(404);
     const isManaged = guild && !!guild.member(req.user.id) ? guild.member(req.user.id).permissions.has('MANAGE_GUILD') : false;
@@ -207,7 +207,8 @@ module.exports = (client) => {
     client.settings.set(guild.id, settings);
     res.redirect('/manage/'+req.params.guildID);
   });
-  app.get('/manage/:guildID', checkAuth, async (req, res) => {
+
+  app.get('/manage/:guildID', checkAuth, (req, res) => {
     const guild = client.guilds.get(req.params.guildID);
     if (!guild) return res.status(404);
     const isManaged = guild && !!guild.member(req.user.id) ? guild.member(req.user.id).permissions.has('MANAGE_GUILD') : false;
@@ -222,6 +223,35 @@ module.exports = (client) => {
       user: req.user,
       auth: true
     });
+  });
+
+  app.get('/leave/:guildID', checkAuth, async (req, res) => {
+    const guild = client.guilds.get(req.params.guildID);
+    if (!guild) return res.status(404);
+    const isManaged = guild && !!guild.member(req.user.id) ? guild.member(req.user.id).permissions.has('MANAGE_GUILD') : false;
+    if (req.user.id === client.config.ownerID) {
+      console.log(`Admin bypass for managing server: ${req.params.guildID}`);
+    } else if (!isManaged) {
+      res.redirect('/');
+    }
+    await guild.leave();
+    if (req.user.id === client.config.ownerID) {
+      return res.redirect('/admin');
+    }
+    res.redirect('/dashboard');
+  });
+
+  app.get('/reset/:guildID', checkAuth, async (req, res) => {
+    const guild = client.guilds.get(req.params.guildID);
+    if (!guild) return res.status(404);
+    const isManaged = guild && !!guild.member(req.user.id) ? guild.member(req.user.id).permissions.has('MANAGE_GUILD') : false;
+    if (req.user.id === client.config.ownerID) {
+      console.log(`Admin bypass for managing server: ${req.params.guildID}`);
+    } else if (!isManaged) {
+      res.redirect('/');
+    }
+    client.settings.set(guild.id, client.config.defaultSettings);
+    res.redirect('/manage/'+req.params.guildID);
   });
 
   app.get('/commands', (req, res) => {
