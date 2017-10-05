@@ -101,7 +101,7 @@ module.exports = class {
     const settings = client.settings.get(message.guild.id);
     const person = message.mentions.members.first();
     if (!person) return;
-    if (person.id !== client.config.ownerID) return;
+    if (person.id !== client.appInfo.owner.id) return;
     if (settings.afk === 'true') {
       message.reply(`${person.displayName} ${settings.afkMessage}`);
     }

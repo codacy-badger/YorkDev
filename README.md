@@ -38,9 +38,6 @@ Once finished:
 
 ```js
 const config = {
-  // Bot Owner, level 10 by default. A User ID. Should never be anything else than the bot owner's ID.
-  'ownerID': '123456789123456',
-
   // Bot Admins, level 9 by default. Array of user ID strings.
   'admins': [],
 
@@ -173,7 +170,7 @@ const config = {
     { level: 10,
       name: 'Bot Owner',
       // Another simple check, compares the message author id to the one stored in the config file.
-      check: (message) => message.client.config.ownerID === message.author.id
+      check: (message) => message.client.appInfo.owner.id === message.author.id
     }
   ]
 };
