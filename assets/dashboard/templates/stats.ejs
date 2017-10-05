@@ -1,0 +1,48 @@
+
+<%- include('blocks/header', {bot: bot, user: user, auth: auth, stats: stats}) %>
+<div class="container">
+  <div class="jumbotron">
+    <div>
+      <center><h3>Live Statistics.</h3></center>
+      <table id="statstable" class="table" align="center">
+        <tbody>
+          <tr width="400">
+            <td width="20px"><i class="fa fa-server" aria-hidden="true"></i></td>
+            <td width="130px">Servers:</td>
+            <td><strong><%= stats.servers %></strong></td>
+            <td width="30px"></td>
+            <td width="20px"><i class="fa fa-clock-o" aria-hidden="true"></i></td>
+            <td colspan="2">Uptime: <strong><%= stats.uptime %></strong></td>
+          </tr>
+          <tr>
+            <td><i class="fa fa-users" aria-hidden="true"></i></td>
+            <td>Members:</td>
+            <td><strong><%= stats.members %></strong></td>
+            <td width="30px"></td>
+            <td><i class="fa fa-tasks" aria-hidden="true"></i></td>
+            <td>Memory:</td>
+            <td><strong><%= stats.memoryUsage %> MB</strong></td>
+          </tr>
+          <tr>
+            <td><i class="fa fa-hashtag" aria-hidden="true"></i></td>
+            <td>Text Channels:</td>
+            <td><strong><%= stats.text %></strong></td>
+            <td width="30px"></td>
+            <td><i class="fa fa-cogs" aria-hidden="true"></i></td>
+            <td>Discord.js Version:</td>
+            <td><strong><%= stats.dVersion %></strong></td>
+          </tr>
+          <tr>
+            <td><i class="fa fa-microphone" aria-hidden="true"></i></td>
+            <td>Voice Channels:</td>
+            <td><strong><%= stats.voice %></strong></td>
+            <td width="30px"></td>
+            <td><i class="fa fa-cog" aria-hidden="true"></i></td>
+            <td>Node.js Version:</td>
+            <td><strong><%= stats.nVersion %></strong></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <% include ./blocks/footer %>

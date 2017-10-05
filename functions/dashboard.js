@@ -22,6 +22,8 @@ const Discord = require('discord.js');
 // Express Session
 const express = require('express');
 const app = express();
+const moment = require('moment');
+require('moment-duration-format');
 
 // Express Plugins
 // Specifically, passport helps with oauth2 in general.
@@ -121,7 +123,7 @@ module.exports = (client) => {
   }
 
   function checkAdmin(req, res, next) {
-    if (req.isAuthenticated() && req.user.id === client.config.ownerID) return next();
+    if (req.isAuthenticated() && req.user.id === client.appInfo.owner.id) return next();
     req.session.backURL = req.originalURL;
     res.redirect('/');
   }
@@ -140,6 +142,47 @@ module.exports = (client) => {
         bot: client,
         auth: false,
         user: null
+      });
+    }
+  });
+
+  app.get('/stats', (req, res) => {
+    const duration = moment.duration(client.uptime).format(' D [days], H [hrs], m [mins], s [secs]');
+    const members = client.guilds.reduce((p, c) => p + c.memberCount, 0);
+    const textChannels = client.channels.filter(c => c.type === 'text').size;
+    const voiceChannels = client.channels.filter(c => c.type === 'voice').size;
+    const guilds = client.guilds.size;
+    if (req.isAuthenticated()) {
+      res.render(path.resolve(`${templateDir}${path.sep}stats.ejs`), {
+        bot: client,
+        auth: true,
+        user: req.user,
+        stats: {
+          servers: guilds,
+          members: members,
+          text: textChannels,
+          voice: voiceChannels,
+          uptime: duration,
+          memoryUsage: (process.memoryUsage().heapUsed / 1024 / 1024).toFixed(2),
+          dVersion: Discord.version,
+          nVersion: process.version
+        }
+      });
+    } else {
+      res.render(path.resolve(`${templateDir}${path.sep}stats.ejs`), {
+        bot: client,
+        auth: false,
+        user: null,
+        stats: {
+          servers: guilds,
+          members: members,
+          text: textChannels,
+          voice: voiceChannels,
+          uptime: duration,
+          memoryUsage: (process.memoryUsage().heapUsed / 1024 / 1024).toFixed(2),
+          dVersion: Discord.version,
+          nVersion: process.version
+        }
       });
     }
   });
@@ -211,7 +254,7 @@ module.exports = (client) => {
     const guild = client.guilds.get(req.params.guildID);
     if (!guild) return res.status(404);
     const isManaged = guild && !!guild.member(req.user.id) ? guild.member(req.user.id).permissions.has('MANAGE_GUILD') : false;
-    if (req.user.id === client.config.ownerID) {
+    if (req.user.id === client.appInfo.owner.id) {
       console.log(`Admin bypass for managing server: ${req.params.guildID}`);
     } else if (!isManaged) {
       res.redirect('/');
@@ -228,7 +271,7 @@ module.exports = (client) => {
     const guild = client.guilds.get(req.params.guildID);
     if (!guild) return res.status(404);
     const isManaged = guild && !!guild.member(req.user.id) ? guild.member(req.user.id).permissions.has('MANAGE_GUILD') : false;
-    if (req.user.id === client.config.ownerID) {
+    if (req.user.id === client.appInfo.owner.id) {
       console.log(`Admin bypass for managing server: ${req.params.guildID}`);
     } else if (!isManaged) {
       res.redirect('/');
@@ -245,13 +288,13 @@ module.exports = (client) => {
     const guild = client.guilds.get(req.params.guildID);
     if (!guild) return res.status(404);
     const isManaged = guild && !!guild.member(req.user.id) ? guild.member(req.user.id).permissions.has('MANAGE_GUILD') : false;
-    if (req.user.id === client.config.ownerID) {
+    if (req.user.id === client.appInfo.owner.id) {
       console.log(`Admin bypass for managing server: ${req.params.guildID}`);
     } else if (!isManaged) {
       res.redirect('/');
     }
     await guild.leave();
-    if (req.user.id === client.config.ownerID) {
+    if (req.user.id === client.appInfo.owner.id) {
       return res.redirect('/admin');
     }
     res.redirect('/dashboard');
@@ -261,7 +304,7 @@ module.exports = (client) => {
     const guild = client.guilds.get(req.params.guildID);
     if (!guild) return res.status(404);
     const isManaged = guild && !!guild.member(req.user.id) ? guild.member(req.user.id).permissions.has('MANAGE_GUILD') : false;
-    if (req.user.id === client.config.ownerID) {
+    if (req.user.id === client.appInfo.owner.id) {
       console.log(`Admin bypass for managing server: ${req.params.guildID}`);
     } else if (!isManaged) {
       res.redirect('/');
