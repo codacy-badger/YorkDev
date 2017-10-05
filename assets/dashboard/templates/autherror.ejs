@@ -1,0 +1,17 @@
+<%- include('blocks/header', {bot: bot, user: user, auth: auth}) %>
+<div class="container">
+  <div class="jumbotron">
+    <div>
+      <h1 class="text-warning">Authentication Error</h1>
+      <p>There has been a problem with authentication.</p>
+    </div>
+  </div>
+  <!-- Example row of columns -->
+  <div class="row">
+    <div class="col-md-4">
+      <h2>Discord Server</h2>
+      <p>If you need assistance creating bots, we're more than eager to help!</p>
+      <p><a class="btn btn-secondary" href="https://discord.gg/9ESEZAx" role="button">Join Server »</a></p>
+    </div>
+  </div>
+  <% include ./blocks/footer %>

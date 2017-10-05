@@ -168,7 +168,23 @@ module.exports = (client) => {
       res.redirect(req.session.backURL);
       req.session.backURL = null;
     } else {
-      res.redirect('/');
+      res.redirect('/autherror');
+    }
+  });
+
+  app.get('/autherror', (req, res) => {
+    if (req.isAuthenticated()) {
+      res.render(path.resolve(`${templateDir}${path.sep}autherror.ejs`), {
+        bot: client,
+        auth: true,
+        user: req.user
+      });
+    } else {
+      res.render(path.resolve(`${templateDir}${path.sep}autherror.ejs`), {
+        bot: client,
+        auth: false,
+        user: null
+      });
     }
   });
 
