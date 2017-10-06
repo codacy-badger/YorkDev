@@ -41,7 +41,7 @@ const md = require('marked');
 module.exports = (client) => {
   // It's easier to deal with complex paths. 
   // This resolves to: yourbotdir/dashboard/
-  const dataDir = path.resolve(`${process.cwd()}${path.sep}dashboard`);
+  const dataDir = path.resolve(`${process.cwd()}${path.sep}assets/dashboard`);
 
   // This resolves to: yourbotdir/dashboard/templates/ 
   // which is the folder that stores all the internal template files.
