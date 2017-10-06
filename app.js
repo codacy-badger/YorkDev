@@ -43,6 +43,39 @@ class YorkDev extends Client {
     return message.channel.permissionsFor(message.guild.me).missing(perms);
   }
 
+  loadCommand(commandName) {
+    try {
+      const props = new (require(`./commands/${commandName}`))(client);
+      client.log('log', `Loading Command: ${props.help.name}. 👌`);
+      if (props.init) {
+        props.init(client);
+      }
+      client.commands.set(props.help.name, props);
+      props.conf.aliases.forEach(alias => {
+        client.aliases.set(alias, props.help.name);
+      });
+      return false;
+    } catch (e) {
+      return `Unable to load command ${commandName}: ${e}`;
+    }
+  }
+
+  async unloadCommand(commandName) {
+    let command;
+    if (client.commands.has(commandName)) {
+      command = client.commands.get(commandName);
+    } else if (client.aliases.has(commandName)) {
+      command = client.commands.get(client.aliases.get(commandName));
+    }
+    if (!command) return `The command \`${commandName}\` doesn"t seem to exist, nor is it an alias. Try again!`;
+  
+    if (command.shutdown) {
+      await command.shutdown(client);
+    }
+    delete require.cache[require.resolve(`./commands/${commandName}.js`)];
+    return false;
+  }
+
 }
 
 const client = new YorkDev({
@@ -58,20 +91,11 @@ const init = async () => {
   const cmdFiles = await readdir('./commands/');
   client.log('log', `Loading a total of ${cmdFiles.length} commands.`);
   cmdFiles.forEach(f => {
-    try {
-      const props = new (require(`./commands/${f}`))(client);
-      if (f.split('.').slice(-1)[0] !== 'js') return;
-      client.log('log', `Loading Command: ${props.help.name}. ✔`);
-      if (props.init) props.init(client);
-      client.commands.set(props.help.name, props);
-      props.conf.aliases.forEach(alias => {
-        client.aliases.set(alias, props.help.name);
-      });
-    } catch (error) {
-      client.log(`Unable to load command ${f}: ${error}`);
-    }
+    if (!f.endsWith('.js')) return;
+    const response = client.loadCommand(f);
+    if (response) console.log(response);
   });
-
+  
   const evtFiles = await readdir('./events/');
   client.log('log', `Loading a total of ${evtFiles.length} events.`);
   evtFiles.forEach(file => {
