@@ -1,15 +1,18 @@
 /* 
-DASHBOARD EXAMPLE
+  DASHBOARD EXAMPLE
 
-This is a very simple dashboard example, but even in its simple state, there are still a
-lot of moving parts working together to make this a reality. I shall attempt to explain
-those parts in as much details as possible, but be aware: there's still a lot of complexity
-and you shouldn't expect to really understand all of it instantly.
+  Install the following for dashboard stuff.
+  npm install body-parser ejs express express-passport express-session marked passport passport-discord
 
-Pay attention, be aware of the details, and read the comments. 
+  This is a very simple dashboard example, but even in its simple state, there are still a
+  lot of moving parts working together to make this a reality. I shall attempt to explain
+  those parts in as much details as possible, but be aware: there's still a lot of complexity
+  and you shouldn't expect to really understand all of it instantly.
 
-Note that this *could* be split into multiple files, but for the purpose of this
-example, putting it in one file is a little simpler. Just *a little*.
+  Pay attention, be aware of the details, and read the comments. 
+
+  Note that this *could* be split into multiple files, but for the purpose of this
+  example, putting it in one file is a little simpler. Just *a little*.
 */
 
 // Native Node Imports
@@ -38,16 +41,11 @@ const md = require('marked');
 module.exports = (client) => {
   // It's easier to deal with complex paths. 
   // This resolves to: yourbotdir/dashboard/
-  const dataDir = path.resolve(`${process.cwd()}${path.sep}assets/dashboard`);
+  const dataDir = path.resolve(`${process.cwd()}${path.sep}dashboard`);
 
   // This resolves to: yourbotdir/dashboard/templates/ 
   // which is the folder that stores all the internal template files.
   const templateDir = path.resolve(`${dataDir}${path.sep}templates`);
-
-
-  // The public data directory, which is accessible from the *browser*. 
-  // It contains all css, client javascript, and images needed for the site.
-  app.use('/public', express.static(path.resolve(`${dataDir}${path.sep}public`)));
 
   // uhhhh check what these do. 
   passport.serializeUser((user, done) => {
@@ -58,20 +56,20 @@ module.exports = (client) => {
   });
 
   /* 
-  This defines the **Passport** oauth2 data. A few things are necessary here.
+    This defines the **Passport** oauth2 data. A few things are necessary here.
   
-  clientID = Your bot's client ID, at the top of your app page. Please note, 
+    clientID = Your bot's client ID, at the top of your app page. Please note, 
     older bots have BOTH a client ID and a Bot ID. Use the Client one.
-  clientSecret: The secret code at the top of the app page that you have to 
+    clientSecret: The secret code at the top of the app page that you have to 
     click to reveal. Yes that one we told you you'd never use.
-  callbackURL: The URL that will be called after the login. This URL must be
+    callbackURL: The URL that will be called after the login. This URL must be
     available from your PC for now, but must be available publically if you're
     ever to use this dashboard in an actual bot. 
-  scope: The data scopes we need for data. identify and guilds are sufficient
+    scope: The data scopes we need for data. identify and guilds are sufficient
     for most purposes. You might have to add more if you want access to more
     stuff from the user. See: https://discordapp.com/developers/docs/topics/oauth2 
 
-  See config.js.example to set these up. 
+    See config.js.example to set these up. 
   */
   passport.use(new Strategy({
     clientID: client.appInfo.id,
@@ -131,19 +129,11 @@ module.exports = (client) => {
   // Index page. If the user is authenticated, it shows their info
   // at the top right of the screen.
   app.get('/', (req, res) => {
-    if (req.isAuthenticated()) {
-      res.render(path.resolve(`${templateDir}${path.sep}index.ejs`), {
-        bot: client,
-        auth: true,
-        user: req.user
-      });
-    } else {
-      res.render(path.resolve(`${templateDir}${path.sep}index.ejs`), {
-        bot: client,
-        auth: false,
-        user: null
-      });
-    }
+    res.render(path.resolve(`${templateDir}${path.sep}index.ejs`), {
+      bot: client,
+      auth: req.isAuthenticated() ? true : false,
+      user: req.isAuthenticated() ? req.user : null
+    });
   });
 
   app.get('/stats', (req, res) => {
@@ -152,39 +142,21 @@ module.exports = (client) => {
     const textChannels = client.channels.filter(c => c.type === 'text').size;
     const voiceChannels = client.channels.filter(c => c.type === 'voice').size;
     const guilds = client.guilds.size;
-    if (req.isAuthenticated()) {
-      res.render(path.resolve(`${templateDir}${path.sep}stats.ejs`), {
-        bot: client,
-        auth: true,
-        user: req.user,
-        stats: {
-          servers: guilds,
-          members: members,
-          text: textChannels,
-          voice: voiceChannels,
-          uptime: duration,
-          memoryUsage: (process.memoryUsage().heapUsed / 1024 / 1024).toFixed(2),
-          dVersion: Discord.version,
-          nVersion: process.version
-        }
-      });
-    } else {
-      res.render(path.resolve(`${templateDir}${path.sep}stats.ejs`), {
-        bot: client,
-        auth: false,
-        user: null,
-        stats: {
-          servers: guilds,
-          members: members,
-          text: textChannels,
-          voice: voiceChannels,
-          uptime: duration,
-          memoryUsage: (process.memoryUsage().heapUsed / 1024 / 1024).toFixed(2),
-          dVersion: Discord.version,
-          nVersion: process.version
-        }
-      });
-    }
+    res.render(path.resolve(`${templateDir}${path.sep}stats.ejs`), {
+      bot: client,
+      auth: req.isAuthenticated() ? true : false,
+      user: req.isAuthenticated() ? req.user : null,
+      stats: {
+        servers: guilds,
+        members: members,
+        text: textChannels,
+        voice: voiceChannels,
+        uptime: duration,
+        memoryUsage: (process.memoryUsage().heapUsed / 1024 / 1024).toFixed(2),
+        dVersion: Discord.version,
+        nVersion: process.version
+      }
+    });
   });
 
   // The login page saves the page the person was on in the session,
@@ -216,19 +188,11 @@ module.exports = (client) => {
   });
 
   app.get('/autherror', (req, res) => {
-    if (req.isAuthenticated()) {
-      res.render(path.resolve(`${templateDir}${path.sep}autherror.ejs`), {
-        bot: client,
-        auth: true,
-        user: req.user
-      });
-    } else {
-      res.render(path.resolve(`${templateDir}${path.sep}autherror.ejs`), {
-        bot: client,
-        auth: false,
-        user: null
-      });
-    }
+    res.render(path.resolve(`${templateDir}${path.sep}autherror.ejs`), {
+      bot: client,
+      auth: req.isAuthenticated() ? true : false,
+      user: req.isAuthenticated() ? req.user : null
+    });
   });
 
   app.get('/admin', checkAdmin, (req, res) => {
@@ -314,21 +278,12 @@ module.exports = (client) => {
   });
 
   app.get('/commands', (req, res) => {
-    if (req.isAuthenticated()) {
-      res.render(path.resolve(`${templateDir}${path.sep}commands.ejs`), {
-        bot: client,
-        auth: true,
-        user: req.user,
-        md: md
-      });
-    } else {
-      res.render(path.resolve(`${templateDir}${path.sep}commands.ejs`), {
-        bot: client,
-        auth: false,
-        user: null,
-        md: md
-      });
-    }
+    res.render(path.resolve(`${templateDir}${path.sep}commands.ejs`), {
+      bot: client,
+      auth: req.isAuthenticated() ? true : false,
+      user: req.isAuthenticated() ? req.user : null,
+      md: md
+    });
   });
 
   app.get('/logout', function(req, res) {
