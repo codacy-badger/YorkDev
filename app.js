@@ -1,19 +1,20 @@
+if (process.version.slice(1).split('.')[0] < 8) throw new Error('Node 8.0.0 or higher is required. Update Node on your system.');
 // For dashboard stuff.
 // npm install body-parser ejs express express-passport express-session marked passport passport-discord
 const { Client } = require('discord.js');
 const {readdir} = require('fs-nextra');
 const Enmap = require('enmap');
-if (process.version.slice(1).split('.')[0] < 8) throw new Error('Node 8.0.0 or higher is required. Update Node on your system.');
+const EnmapLevel = require('enmap-level');
 
 class YorkDev extends Client {
   constructor(options) {
     super(options);
     this.db = require('./functions/EnmapDB.js');
     this.config = require('./config.js');
-    this.settings = new Enmap({name: 'settings', persistent: true});
-    this.consent = new Enmap({name: 'consent', persistent: true});
-    this.blacklist = new Enmap({name: 'blacklist', persistent: true});
-    this.points = new Enmap({name: 'points', persistent: true});
+    this.settings = new Enmap({provider: new EnmapLevel({name: 'settings'})});
+    this.consent = new Enmap({provider: new EnmapLevel({name: 'consent'})});
+    this.blacklist = new Enmap({provider: new EnmapLevel({name: 'blacklist'})});
+    this.points = new Enmap({provider: new EnmapLevel({name: 'points'})});
     this.commands = new Enmap();
     this.aliases = new Enmap();
     this.invspam = new Enmap();
