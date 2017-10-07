@@ -17,6 +17,10 @@ const animals = {
   'bunny': {
     fetch: async () => fetch('https://api.bunnies.io/v2/loop/random/?media=gif,png'),
     get: async (resp) => resp.body.media.poster
+  },
+  'bill': {
+    fetch: async (args, message) => fetch(`http://belikebill.azurewebsites.net/billgen-API.php?default=1&name=${message.member.displayName}`),
+    get: async (resp) => resp.body
   }
 };
 
@@ -47,10 +51,11 @@ class Random extends Social {
         return message.channel.send(new Attachment(resp.body, `random${args[0]}.jpg`));
       }
     } catch (e) {
-      return message.reply('Sorry I couldn\'t find any valid API for that keyword, try again!');
+      console.log(e);
+      throw 'Sorry I couldn\'t find any valid API for that keyword, try again!';
     }
 
-    const response = await api.fetch(args);
+    const response = await api.fetch(args, message);
     const image = await api.get(response);
     message.channel.send({ files: [image] });
   }
