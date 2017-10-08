@@ -19,8 +19,10 @@ module.exports = class {
     monitor.run(this.client, message, level);
     if (level < 2) errorChecks(message, message.content);
   
-  
-    const prefixes = [settings.prefix, defaults.prefix];
+    // const mentionPrefix = new RegExp(`^<@!?${this.client.user.id}> `);
+    // const prefixMention = mentionPrefix.exec(message.content);
+
+    const prefixes = [settings.prefix, defaults.prefix/*, `${prefixMention}`*/];
     let prefix = false;
   
     for (const thisPrefix of prefixes) {
