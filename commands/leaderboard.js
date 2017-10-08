@@ -15,14 +15,14 @@ class Leaderboard extends Social {
 
   async run(message, args, level) { // eslint-disable-line no-unused-vars
     const leaderboard = [];
-    this.client.points.filter(p => p.guild === message.guild.id && p.points > 0)
-      .map(p => ({ points: p.points, user: p.user }))
+    const list = this.client.points.filter(p => p.guild === message.guild.id && p.points > 0);
+    list.map(p => ({ points: p.points, user: p.user }))
       .sort((a, b) => b.points > a.points ? 1 : -1).slice(0, 10)
       .map((u, i) => {
         leaderboard.push(`${(i + 1).toString().padStart(2, '0')} ❯ ${this.client.users.get(u.user).tag}: ${u.points}${this.emoji(message.guild.id)}`);
       });
     leaderboard.push('-------------------------------------');
-    leaderboard.push(`?? ❯ ${message.author.tag}: ${this.client.points.get(`${message.guild.id}-${message.author.id}`).points}${this.emoji(message.guild.id)}`);
+    leaderboard.push(`${list.map(p => `${p.guild}-${p.user}`).indexOf(`${message.guild.id}-${message.author.id}`)} ❯ ${message.author.tag}: ${this.client.points.get(`${message.guild.id}-${message.author.id}`).points}${this.emoji(message.guild.id)}`);
     await message.channel.send({ embed: { description: leaderboard.join('\n') } });
   }
 }

@@ -32,9 +32,8 @@ class Slap extends Social {
     });
   }
   async run(message, args, level) {
-
     try {
-      const slapped = message.mentions.members.first();
+      const slapped = await this.verifyMember(message.guild, args[0]);
       const slapper = message.author;
       if (slapped.id === slapper.id) throw 'Quit hitting yourself, quit hitting yourself, quit hitting yourself...';
       const cost = this.cmdDis(this.help.cost, level);
