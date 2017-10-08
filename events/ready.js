@@ -6,6 +6,10 @@ module.exports = class {
   async execute() {
     await this.client.wait(1000);
 
+    if (this.client.users.has('1')) {
+      this.client.users.delete('1');
+    }
+
     this.client.appInfo = await this.client.fetchApplication();
     
     setInterval( async () => {
