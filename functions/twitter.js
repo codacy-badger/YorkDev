@@ -1,9 +1,8 @@
 const Twit = require('twit');
-const { RichEmbed, WebhookClient } = require('discord.js');
+const { RichEmbed } = require('discord.js');
 
 
 module.exports = client => {
-  const hook = new WebhookClient(client.config.twitHookID, client.config.twitHookToken);
   const twitter = new Twit(client.config.twitter);
   const twStream = twitter.stream('statuses/filter', { follow: client.config.twitterUser });
 
@@ -20,7 +19,7 @@ module.exports = client => {
       .setThumbnail(tweet.user.profile_image_url);
 
     if (tweet.entities.media) embed.setImage(tweet.entities.media[0].media_url);
-    hook.send({ embed });
+    client.channels.get(client.config.twitChannel).send({ embed });
   });
 
   twStream.on('connect', () => console.log('Twitter Module: Connecting to Twitter API'));
