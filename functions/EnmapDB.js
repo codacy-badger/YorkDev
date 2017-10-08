@@ -1,8 +1,9 @@
 const Enmap = require('enmap');
+const EnmapLevel = require('enmap-level');
 
 class EnmapDB extends Enmap {
   constructor(client, PCName, editable = 'contents') {
-    super({name: PCName, persistent: true});
+    super({provider: new EnmapLevel({name: PCName})});
     this.client = client;
     this.type = PCName.toLowerCase().slice(0, -1);
     this.editable = editable;
