@@ -8,7 +8,7 @@ class Say extends Social {
       usage: 'say [#channel] <message>',
       category: 'Fun',
       extended: 'You can send a message to another channel via this command.',
-      cost: 5,
+      cost: 1,
       aliases: ['speak'],
       botPerms: ['SEND_MESSAGES', 'MANAGE_MESSAGES'],
       permLevel: 'Patrons'
