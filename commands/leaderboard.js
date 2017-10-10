@@ -22,7 +22,7 @@ class Leaderboard extends Social {
         leaderboard.push(`${(i + 1).toString().padStart(2, '0')} ❯ ${this.client.users.get(u.user).tag}: ${u.points}${this.emoji(message.guild.id)}`);
       });
     leaderboard.push('-------------------------------------');
-    leaderboard.push(`${list.map(p => `${p.guild}-${p.user}`).indexOf(`${message.guild.id}-${message.author.id}`)} ❯ ${message.author.tag}: ${this.client.points.get(`${message.guild.id}-${message.author.id}`).points}${this.emoji(message.guild.id)}`);
+    leaderboard.push(`?? ❯ ${message.author.tag}: ${this.client.points.get(`${message.guild.id}-${message.author.id}`).points}${this.emoji(message.guild.id)}`);
     await message.channel.send({ embed: { description: leaderboard.join('\n') } });
   }
 }
