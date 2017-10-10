@@ -16,6 +16,7 @@ class Say extends Social {
   }
 
   async run(message, args, level) { // eslint-disable-line no-unused-vars
+    if (args.length < 1) throw 'You need to give the bot a message to send.';
     try {
       message.delete();
       const cost = this.cmdDis(this.help.cost, level);
