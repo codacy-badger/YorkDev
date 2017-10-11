@@ -13,7 +13,7 @@ class FML extends Social {
   constructor(client) {
     super(client, {
       name: 'fml',
-      description: 'Grabs a random "fuck my life" story.',
+      description: 'Grabs a random fml story.',
       usage: 'fml',
       category: 'Fun',
       extended: 'This command grabs a random "fuck my life" story from fmylife.com and displays it in an organised embed.',

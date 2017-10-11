@@ -29,7 +29,7 @@ class Example extends Command {
     }
     
     if (message.flags[0] === 'list') return message.channel.send(this.db.list());
-    if (level < 2) return;
+    if (level < 8) return;
     
     const [name, ...extra] = args;
     

@@ -4,7 +4,7 @@ class Support extends Command {
   constructor(client) {
     super(client, {
       name: 'support',
-      description: 'Contact Bot Support',
+      description: 'Contact Bot Support.',
       usage: 'support <message>',
       category: 'Support',
       extended: 'This command will forward your Support DM to the Support Guild, your consent is **required** to use this command.',

@@ -4,7 +4,7 @@ class Warn extends Moderation {
   constructor(client) {
     super(client, {
       name: 'warn',
-      description: 'Warns a mentioned user, or a user\'s ID',
+      description: 'Warns a nominated user.',
       usage: 'warn <@mention> <reason>',
       extended: 'This warns the mentioned user, with a reason.',
       aliases: ['caution'],

@@ -5,16 +5,16 @@ class Announcement extends Moderation {
     super(client, {
       name: 'announcement',
       description: 'Posts an announcement.',
-      usage: 'announcement <Komada|Idiot> <announcement>',
-      extended: '[role] is either \'Komada\' or \'Idiot\', followed by your announcement.',
+      usage: 'announcement <role name> <announcement>',
+      extended: '<role> must be correctly spelt, otherwise it will throw an error.',
       botPerms: ['SEND_MESSAGES']
     });
   }
 
   async run(message, args, level) { // eslint-disable-line no-unused-vars
     try {
-      const role = message.guild.roles.find('name', `${args[0]} Subscribers`);
-      if (!role) return message.reply(`Cannot find ${args[0]} Subscribers`);
+      const role = message.guild.roles.find('name', `${args[0]}`);
+      if (!role) return message.reply(`Cannot find ${args[0]}`);
       const channel = message.guild.channels.find('name', 'announcements');
       if (!channel) return message.reply('Cannot find Announcements channel');
       if (role.mentionable === false) await role.edit({mentionable: true});
