@@ -8,8 +8,7 @@
           <i class="fa fa-fw fa-user-circle-o" aria-hidden="true"></i> <%= `${guild.owner.user.tag}` %>
         </div>
         <div class="col">
-          <i class="fa fa-fw fa-users" aria-hidden="true"></i> <%= `${guild.memberCount}` %> Members
-          ( <i class="fa fa-fw fa-android" aria-hidden="true"></i> <%= `${guild.members.filter(m => m.user.bot).size}` %> Bots )
+          <a href="../members/<%= guild.id %>"><i class="fa fa-fw fa-users" aria-hidden="true"></i> <%= `${guild.memberCount}` %> Members ( <i class="fa fa-fw fa-android" aria-hidden="true"></i> <%= `${guild.members.filter(m => m.user.bot).size}` %> Bots )</a>
         </div>
         <div class="col">
           <i class="fa fa-fw fa-users" aria-hidden="true"></i> <%= `${guild.roles.size} Roles` %>
