@@ -16,7 +16,7 @@ bot.commands.forEach((command) => {
     <div class="card-columns">
       <% for (const command of help[category]) { %>
         <div class="card">
-          <h4 class="card-header"><%= command.help.name %><i class="fa fa-refresh fa-fw pull-right" aria-hidden="true"></i></h4>
+          <h4 class="card-header"><%= command.help.name.toProperCase() %><i class="fa fa-refresh fa-fw pull-right" aria-hidden="true"></i></h4>
           <div class="card-block">
             <p class="card-text"><%= command.help.description %></p>
             <h6 class="card-subtitle text-muted">Permission: <%= command.conf.permLevel %><br /><a href="#" data-toggle="modal" data-target="#<%= `${command.help.name}` %>Modal">more...</a></h6>

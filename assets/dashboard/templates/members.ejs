@@ -1,0 +1,31 @@
+<%- include('blocks/header', {bot:bot, user: user, auth: auth}) %>
+<div class="container">
+    <div class="jumbotron">
+      <div>
+        <h1>Members</h1>
+        <h5><%= guild.name %> (<%= guild.id %>)</h5>
+      </div>
+    </div>
+    
+    <table class="table table-hover table-bordered">
+      <thead class="thead-default">
+        <tr>
+          <th>Display Name:</th>
+          <th>User Tag:</th>
+          <th>User ID:</th>
+          <th>Roles:</th>
+        </tr>
+      </thead>
+      <tbody>
+      <% for(let member of members) { %>
+        <tr>
+          <td><span style="color:<% if (member.highestRole.hexColor !== "#000000") { %> <%= member.highestRole.hexColor%> <% } else { %> #FFFFFF <% } %>"><%= member.displayName %></span></td>
+          <td><span style="color:<% if (member.highestRole.hexColor !== "#000000") { %> <%= member.highestRole.hexColor%> <% } else { %> #FFFFFF <% } %>"><%= member.user.tag %></span></td>
+          <td><span style="color:<% if (member.highestRole.hexColor !== "#000000") { %> <%= member.highestRole.hexColor%> <% } else { %> #FFFFFF <% } %>"><%= member.id %></span></td>
+          <td><% member.roles.map(r => { %><span style="color:<% if (r.hexColor !== "#000000") { %> <%= r.hexColor %> <% } else { %> #FFFFFF <% } %>"><%- r.name %></span> <% }).slice(1) %></td>
+        </tr>
+      <% } %>
+      </tbody>
+    </table>
+
+<% include ./blocks/footer %>

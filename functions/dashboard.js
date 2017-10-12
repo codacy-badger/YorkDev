@@ -213,6 +213,20 @@ module.exports = (client) => {
     });
   });
 
+  app.get('/members/:guildID', checkAuth, async (req, res) => {
+    const guild = client.guilds.get(req.params.guildID);
+    if (!guild) return res.status(404);
+    if (req.param.fetch) {
+      await guild.fetchMembers();
+    }
+    res.render(path.resolve(`${templateDir}${path.sep}members.ejs`), {
+      bot: client,
+      user: req.user,
+      auth: true,
+      guild: guild,
+      members: guild.members.array()
+    });
+  });
 
   app.post('/manage/:guildID', checkAuth, (req, res) => {
     const guild = client.guilds.get(req.params.guildID);

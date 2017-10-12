@@ -1,6 +1,11 @@
 <%- include('blocks/header', {bot:bot, user: user, auth: auth}) %>
 <div class="container">
-<h1 class="display-3">Dashboard</h1>
+  <div class="jumbotron">
+    <div>
+      <h1>Dashboard</h1>
+      <h5>From this page you can select a guild you have MANAGE_GUILD permissions on<br>and either manage the guild via the bot, or invite the bot.</h5>
+    </div>
+  </div>
 <ul class="list-unstyled">
   <% user.guilds.forEach(guild => { 
     const permsOnGuild = new perms(guild.permissions);
