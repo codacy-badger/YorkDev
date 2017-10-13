@@ -30,13 +30,13 @@ class User extends Command {
   
       const target = await this.verifyMember(message.guild, member);
       const embed = new RichEmbed()
-         .setThumbnail(target.user.displayAvatarURL)
-         .setColor(target.highestRole.color || 0)
-         .setAuthor(`${target.displayName} (${target.user.id})`, target.user.displayAvatarURL)
-         .addField("Account Created", `${moment(target.user.createdAt).format("dddd, MMMM Do YYYY, h:mm:ss a") (`${moment(target.user.createdAt).fromNow()}`)}`)
-         .addField("Member Joined", `${moment(target.joinedAt).format("dddd, MMMM Do YYYY, h:mm:ss a") (`${moment(target.joinedAt).fromNow()}`)}`)
-         .setFooter("User Information")
-         .setTimestamp();
+        .setThumbnail(target.user.displayAvatarURL)
+        .setColor(target.highestRole.color || 0)
+        .setAuthor(`${target.displayName} (${target.user.id})`, target.user.displayAvatarURL)
+        .addField('Account Created', `${moment(target.user.createdAt).format('dddd, MMMM Do YYYY, h:mm:ss a') (`${moment(target.user.createdAt).fromNow()}`)}`)
+        .addField('Member Joined', `${moment(target.joinedAt).format('dddd, MMMM Do YYYY, h:mm:ss a') (`${moment(target.joinedAt).fromNow()}`)}`)
+        .setFooter('User Information')
+           .setTimestamp();
 
 
       message.channel.send({embed});
