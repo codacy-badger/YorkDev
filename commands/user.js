@@ -36,7 +36,7 @@ class User extends Command {
         .addField('Account Created', `${moment(target.user.createdAt).format('dddd, MMMM Do YYYY, h:mm:ss a') (`${moment(target.user.createdAt).fromNow()}`)}`)
         .addField('Member Joined', `${moment(target.joinedAt).format('dddd, MMMM Do YYYY, h:mm:ss a') (`${moment(target.joinedAt).fromNow()}`)}`)
         .setFooter('User Information')
-           .setTimestamp();
+        .setTimestamp();
 
 
       message.channel.send({embed});
