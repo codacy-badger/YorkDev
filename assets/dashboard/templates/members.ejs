@@ -19,7 +19,7 @@
       <tbody>
       <% for(let member of members) { %>
         <tr>
-          <td><span style="color:<% if (member.highestRole.hexColor !== "#000000") { %> <%= member.highestRole.hexColor%> <% } else { %> #FFFFFF <% } %>"><%= member.displayName %></span></td>
+          <td><span style="color:<% if (member.highestRole.hexColor !== "#000000") { %> <%= member.highestRole.hexColor%> <% } else { %> #FFFFFF <% } %>"><%= member.displayName %></span><% if (member.user.bot) { %> <img src="/public/bot.png"> <% } %></td>
           <td><span style="color:<% if (member.highestRole.hexColor !== "#000000") { %> <%= member.highestRole.hexColor%> <% } else { %> #FFFFFF <% } %>"><%= member.user.tag %></span></td>
           <td><span style="color:<% if (member.highestRole.hexColor !== "#000000") { %> <%= member.highestRole.hexColor%> <% } else { %> #FFFFFF <% } %>"><%= member.id %></span></td>
           <td><% member.roles.map(r => { %><span style="color:<% if (r.hexColor !== "#000000") { %> <%= r.hexColor %> <% } else { %> #FFFFFF <% } %>"><%- r.name %></span> <% }).slice(1) %></td>

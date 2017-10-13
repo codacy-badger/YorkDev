@@ -84,8 +84,6 @@ const client = new YorkDev({
   disabledEvents:['TYPING_START']
 });
 
-console.log(client.config.permLevels.map(p=>`${p.level} : ${p.name}`));
-
 require('./functions/utilities.js')(client);
 
 const init = async () => {
