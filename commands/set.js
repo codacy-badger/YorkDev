@@ -12,7 +12,7 @@ class Set extends Command {
       guildOnly: true,
       aliases: ['setting', 'settings', 'conf'],
       botPerms: ['SEND_MESSAGES'],
-      permLevel: 'Bot Admin'
+      permLevel: 'Administrator'
     });
   }
 
