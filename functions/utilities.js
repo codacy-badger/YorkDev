@@ -1,9 +1,6 @@
 module.exports = (client) => {
-
   client.supportMsg = (message, msg) => {
-    const {
-      RichEmbed
-    } = require('discord.js');
+    const { RichEmbed } = require('discord.js');
     const embed = new RichEmbed()
       .setAuthor(message.author.username, message.author.displayAvatarURL)
       .setDescription(msg)
@@ -12,30 +9,26 @@ module.exports = (client) => {
   };
 
   client.checkConsent = async (client, message, msg) => {
+    const botSupport = client.botSettings.get('bot').botSupport;
+    console.log(botSupport);
     const embed = client.supportMsg(message, msg);
-    const agree = ['yes', 'y'];
-    const disagree = ['no', 'n', 'cancel'];
     const consent = client.consent.get(message.author.id);
-    const channel = client.guilds.get('351448068257742868').channels.exists('topic', message.author.id);
+    const channel = client.guilds.get(botSupport).channels.exists('topic', message.author.id);
     if (!consent) client.consent.set(message.author.id, false);
     if (consent && channel) {
-      client.channels.find('topic', message.author.id).send({
-        embed
-      }).then(() => message.channel.send('Sent Successfully'));
+      client.channels.find('topic', message.author.id).send({ embed }).then(() => message.channel.send('Sent Successfully'));
     } else {
 
       const response = await client.awaitReply(message, '```By submitting the support ticket below, you authorise the bot, the bot creator, and other bot support members ("the Staff") to store and use your Username, Discriminator, Message Content, and any other End User Data in matters relative to usage of the bot, record keeping, and support. You also agree not to hold the Staff responsible for any actions that are taken, that also comply with these terms.```\n\nDo you wish to send this message? (**y**es | **n**o)\n\n\nReply with `cancel` to cancel the message. The message will timeout after 60 seconds.\n\n\n', 60000, embed);
-      if (agree.includes(response)) {
+      if (['yes', 'y'].includes(response)) {
         client.consent.set(message.author.id, true);
-        const channel = (await client.guilds.get('351448068257742868').createChannel(message.author.tag.replace('#', '-').toLowerCase(), 'text')).setTopic(message.author.id).then(c => { // eslint-disable-line no-unused-vars
-          c.send({
-            embed
-          });
+        const channel = (await client.guilds.get(botSupport).createChannel(message.author.tag.replace('#', '-').toLowerCase(), 'text')).setTopic(message.author.id).then(c => { // eslint-disable-line no-unused-vars
+          c.send({ embed });
           message.channel.send('Support channel opened.');
         });
       } else
 
-      if (disagree.includes(response)) {
+      if (['no', 'n', 'cancel'].includes(response)) {
         message.channel.send('Cancelled message.');
       } else {
         message.channel.send('That is not a valid answer');
@@ -57,15 +50,9 @@ module.exports = (client) => {
   */
   client.awaitReply = async (message, question, limit = 60000, embed = {}) => {
     const filter = m => m.author.id === message.author.id;
-    await message.channel.send(question, {
-      embed
-    });
+    await message.channel.send(question, { embed });
     try {
-      const collected = await message.channel.awaitMessages(filter, {
-        max: 1,
-        time: limit,
-        errors: ['time']
-      });
+      const collected = await message.channel.awaitMessages(filter, { max: 1, time: limit, errors: ['time'] });
       return collected.first().content;
     } catch (error) {
       return false;
@@ -75,11 +62,8 @@ module.exports = (client) => {
   client.clean = async (client, text) => {
     if (text && text.constructor.name == 'Promise')
       text = await text;
-    if (typeof evaled !== 'string')
-      text = require('util').inspect(text, {
-        depth: 1
-      });
-
+    if (typeof evaled !== 'string') text = require('util').inspect(text, { depth: 1 });
+    
     text = text
       .replace(/`/g, '`' + String.fromCharCode(8203))
       .replace(/@/g, '@' + String.fromCharCode(8203))

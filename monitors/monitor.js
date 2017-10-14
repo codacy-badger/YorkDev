@@ -98,11 +98,11 @@ module.exports = class {
 
   static checkAFK(client, message, level) { // eslint-disable-line no-unused-vars
     if (!message.guild) return;
-    const settings = client.settings.get(message.guild.id);
+    const settings = client.botSettings.get('bot');
     const person = message.mentions.members.first();
     if (!person) return;
     if (person.id !== client.appInfo.owner.id) return;
-    if (settings.afk === 'true') {
+    if (settings.afk) {
       message.reply(`${person.displayName} ${settings.afkMessage}`);
     }
   }
