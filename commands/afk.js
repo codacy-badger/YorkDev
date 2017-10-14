@@ -4,7 +4,8 @@ class AFK extends Command {
   constructor(client) {
     super(client, {
       name: 'afk',
-      description: 'Latency and API response times.',
+      description: 'Sets an away message.',
+      category: 'System',
       usage: 'afk [-on|-off|-status|-edit <message>]',
       extended: 'Toggle bot owner AFK, view and edit current AFK message.',
       aliases: ['brb', 'bbl'],
