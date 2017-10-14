@@ -8,19 +8,33 @@
 *.txt
 
 # Specific Files
+package-lock.json
 settings.json
 config.json
 config.js
 tagsbot.sqlite
+
+# Asset Files
 assets/selfies/selfie.jpg
 assets/selfies/selfie_meme.jpg
 assets/selfies/selfie_triggered.jpg
 assets/images/image_evil.png
+
+# Commands
 commands/evil.js
 commands/init.js
 commands/meme_old.js
 commands/meme.js
 commands/selfie.js
 commands/triggered.js
+commands/pause.js
+commands/play.js
+commands/queue.js
+commands/resume.js
+commands/search.js
+commands/skip.js
+commands/stop.js
+commands/volume.js
+
+# Monitors
 monitors/starboard.js
-package-lock.json
