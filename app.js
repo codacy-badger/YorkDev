@@ -11,6 +11,7 @@ class YorkDev extends Client {
     super(options);
     this.db = require('./functions/EnmapDB.js');
     this.config = require('./config.js');
+    this.botSettings = new Enmap({provider: new EnmapLevel({name: 'bot_settings'})});
     this.settings = new Enmap({provider: new EnmapLevel({name: 'settings'})});
     this.consent = new Enmap({provider: new EnmapLevel({name: 'consent'})});
     this.blacklist = new Enmap({provider: new EnmapLevel({name: 'blacklist'})});

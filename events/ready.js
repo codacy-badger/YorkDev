@@ -24,6 +24,9 @@ module.exports = class {
     
     if (!this.client.blacklist.get('list')) this.client.blacklist.set('list', []);
     
+    if (!this.client.botSettings.get('bot')) this.client.botSettings.set('bot', this.client.config.botSettings);
+    if (this.client.botSettings.get('bot').afk) this.client.user.setStatus('dnd');
+
     require('../functions/dashboard.js')(this.client);
     
     require('../functions/twitter.js')(this.client);
