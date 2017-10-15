@@ -23,7 +23,7 @@ class Say extends Social {
         args.shift();
       }
 
-      if (message.guild.channels.get(channelid).permissionsFor(message.member).missing(['SEND_MESSAGES'])) throw 'You do not have permission to `say` in that channel.';
+      if (message.guild.channels.get(channelid).permissionsFor(message.member).has('SEND_MESSAGES')) throw 'You do not have permission to `say` in that channel.';
 
       message.delete();
       const cost = this.cmdDis(this.help.cost, level);
