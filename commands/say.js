@@ -18,15 +18,18 @@ class Say extends Social {
   async run(message, args, level) { // eslint-disable-line no-unused-vars
     if (args.length < 1) throw 'You need to give the bot a message to send.';
     try {
+      const channelid = await this.verifyChannel(message, args[0]);
+      if (channelid !== message.channel.id) {
+        args.shift();
+      }
+
+      if (message.guild.channels.get(channelid).permissionsFor(message.member).missing(['SEND_MESSAGES'])) throw 'You do not have permission to `say` in that channel.';
+
       message.delete();
       const cost = this.cmdDis(this.help.cost, level);
       const payMe = await this.cmdPay(message, message.author.id, cost, this.conf.botPerms);
       if (!payMe) return;  
 
-      const channelid = await this.verifyChannel(message, args[0]);
-      if (channelid !== message.channel.id) {
-        args.shift();
-      }
       const channel = message.guild.channels.get(channelid);
       channel.startTyping();
       setTimeout(() => {
