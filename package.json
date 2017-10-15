@@ -1,6 +1,6 @@
 {
   "name": "york_dev",
-  "version": "5.4.8",
+  "version": "5.4.9",
   "description": "Enmap based Development Bot",
   "main": "app.js",
   "scripts": {
@@ -20,6 +20,7 @@
   "dependencies": {
     "body-parser": "^1.18.2",
     "canvas-constructor": "github:kyranet/canvasConstructor#2.0",
+    "cheerio": "^1.0.0-rc.2",
     "discord.js": "^11.2.1",
     "ejs": "^2.5.7",
     "enmap": "^0.4.1",
@@ -34,6 +35,8 @@
     "moment-duration-format": "^1.3.0",
     "passport": "^0.4.0",
     "passport-discord": "^0.1.2",
+    "querystring": "^0.2.0",
+    "simple-youtube-api": "^3.0.1",
     "snekfetch": "^3.4.5",
     "twit": "^2.2.9"
   }
