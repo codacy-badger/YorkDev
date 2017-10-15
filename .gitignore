@@ -38,3 +38,6 @@ commands/volume.js
 
 # Monitors
 monitors/starboard.js
+
+# Functions
+functions/music.js
