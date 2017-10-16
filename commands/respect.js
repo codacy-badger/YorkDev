@@ -45,7 +45,7 @@ class Respect extends Social {
       await this.verifyUser(user);
 
       const result = await giveRespect(user.displayAvatarURL);
-      const m = await message.channel.send({ files: [{ attachment: result, name: 'paid-respects.png' }] });
+      const m = await message.channel.send('Press 🇫 to pay respects.', { files: [{ attachment: result, name: 'paid-respects.png' }] });
       await msg.delete();
       m.react('🇫');
     } catch (error) {
