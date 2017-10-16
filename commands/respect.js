@@ -32,9 +32,9 @@ class Respect extends Social {
   }
   async run(message, args, level) {
     try {
-      const cost = this.cmdDis(this.help.cost, level);
-      const payMe = await this.cmdPay(message, message.author.id, cost, this.conf.botPerms);
-      if (!payMe) return;  
+      // const cost = this.cmdDis(this.help.cost, level);
+      // const payMe = await this.cmdPay(message, message.author.id, cost, this.conf.botPerms);
+      // if (!payMe) return;  
       let target;
       
       if (!args[0]) target = message.author.id;
@@ -45,8 +45,9 @@ class Respect extends Social {
       await this.verifyUser(user);
 
       const result = await giveRespect(user.displayAvatarURL);
-      await message.channel.send({ files: [{ attachment: result, name: 'paid-respects.png' }] });
+      const m = await message.channel.send({ files: [{ attachment: result, name: 'paid-respects.png' }] });
       await msg.delete();
+      m.react('🇫');
     } catch (error) {
       throw error;
     }
