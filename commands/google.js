@@ -1,6 +1,7 @@
-const cheerio = require('cheerio');
-const snekfetch = require('snekfetch');
-const querystring = require('querystring');
+const { parse } = require('fast-html-parser'), 
+  { get } = require('snekfetch'),
+  qs = require('querystring'),
+  uf = require('unfluff').lazy;
 const Command = require('../base/Command.js');
 
 class Google extends Command {
@@ -16,16 +17,53 @@ class Google extends Command {
   }
 
   async run(message, level) { // eslint-disable-line no-unused-vars
-    const searchMessage = await message.reply('Searching... Please wait.');
-    const searchUrl = `https://www.google.com/search?q=${encodeURIComponent(message.content)}`;
-    return snekfetch.get(searchUrl).then((result) => {
-      const $ = cheerio.load(result.text);
-      let googleData = $('.r').first().find('a').first().attr('href');
-      googleData = querystring.parse(googleData.replace('/url?', ''));
-      searchMessage.edit(`Result found!\n${googleData.q}`);
-    }).catch((err) => { // eslint-disable-line no-unused-vars
-      searchMessage.edit('No results found.');
-    });
+    const term = message.content.split(' ').slice(1).join(' ');
+    const searchurl = 'http://google.com/search?q=' + encodeURIComponent(term);
+    const searchmessage = await message.channel.send('Searching for ' + term);
+    try {
+      const body = await get(searchurl);
+      const $ = new parse(body.text);
+
+      const result = (await Promise.all($.querySelectorAll('.r').filter(e => e.childNodes[0].tagName === 'a' && e.childNodes[0].attributes.href).slice(0, 5)
+        .map(async (e) => {
+          let url = e.childNodes[0].attributes.href.replace('/url?', '');
+          if (url.startsWith('/')) url = 'http://google.com' + url;
+          else url = qs.parse(url).q;
+          const body = await get(url);
+          const details = uf(body.text);
+          return {
+            url,
+            title: new parse(body.text).querySelector('head').childNodes.find(e => e.tagName === 'title').childNodes[0].rawText,
+            snippet: () => details.description() + '\n' + details.text().replace(/\n+/g, ' ').substring(0, 500) + '...',
+            image: () => details.image()
+          };
+        })));
+      if (!result.length) return searchmessage.edit('No results found for ' + term);
+      const first = result.shift();
+      if (message.guild.me.hasPermission('EMBED_LINKS')) {
+        const embed = new require('discord.js').RichEmbed()
+          .setColor('GREEN')
+          .setAuthor(`Results for "${term}"`, 'https://lh4.googleusercontent.com/-v0soe-ievYE/AAAAAAAAAAI/AAAAAAADwkE/KyrKDjjeV1o/photo.jpg', searchurl)
+          .setTitle(first.title)
+          .setURL(first.url)
+          .setThumbnail(first.image())
+          .setDescription(first.snippet())
+          .setTimestamp()
+          .addField('Top results', result.map(r => `${r.title}\n[${r.url}](${r.url})\n`));
+
+        searchmessage.edit({ embed });
+      } else {
+        let str = '';
+        str += `Results for "${term}":\n\n`;
+        str += `${first.title}\n\n${first.snippet()}\n\n`;
+        str += `Top results\n\n${result.map(r => `${r.title}\n${r.url}\n`).join('\n')}`;
+
+        searchmessage.edit(str);
+      }
+    } catch (e) {
+      if (e.message === 'RangeError: Maximum call stack size exceeded') searchmessage.edit(`Error: Search for "${term}" took too long`);
+      else throw e;
+    }
   }
 }
 
