@@ -5,7 +5,7 @@ const fsn = require('fs-nextra');
 
 const giveRespect = async (person) => {
   const plate = await fsn.readFile('./assets/images/image_respects.png');
-  const png = person.replace(/\.gif.+/g, '.png');
+  const png = person.replace(/\.(gif|jpg|png|jpeg)\?size=2048/g, '.png?size=128');
   const { body } = await snek.get(png);
   return new Canvas(720, 405)
     .addRect(0, 0, 720, 405)
@@ -32,9 +32,9 @@ class Respect extends Social {
   }
   async run(message, args, level) {
     try {
-      // const cost = this.cmdDis(this.help.cost, level);
-      // const payMe = await this.cmdPay(message, message.author.id, cost, this.conf.botPerms);
-      // if (!payMe) return;  
+      const cost = this.cmdDis(this.help.cost, level);
+      const payMe = await this.cmdPay(message, message.author.id, cost, this.conf.botPerms);
+      if (!payMe) return;  
       let target;
       
       if (!args[0]) target = message.author.id;
