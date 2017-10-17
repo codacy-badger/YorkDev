@@ -24,7 +24,7 @@ class Google extends Command {
     const body = await get(searchurl);
     const $ = new parse(body.text);
 
-    const result = (await Promise.all($.querySelectorAll('.r').filter(e => e.childNodes[0].tagName === 'a' && e.childNodes[0].attributes.href).slice(0, 5)
+    const result = (await Promise.all($.querySelectorAll('.r').filter(e => e.childNodes[0].tagName === 'a' && e.childNodes[0].attributes.href).filter(e => !e.childNodes[0].attributes.href.replace('/url?', '').startsWith('/')).slice(0, 5)
       .map(async (e) => {
         let url = e.childNodes[0].attributes.href.replace('/url?', '');
         if (url.startsWith('/')) url = 'http://google.com' + url;
@@ -33,13 +33,13 @@ class Google extends Command {
         const details = uf(body.text);
         const obj = {
           url,
-          snippet: () => details.description() + '\n' + details.text() /*.replace(/\n+/g, ' ')*/ .substring(0, 100) + '...',
+          snippet: () => (details.description() || '') + '\n' + (details.text() || '') /*.replace(/\n+/g, ' ')*/ .substring(0, 100) + '...',
           image: () => details.image()
         };
         try {
-          obj.title = new parse(body.text).querySelector('head').childNodes.find(e => e.tagName === 'title').childNodes[0].rawText;
+          obj.title = new parse(body.text).querySelector('head').childNodes.find(e => e.tagName === 'title').childNodes[0].text;
         } catch (e) {
-          obj.title = details.title();
+          obj.title = details.title() || 'No title found';
         }
         return obj;
       })));
