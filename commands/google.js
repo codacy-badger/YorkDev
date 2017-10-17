@@ -32,13 +32,14 @@ class Google extends Command {
     const result = (await Promise.all($.querySelectorAll('.r').filter(e => e.childNodes[0].tagName === 'a' && e.childNodes[0].attributes.href).filter(e => !e.childNodes[0].attributes.href.replace('/url?', '').startsWith('/')).slice(0, 5)
       .map(async (e) => {
         let url = e.childNodes[0].attributes.href.replace('/url?', '');
-        if (url.startsWith('/')) url = 'http://google.com' + url;
-        else url = qs(url).q;
+        if (url.startsWith('q=/')) url = 'http://google.com' + qs(url).q || url;
+        else url = qs(url).q || url;
+        console.log(e, url);
         const body = await get(url);
         const details = uf(body.text);
         const obj = {
           url,
-          snippet: () => (details.description() || '') + '\n' + (details.text() || '').substring(0, 180) + '...',
+          snippet: () => ((details.description() || '') + '\n' + (details.text() || '')).substring(0, 180) + '...',
           image: () => details.image()
         };
         try {
@@ -59,8 +60,10 @@ class Google extends Command {
       .setDescription(first.snippet())
       .setTimestamp()
       .setFooter(Date.now() - time + ' ms')
-      .addField('Top results', result.map(r => `${r.title}\n[${r.url}](${r.url})\n`));
-
+      .addField('Top results', result.map(r => {
+        const t = `${r.title}\n[${r.url}](${r.url})`;
+        return t.length > 180 ? `${r.title}\n[snipped]` : t;
+      }).join('\n'));
     searchmessage.edit({ embed });
   }
 }
