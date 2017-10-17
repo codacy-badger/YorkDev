@@ -1,7 +1,7 @@
 const { parse } = require('fast-html-parser'), 
   { get } = require('snekfetch'),
-  qs = require('querystring'),
-  uf = require('unfluff').lazy,
+  { parse: qs } = require('querystring'),
+  { lazy: uf } = require('unfluff'),
   { RichEmbed } = require('discord.js');
 const Command = require('../base/Command.js');
 
@@ -29,7 +29,7 @@ class Google extends Command {
       .map(async (e) => {
         let url = e.childNodes[0].attributes.href.replace('/url?', '');
         if (url.startsWith('/')) url = 'http://google.com' + url;
-        else url = qs.parse(url).q;
+        else url = qs(url).q;
         const body = await get(url);
         const details = uf(body.text);
         const obj = {
