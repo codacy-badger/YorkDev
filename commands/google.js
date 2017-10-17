@@ -20,7 +20,7 @@ class Google extends Command {
   async run(message, level) { // eslint-disable-line no-unused-vars
     const time = Date.now();
     const term = message.content.split(' ').slice(1).join(' ');
-    const searchurl = 'http://google.com/search?q=' + encodeURIComponent(term);
+    const searchurl = 'http://google.com/search?safe=active&q=' + encodeURIComponent(term);
     const searchmessage = await message.channel.send('Searching for ' + term);
     const body = await get(searchurl);
     const $ = new parse(body.text);
