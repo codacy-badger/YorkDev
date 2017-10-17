@@ -47,7 +47,7 @@ class Google extends Command {
     if (!result.length) return searchmessage.edit('No results found for ' + term);
     const first = result.shift();
     if (message.guild.me.hasPermission('EMBED_LINKS')) {
-      const embed = new SRichEmbed()
+      const embed = new RichEmbed()
         .setColor('GREEN')
         .setAuthor(`Results for "${term}"`, 'https://lh4.googleusercontent.com/-v0soe-ievYE/AAAAAAAAAAI/AAAAAAADwkE/KyrKDjjeV1o/photo.jpg', searchurl)
         .setTitle(first.title)
