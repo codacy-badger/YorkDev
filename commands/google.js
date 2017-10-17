@@ -1,11 +1,11 @@
-const { parse } = require('fast-html-parser'), 
-  { get } = require('snekfetch'),
-  { parse: qs } = require('querystring'),
-  { lazy: uf } = require('unfluff'),
-  { RichEmbed } = require('discord.js');
+const { parse } = require('fast-html-parser');
+const { get } = require('snekfetch');
+const { parse: qs } = require('querystring');
+const { lazy: uf } = require('unfluff');
+const { RichEmbed } = require('discord.js');
 const Command = require('../base/Command.js');
 
-const ecolour = ['#4285FA', '#0F9D58', '#F4B400', '#DB4437'];
+const gcolor = ['#4285FA', '#0F9D58', '#F4B400', '#DB4437'];
 
 class Google extends Command {
   constructor(client) {
@@ -15,13 +15,15 @@ class Google extends Command {
       extended: 'Searches Google for your question.',
       category: 'Utilities',
       usage: 'google [search]',
-      botPerms: ['SEND_MESSAGES']
+      aliases: ['g'],
+      botPerms: ['SEND_MESSAGES', 'EMBED_LINKS']
     });
   }
 
-  async run(message, level) { // eslint-disable-line no-unused-vars
+
+  async run(message, args, level) { // eslint-disable-line no-unused-vars
     const time = Date.now();
-    const term = message.content.split(' ').slice(1).join(' ');
+    const term = args.join(' ');
     const searchurl = 'http://google.com/search?safe=active&q=' + encodeURIComponent(term);
     const searchmessage = await message.channel.send('Searching for ' + term);
     const body = await get(searchurl);
@@ -48,28 +50,18 @@ class Google extends Command {
       })));
     if (!result.length) return searchmessage.edit('No results found for ' + term);
     const first = result.shift();
-    if (message.guild.me.hasPermission('EMBED_LINKS')) {
-      
-      const embed = new RichEmbed()
-        .setColor(ecolour[Math.floor(Math.random() * ecolour.length)])
-        .setAuthor(`Results for "${term}"`, 'https://lh4.googleusercontent.com/-v0soe-ievYE/AAAAAAAAAAI/AAAAAAADwkE/KyrKDjjeV1o/photo.jpg', searchurl)
-        .setTitle(first.title)
-        .setURL(first.url)
-        .setThumbnail(first.image())
-        .setDescription(first.snippet())
-        .setTimestamp()
-        .setFooter(Date.now() - time + ' ms')
-        .addField('Top results', result.map(r => `${r.title}\n[${r.url}](${r.url})\n`));
+    const embed = new RichEmbed()
+      .setColor(gcolor[Math.floor(Math.random() * gcolor.length)])
+      .setAuthor(`Results for "${term}"`, 'https://lh4.googleusercontent.com/-v0soe-ievYE/AAAAAAAAAAI/AAAAAAADwkE/KyrKDjjeV1o/photo.jpg', searchurl)
+      .setTitle(first.title)
+      .setURL(first.url)
+      .setThumbnail(first.image())
+      .setDescription(first.snippet())
+      .setTimestamp()
+      .setFooter(Date.now() - time + ' ms')
+      .addField('Top results', result.map(r => `${r.title}\n[${r.url}](${r.url})\n`));
 
-      searchmessage.edit({ embed });
-    } else {
-      let str = '';
-      str += `Results for "${term}":\n\n`;
-      str += `${first.title}\n\n${first.snippet()}\n\n`;
-      str += `Top results\n\n${result.map(r => `${r.title}\n${r.url}\n`).join('\n')}`;
-
-      searchmessage.edit(str);
-    }
+    searchmessage.edit({ embed });
   }
 }
 
