@@ -1,7 +1,8 @@
 const { parse } = require('fast-html-parser'), 
   { get } = require('snekfetch'),
   qs = require('querystring'),
-  uf = require('unfluff').lazy;
+  uf = require('unfluff').lazy,
+  { RichEmbed } = require('discord.js');
 const Command = require('../base/Command.js');
 
 class Google extends Command {
@@ -33,7 +34,7 @@ class Google extends Command {
         const details = uf(body.text);
         const obj = {
           url,
-          snippet: () => (details.description() || '') + '\n' + (details.text() || '') /*.replace(/\n+/g, ' ')*/ .substring(0, 180) + '...',
+          snippet: () => (details.description() || '') + '\n' + (details.text() || '').substring(0, 180) + '...',
           image: () => details.image()
         };
         try {
@@ -46,7 +47,7 @@ class Google extends Command {
     if (!result.length) return searchmessage.edit('No results found for ' + term);
     const first = result.shift();
     if (message.guild.me.hasPermission('EMBED_LINKS')) {
-      const embed = new require('discord.js').RichEmbed()
+      const embed = new SRichEmbed()
         .setColor('GREEN')
         .setAuthor(`Results for "${term}"`, 'https://lh4.googleusercontent.com/-v0soe-ievYE/AAAAAAAAAAI/AAAAAAADwkE/KyrKDjjeV1o/photo.jpg', searchurl)
         .setTitle(first.title)
