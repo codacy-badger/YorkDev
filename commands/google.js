@@ -39,7 +39,11 @@ class Google extends Command {
         const details = uf(body.text);
         const obj = {
           url,
-          snippet: () => ((details.description() || '') + '\n' + (details.text() || '')).substring(0, 180) + '...',
+          snippet: () => {
+            const x = (details.description() || '').substring(0, 180);
+            const y = (details.text() || '').substring(0, 180) + '...';
+            return y.includes(x) ? y : x + "\n" + y;
+          },
           image: () => details.image()
         };
         try {
