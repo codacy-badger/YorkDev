@@ -33,7 +33,7 @@ class Google extends Command {
         const details = uf(body.text);
         const obj = {
           url,
-          snippet: () => (details.description() || '') + '\n' + (details.text() || '') /*.replace(/\n+/g, ' ')*/ .substring(0, 100) + '...',
+          snippet: () => (details.description() || '') + '\n' + (details.text() || '') /*.replace(/\n+/g, ' ')*/ .substring(0, 180) + '...',
           image: () => details.image()
         };
         try {
