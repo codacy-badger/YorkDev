@@ -5,6 +5,8 @@ const { parse } = require('fast-html-parser'),
   { RichEmbed } = require('discord.js');
 const Command = require('../base/Command.js');
 
+const ecolour = ['#4285FA', '#0F9D58', '#F4B400', '#DB4437'];
+
 class Google extends Command {
   constructor(client) {
     super(client, {
@@ -47,8 +49,9 @@ class Google extends Command {
     if (!result.length) return searchmessage.edit('No results found for ' + term);
     const first = result.shift();
     if (message.guild.me.hasPermission('EMBED_LINKS')) {
+      
       const embed = new RichEmbed()
-        .setColor('GREEN')
+        .setColor(ecolour[Math.floor(Math.random() * ecolour.length)])
         .setAuthor(`Results for "${term}"`, 'https://lh4.googleusercontent.com/-v0soe-ievYE/AAAAAAAAAAI/AAAAAAADwkE/KyrKDjjeV1o/photo.jpg', searchurl)
         .setTitle(first.title)
         .setURL(first.url)
