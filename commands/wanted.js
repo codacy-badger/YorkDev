@@ -35,7 +35,7 @@ class Wanted extends Social {
       const cost = this.cmdDis(this.help.cost, level);
 
       const payMe = await this.cmdPay(message, message.author.id, cost, this.conf.botPerms);
-      if (payMe !== true) return message.channel.send(payMe);
+      if (!payMe) return;
 
       const msg = await message.channel.send('Fetching the Sheriff...');
   
