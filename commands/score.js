@@ -9,14 +9,18 @@ const getProfile = async (user, person, points, level) => {
   const plate = await fsn.readFile('./assets/images/image_profile.png');
   const png = person.replace(/\.(gif|jpg|png|jpeg)\?size=2048/g, '.png?size=64');
   const { body } = await snek.get(png);
-  return new Canvas(270, 90)
+  const size = new Canvas(270, 90)
+    .setTextFont('12pt FiraCode')
+    .measureText(user);
+  const newSize = size.width < 270 ? 270 : size.width + 20;
+  return new Canvas(newSize, 90)
     .setColor('#383838')
     .addRect(0, 0, 270, 90)
+    .setColor('#000000')
+    .setTextFont('12pt FiraCode')
     .addImage(body, 14, 17, 62, 62)
     .restore()
     .addImage(plate, 0, 0, 270, 90)
-    .setTextFont('12pt FiraCode')
-    .setColor('#000000')
     .addText(user, 90, 29)
     .addText(level, 172, 51)
     .addText(points, 172, 72)
