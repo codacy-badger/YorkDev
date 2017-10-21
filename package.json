@@ -1,6 +1,6 @@
 {
   "name": "york_dev",
-  "version": "5.4.9",
+  "version": "6.0.0",
   "description": "Enmap based Development Bot",
   "main": "app.js",
   "scripts": {
@@ -31,6 +31,7 @@
     "express-session": "^1.15.6",
     "fast-html-parser": "^1.0.1",
     "fs-nextra": "^0.2.1",
+    "klaw": "^2.1.0",
     "marked": "^0.3.6",
     "moment": "^2.18.1",
     "moment-duration-format": "^1.3.0",

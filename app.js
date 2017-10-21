@@ -5,6 +5,8 @@ const { Client } = require('discord.js');
 const {readdir} = require('fs-nextra');
 const Enmap = require('enmap');
 const EnmapLevel = require('enmap-level');
+const klaw = require('klaw');
+const path = require('path');
 
 class YorkDev extends Client {
   constructor(options) {
@@ -46,9 +48,10 @@ class YorkDev extends Client {
     return message.channel.permissionsFor(message.guild.me).missing(perms);
   }
 
-  loadCommand(commandName) {
+  loadCommand(commandPath, commandName) {
     try {
-      const props = new (require(`./commands/${commandName}`))(client);
+      const props = new (require(`${commandPath}${path.sep}${commandName}`))(client);
+      props.conf.location = commandPath;
       client.log('log', `Loading Command: ${props.help.name}. 👌`);
       if (props.init) {
         props.init(client);
@@ -63,7 +66,7 @@ class YorkDev extends Client {
     }
   }
 
-  async unloadCommand(commandName) {
+  async unloadCommand(commandPath, commandName) {
     let command;
     if (client.commands.has(commandName)) {
       command = client.commands.get(commandName);
@@ -71,14 +74,13 @@ class YorkDev extends Client {
       command = client.commands.get(client.aliases.get(commandName));
     }
     if (!command) return `The command \`${commandName}\` doesn"t seem to exist, nor is it an alias. Try again!`;
-  
+    
     if (command.shutdown) {
       await command.shutdown(client);
     }
-    delete require.cache[require.resolve(`./commands/${commandName}.js`)];
+    delete require.cache[require.resolve(`${commandPath}/${commandName}.js`)];
     return false;
   }
-
 }
 
 const client = new YorkDev({
@@ -89,12 +91,12 @@ const client = new YorkDev({
 require('./functions/utilities.js')(client);
 // require('./functions/music.js')(client);
 
+
 const init = async () => {
-  const cmdFiles = await readdir('./commands/');
-  client.log('log', `Loading a total of ${cmdFiles.length} commands.`);
-  cmdFiles.forEach(f => {
-    if (!f.endsWith('.js')) return;
-    const response = client.loadCommand(f);
+  klaw('./commands').on('data', (item) => {
+    const file = path.parse(item.path);
+    if (!file.ext || file.ext !== '.js') return;
+    const response = client.loadCommand(file.dir, `${file.name}${file.ext}`);
     if (response) console.log(response);
   });
   
