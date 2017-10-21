@@ -27,7 +27,7 @@ class SnapChat extends Social {
       usage: 'snapchat <text>',
       category: 'Fun',
       extended: 'This command uses canvas to generate a Snapchat styled image based on the well known statue meme.',
-      cost: 5,
+      cost: 4,
       aliases: ['sc'],
       botPerms: ['SEND_MESSAGES', 'ATTACH_FILES']
     });
@@ -35,8 +35,8 @@ class SnapChat extends Social {
 
   async run(message, args, level) { // eslint-disable-line no-unused-vars 
     const text = args.join(' ');
-    if (text.length < 1) return message.reply('You must give the snap some text.');
-    if (text.length > 28) return message.reply('I can only handle a maximum of 28 characters');
+    if (text.length < 1) throw 'You must give the snap some text.';
+    if (text.length > 28) throw 'I can only handle a maximum of 28 characters';
     try {
       const cost = this.cmdDis(this.help.cost, level);
       const payMe = await this.cmdPay(message, message.author.id, cost, this.conf.botPerms);

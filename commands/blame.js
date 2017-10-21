@@ -29,7 +29,7 @@ class Blame extends Social {
       usage: 'blame [mention]',
       category: 'Fun',
       extended: 'Blame someone else via this command.',
-      cost: 5,
+      cost: 2,
       botPerms: ['SEND_MESSAGES', 'ATTACH_FILES']
     });
   }

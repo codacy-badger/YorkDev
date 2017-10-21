@@ -28,15 +28,15 @@ class Achievement extends Social {
       category: 'Fun',
       usage: 'achievement',
       extended: 'Either mention a user with text to give the achievement their user avatar, or just supply text for your own achievement.',
-      cost: 5,
+      cost: 4,
       aliases: ['get', 'achieveget', 'achievementget'],
       botPerms: ['SEND_MESSAGES', 'ATTACH_FILES']
     });
   }
   async run(message, args, level) {
     let text = args.join(' ');
-    if (text.length < 1) return message.reply('You must give an achievement description.');
-    if (text.length > 22) return message.reply('I can only handle a maximum of 22 characters');
+    if (text.length < 1) throw 'You must give an achievement description.';
+    if (text.length > 22) throw 'I can only handle a maximum of 22 characters';
     try {
       const cost = this.cmdDis(this.help.cost, level);
       const payMe = await this.cmdPay(message, message.author.id, cost, this.conf.botPerms);

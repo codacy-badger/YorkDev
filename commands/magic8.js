@@ -9,7 +9,7 @@ class Magic8 extends Social {
       usage: 'magic8 <question>?',
       category: 'Fun',
       extended: 'This Social will answer any question given to it in the style of a magic 8 ball.',
-      cost: 5,
+      cost: 1,
       aliases: ['8', '8ball'],
       botPerms: ['SEND_MESSAGES']
     });
@@ -17,8 +17,8 @@ class Magic8 extends Social {
 
   async run(message, args, level) {
     try {
-      if (!message.content.endsWith('?')) return message.reply('That does not look like a question, (hint, end your question with a `?`.)');
-      if (!args) return message.reply('You need to actually ask a question...');
+      if (!message.content.endsWith('?')) throw 'That does not look like a question, (hint, end your question with a `?`.)';
+      if (!args) throw 'You need to actually ask a question...';
       const cost = this.cmdDis(this.help.cost, level);
       const payMe = await this.cmdPay(message, message.author.id, cost, this.conf.botPerms);
       if (!payMe) return;  

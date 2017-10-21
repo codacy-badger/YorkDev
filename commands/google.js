@@ -12,9 +12,9 @@ class Google extends Command {
     super(client, {
       name: 'google',
       description: 'Searches something on Google.',
-      extended: 'Searches Google for your question.',
       category: 'Utilities',
       usage: 'google [search]',
+      extended: 'Searches Google for your question.',
       aliases: ['g'],
       botPerms: ['SEND_MESSAGES', 'EMBED_LINKS']
     });

@@ -4,9 +4,9 @@ class Hug extends Command {
   constructor(client) {
     super(client, {
       name: 'hug',
-      description: '',
+      description: 'You can hug, or punch people with this.',
       usage: 'hug [@mention]',
-      extended: '',
+      extended: 'Ever needed to give a supportive hug, or high five another user? Now you can.',
       aliases: ['stab', 'shoot', 'knife', 'punch', 'highfive'],
       botPerms: ['SEND_MESSAGES']
     });

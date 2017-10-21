@@ -16,6 +16,7 @@ class YorkDev extends Client {
     this.consent = new Enmap({provider: new EnmapLevel({name: 'consent'})});
     this.blacklist = new Enmap({provider: new EnmapLevel({name: 'blacklist'})});
     this.points = new Enmap({provider: new EnmapLevel({name: 'points'})});
+    this.reminders = new Enmap({provider: new EnmapLevel({name: 'reminders'})});
     this.commands = new Enmap();
     this.aliases = new Enmap();
     this.invspam = new Enmap();
@@ -86,6 +87,7 @@ const client = new YorkDev({
 });
 
 require('./functions/utilities.js')(client);
+// require('./functions/music.js')(client);
 
 const init = async () => {
   const cmdFiles = await readdir('./commands/');

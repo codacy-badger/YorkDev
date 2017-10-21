@@ -30,7 +30,7 @@ class Please extends Social {
       usage: 'pls [mention]',
       category: 'Fun',
       extended: 'Didn\'t your mother always tell you to say please? Now you can with a bot!',
-      cost: 5,
+      cost: 2,
       botPerms: ['SEND_MESSAGES', 'ATTACH_FILES']
     });
   }
