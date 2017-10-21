@@ -4,11 +4,17 @@ const snek = require('snekfetch');
 const fsn = require('fs-nextra');
 
 const getSlapped = async (slapper, slapped) => {
-  const plate = await fsn.readFile('./assets/images/image_slap.png');
   const pngSlapper = slapper.replace(/\.gif.+/g, '.png');
   const pngSlapped = slapped.replace(/\.gif.+/g, '.png');
-  const Slapper = await snek.get(pngSlapper);
-  const Slapped = await snek.get(pngSlapped);
+  const [
+    plate,
+    Slapper,
+    Slapped,
+  ] = await Promise.all([
+    fsn.readFile('./assets/images/image_slap.png'),
+    snek.get(pngSlapper),
+    snek.get(pngSlapped),
+  ]);
   return new Canvas(950, 475)
     .addImage(plate, 0, 0, 950, 475)
     .addImage(Slapper.body, 410, 107, 131, 131, { type: 'round', radius: 66 })
