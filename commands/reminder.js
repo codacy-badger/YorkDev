@@ -30,7 +30,7 @@ class Reminder extends Command {
   async run(message, args, level) { // eslint-disable-line no-unused-vars
     try {
       const blah = await regCheck(args.join(' '));
-      if (!blah) throw '|\`❌\`| Invalid Command usage, you must supply a reminder message and duration e.g; `Do the laundry in 20 minutes`.';
+      if (!blah) throw '|`❌`| Invalid Command usage, you must supply a reminder message and duration e.g; `Do the laundry in 20 minutes`.';
       this.client.reminders.set(`${message.guild.id}-${message.author.id}-${message.createdTimestamp + ms(blah.split('#')[1])}`, {
         id: `${message.author.id}-${message.guild.id}`,
         reminder: blah.split('#')[0],
