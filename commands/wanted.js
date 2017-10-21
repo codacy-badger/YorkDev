@@ -30,7 +30,7 @@ class Wanted extends Social {
     try {
       let wanted;
       if (!args[0]) wanted = message.member;
-      else wanted = await this.verifyMember(message, args[0]);
+      else wanted = await this.verifyMember(message.guild, args[0]);
   
       const cost = this.cmdDis(this.help.cost, level);
 
