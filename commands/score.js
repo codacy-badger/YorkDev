@@ -12,8 +12,10 @@ const getProfile = async (user, person, points, level) => {
   const size = new Canvas(270, 90)
     .setTextFont('12pt FiraCode')
     .measureText(user);
-  const newSize = size.width < 270 ? 270 : size.width + 20;
+  const newSize = size.width < 180 ? 270 : 90 + size.width + 10;
   return new Canvas(newSize, 90)
+    .setColor('#FFFFFF')
+    .addRect(0, 0, newSize, 90)
     .setColor('#383838')
     .addRect(0, 0, 270, 90)
     .setColor('#000000')
