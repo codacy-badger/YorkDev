@@ -4,15 +4,15 @@ const snek = require('snekfetch');
 const fsn = require('fs-nextra');
 
 const getBeautiful = async (person) => {
-  const plate = await fsn.readFile('./assets/images/plate_beautiful.jpg');
+  const plate = await fsn.readFile('./assets/images/plate_beautiful.png');
   const png = person.replace(/\.gif.+/g, '.png');
   const { body } = await snek.get(png);
   return new Canvas(634, 675)
     .setColor('#000000')
     .addRect(0, 0, 634, 675)
+    .addImage(body, 423, 45, 168, 168)
+    .addImage(body, 426, 382, 168, 168)
     .addImage(plate, 0, 0, 634, 675)
-    .addImage(body, 435, 45, 150, 170)
-    .addImage(body, 435, 380, 150, 170)
     .toBuffer();
 };
 
