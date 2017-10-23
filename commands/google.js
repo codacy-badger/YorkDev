@@ -29,20 +29,31 @@ class Google extends Command {
     const body = await get(searchurl);
     const $ = new parse(body.text);
 
-    const result = (await Promise.all($.querySelectorAll('.r').filter(e => e.childNodes[0].tagName === 'a' && e.childNodes[0].attributes.href).filter(e => !e.childNodes[0].attributes.href.replace('/url?', '').startsWith('/')).slice(0, 5)
+    /*
+    All results are under class .r
+    There are 3 different types of URLs from google searches, in the href tag:
+    /url?q=URL - This one is most common
+    /search?q=TERM - This one is typically a Google Images result or similar
+    URL - Direct links are usually Google Books results
+    */
+    
+    const result = (await Promise.all(
+      $.querySelectorAll('.r')
+      .filter(e => e.childNodes[0].tagName === 'a' && e.childNodes[0].attributes.href)
+      .slice(0, 5)
       .map(async (e) => {
         let url = e.childNodes[0].attributes.href.replace('/url?', '');
-        if (url.startsWith('q=/')) url = 'http://google.com' + qs(url).q || url;
+        if (url.startsWith('/')) url = 'http://google.com' + url;
         else url = qs(url).q || url;
-        console.log(e, url);
+
         const body = await get(url);
         const details = uf(body.text);
         const obj = {
           url,
           snippet: () => {
-            const x = (details.description() || '').substring(0, 180);
-            const y = (details.text() || '').substring(0, 180) + '...';
-            return y.includes(x) ? y : x + "\n" + y;
+            const x = (details.description() || '').substring(0, 240);
+            const y = (details.text() || '').substring(0, 240) + '...';
+            return y.includes(x) ? y : x + '\n' + y;
           },
           image: () => details.image()
         };
@@ -53,6 +64,21 @@ class Google extends Command {
         }
         return obj;
       })));
+    
+    /*
+    Results now have the structure:
+    [
+      {
+        title: Page title,
+        url: Page URL,
+        snippet: Function, returns page snippet
+        image: Function, returns an image from the page
+      },
+      {...},
+      ...
+    ]
+    */
+    
     if (!result.length) return searchmessage.edit('No results found for ' + term);
     const first = result.shift();
     const embed = new RichEmbed()
@@ -66,7 +92,7 @@ class Google extends Command {
       .setFooter(Date.now() - time + ' ms')
       .addField('Top results', result.map(r => {
         const t = `${r.title}\n[${r.url}](${r.url})`;
-        return t.length > 180 ? `${r.title}\n[snipped]` : t;
+        return t.length > 600 ? `${r.title}\n[snipped]` : t;
       }).join('\n'));
     searchmessage.edit({ embed });
   }
