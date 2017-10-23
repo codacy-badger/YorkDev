@@ -23,9 +23,10 @@ class Magic8 extends Social {
       const payMe = await this.cmdPay(message, message.author.id, cost, this.conf.botPerms);
       if (!payMe) return;  
       const msg = await message.channel.send('`Thinking...`');
-      setTimeout(async () => {
-        await msg.edit(`${answers[Math.floor(Math.random() * answers.length)]}`);
-      }, Math.random() * (1 - 5) + 1 * 2000);
+      setTimeout(
+        () => msg.edit(`${answers[Math.floor(Math.random() * answers.length)]}`,
+        Math.random() * (1 - 5) + 1 * 2000)
+      );
     } catch (error) {
       throw error;
     }
