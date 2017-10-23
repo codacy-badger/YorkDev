@@ -10,7 +10,8 @@ class Command {
     guildOnly = false,
     aliases = [],
     botPerms = [],
-    permLevel = 'User'
+    permLevel = 'User',
+    location = ''
   }) {
     this.client = client;
     this.conf = {
@@ -18,7 +19,8 @@ class Command {
       guildOnly,
       aliases,
       botPerms,
-      permLevel
+      permLevel,
+      location
     };
     this.help = {
       name,
