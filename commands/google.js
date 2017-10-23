@@ -36,7 +36,7 @@ class Google extends Command {
     /search?q=TERM - This one is typically a Google Images result or similar
     URL - Direct links are usually Google Books results
     */
-    
+
     const result = (await Promise.all(
       $.querySelectorAll('.r')
       .filter(e => e.childNodes[0].tagName === 'a' && e.childNodes[0].attributes.href)
@@ -63,8 +63,9 @@ class Google extends Command {
           obj.title = details.title() || 'No title found';
         }
         return obj;
-      })));
-    
+      })
+    ));
+
     /*
     Results now have the structure:
     [
@@ -78,7 +79,7 @@ class Google extends Command {
       ...
     ]
     */
-    
+
     if (!result.length) return searchmessage.edit('No results found for ' + term);
     const first = result.shift();
     const embed = new RichEmbed()
