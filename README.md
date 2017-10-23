@@ -1,6 +1,6 @@
 # York Dev
 
-This bot serves as one of the backbones of the Idiot's Guide Community, using the communities [Guide Bot](https://github.com/An-Idiots-Guide/guidebot) as a base framework, York Dev expands on it's functionalities with common error detection with solution, fun commands, as well as a tag and example command!
+This bot serves as one of the backbones of the Idiot's Guide Community, using the community's [Guide Bot](https://github.com/An-Idiots-Guide/guidebot) as a base framework, York Dev expands on its functionalities with common error detection with solution, fun commands, as well as a tag and example command!
 
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/aecd644228534158bbdcc94064b3da75)](https://www.codacy.com/app/YorkAARGH/York-Dev?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=YorkAARGH/York-Dev&amp;utm_campaign=Badge_Grade)
 
@@ -26,7 +26,7 @@ Windows | [Instructions on their wiki](https://github.com/Automattic/node-canvas
 
 ## Downloading
 
-In a command prompt in your projects folder (wherever that may be) run the following:
+In a command prompt in your project's folder (wherever that may be) run the following:
 
 `git clone https://github.com/YorkAARGH/York-Dev.git`
 
@@ -185,7 +185,7 @@ To start the bot, in the command prompt, run the following command:
 
 ## Inviting to a guild
 
-To add the bot to your guild, you have to get an oauth link for it.
+To add the bot to your guild, you have to get an OAuth link for it.
 
 You can use this site to help you generate a full OAuth Link, which includes a calculator for the permissions:
 [Permissions Calculator](https://finitereality.github.io/permissions-calculator/?v=0)
