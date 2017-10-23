@@ -1,5 +1,4 @@
 const Command = require('../../base/Command.js');
-const { inspect } = require('util');
 
 class Set extends Command {
   constructor(client) {
@@ -62,7 +61,12 @@ class Set extends Command {
       if (!settings[key]) return message.reply('This key does not exist in the settings');
       message.reply(`The value of ${key} is currently ${settings[key]}`);
     } else {
-      message.channel.send(inspect(settings), {code: 'json'});
+      const array = [];
+      Object.entries(this.client.settings.get(message.guild.id)).forEach(([key, value]) => {
+        array.push(`${key}${' '.repeat(20 - key.length)}::  ${value}`); 
+      });
+      message.channel.send(`= Settings =
+${array.join('\n')}`, {code: 'asciidoc'});
     }
   }
 }

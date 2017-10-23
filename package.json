@@ -31,6 +31,7 @@
     "express-session": "^1.15.6",
     "fast-html-parser": "^1.0.1",
     "fs-nextra": "^0.2.1",
+    "gifencoder": "^1.1.0",
     "helmet": "^3.9.0",
     "klaw": "^2.1.0",
     "level-session-store": "^2.1.0",
@@ -42,7 +43,9 @@
     "passport-discord": "^0.1.2",
     "simple-youtube-api": "^3.0.1",
     "snekfetch": "^3.5.3",
+    "stream-to-array": "^2.3.0",
     "twit": "^2.2.9",
-    "unfluff": "^1.1.0"
+    "unfluff": "^1.1.0",
+    "wikidot-kit": "^0.7.0"
   }
 }
