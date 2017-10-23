@@ -12,7 +12,7 @@ module.exports = class {
 
     this.client.appInfo = await this.client.fetchApplication();
     
-    setInterval( async () => {
+    setInterval(async () => {
       this.client.appInfo = await this.client.fetchApplication();
     }, 60000);
 
