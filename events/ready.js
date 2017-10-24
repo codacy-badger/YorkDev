@@ -37,7 +37,7 @@ module.exports = class {
         this.client.users.get(remind.id).send(`You asked me to remind you about: \`${remind.reminder}\``);
         this.client.reminders.delete(`${remind.id}-${remind.reminderTimestamp});
       }) 
-    }) 
+    }, 5000) 
   }
   
 };
