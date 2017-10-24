@@ -11,7 +11,7 @@ class Say extends Social {
       cost: 1,
       aliases: ['speak'],
       botPerms: ['SEND_MESSAGES', 'MANAGE_MESSAGES'],
-      permLevel: 'Patrons'
+      permLevel: 'Patron'
     });
   }
 
