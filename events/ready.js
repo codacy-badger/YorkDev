@@ -30,6 +30,14 @@ module.exports = class {
     require('../functions/dashboard.js')(this.client);
     
     require('../functions/twitter.js')(this.client);
+    
+    setInterval(() => {
+      const toRemind = this.client.reminders.filter(r => r.reminderTimestamp <= Date.now());
+      toRemind.forEach(reminder => {
+        this.client.users.get(remind.id).send(`You asked me to remind you about: \`${remind.reminder}\``);
+        this.client.reminders.delete(`${remind.id}-${remind.reminderTimestamp});
+      }) 
+    }) 
   }
   
 };
