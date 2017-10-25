@@ -1,6 +1,5 @@
 const Command = require('../../base/Command.js');
 const ms = require('ms');
-const moment = require('moment'); 
 
 function regCheck(reminder) {
   const remind = /([0-9]{1,3}) (seconds|second|minutes|minute|hours|hour|days|day|weeks|week|months|month|years|year)/g.exec(reminder);
@@ -38,7 +37,7 @@ class Reminder extends Command {
         reminderTimestamp: message.createdTimestamp + ms(blah.split('#')[1])
       });
       
-      message.channel.send(`I will remind you to \`${blah.split('#')[0]}\`, ${moment(blah.split('#')[1]).fromNow()}`);
+      message.channel.send(`I will remind you to \`${blah.split('#')[0]}\`, ${blah.split('#')[1]} from now.`);
 
       setTimeout(async () => {
         message.author.send(`Here is your reminder: ${blah.split('#')[0]}`);
