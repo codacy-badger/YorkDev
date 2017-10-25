@@ -4,7 +4,7 @@ class Help extends Command {
   constructor(client) {
     super(client, {
       name: 'help',
-      description: 'Displays the available commands for your level.',
+      description: 'Displays the commands for your level.',
       usage: 'help [command]',
       category: 'Support',
       extended: 'This command will display all available commands for your permission level, with the additonal option of getting per command information when you run \'help <command name>\'.',

@@ -41,7 +41,7 @@ class Reminder extends Command {
       // setTimeout(async () => {
       //   message.author.send(`Here is your reminder: ${blah.split('#')[0]}`);
       //   const reminder = this.client.reminders.find('id', `${message.author.id}-${message.guild.id}`);
-      //   this.client.reminders.delete(`${message.guild.id}-${message.author.id}-${reminder.reminderTimestamp}`);
+      //   this.client.reminders.delete(`${message.author.id}-${reminder.reminderTimestamp}`);
       // }, ms(blah.split('#')[1]));
   
     } catch (error) {
