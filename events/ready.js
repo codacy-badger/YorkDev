@@ -35,9 +35,9 @@ module.exports = class {
       const toRemind = this.client.reminders.filter(r => r.reminderTimestamp <= Date.now());
       toRemind.forEach(reminder => {
         this.client.users.get(reminder.id).send(`You asked me to remind you about: \`${reminder.reminder}\``);
-        this.client.reminders.delete(`${reminder.id}-${reminder.reminderTimestamp});
-      }) 
-    }, 60000) 
+        this.client.reminders.delete(`${reminder.id}-${reminder.reminderTimestamp}`);
+      }); 
+    }, 60000); 
   }
   
 };
