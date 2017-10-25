@@ -38,11 +38,11 @@ class Reminder extends Command {
       
       message.channel.send(`I will remind you to \`${blah.split('#')[0]}\`, ${blah.split('#')[1]} from now.`);
 
-      setTimeout(async () => {
-        message.author.send(`Here is your reminder: ${blah.split('#')[0]}`);
-        const reminder = this.client.reminders.find('id', `${message.author.id}-${message.guild.id}`);
-        this.client.reminders.delete(`${message.guild.id}-${message.author.id}-${reminder.reminderTimestamp}`);
-      }, ms(blah.split('#')[1]));
+      // setTimeout(async () => {
+      //   message.author.send(`Here is your reminder: ${blah.split('#')[0]}`);
+      //   const reminder = this.client.reminders.find('id', `${message.author.id}-${message.guild.id}`);
+      //   this.client.reminders.delete(`${message.guild.id}-${message.author.id}-${reminder.reminderTimestamp}`);
+      // }, ms(blah.split('#')[1]));
   
     } catch (error) {
       throw error;
