@@ -1,5 +1,6 @@
 const Command = require('../../base/Command.js');
 const ms = require('ms');
+const moment = require('moment') 
 
 function regCheck(reminder) {
   const remind = /([0-9]{1,3}) (seconds|second|minutes|minute|hours|hour|days|day|weeks|week|months|month|years|year)/g.exec(reminder);
@@ -31,13 +32,13 @@ class Reminder extends Command {
     try {
       const blah = await regCheck(args.join(' '));
       if (!blah) throw '|`❌`| Invalid Command usage, you must supply a reminder message and duration e.g; `Do the laundry in 20 minutes`.';
-      this.client.reminders.set(`${message.guild.id}-${message.author.id}-${message.createdTimestamp + ms(blah.split('#')[1])}`, {
-        id: `${message.author.id}-${message.guild.id}`,
+      this.client.reminders.set(`${message.author.id}-${message.createdTimestamp + ms(blah.split('#')[1])}`, {
+        id: `${message.author.id},
         reminder: blah.split('#')[0],
         reminderTimestamp: message.createdTimestamp + ms(blah.split('#')[1])
       });
       
-      message.channel.send(`I will remind you to \`${blah.split('#')[0]}\`, ${blah.split('#')[1]} from now.`);
+      message.channel.send(`I will remind you to \`${blah.split('#')[0]}\`, ${moment(blah.split('#')[1]).fromNow()}`);
 
       setTimeout(async () => {
         message.author.send(`Here is your reminder: ${blah.split('#')[0]}`);
