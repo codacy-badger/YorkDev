@@ -38,10 +38,7 @@ class Google extends Command {
     */
 
     const result = (await Promise.all(
-      $.querySelectorAll('.r')
-      .filter(e => e.childNodes[0].tagName === 'a' && e.childNodes[0].attributes.href)
-      .slice(0, 5)
-      .map(async (e) => {
+      $.querySelectorAll('.r').filter(e => e.childNodes[0].tagName === 'a' && e.childNodes[0].attributes.href).slice(0, 5).map(async (e) => {
         let url = e.childNodes[0].attributes.href.replace('/url?', '');
         if (url.startsWith('/')) url = 'http://google.com' + url;
         else url = qs(url).q || url;
@@ -95,7 +92,9 @@ class Google extends Command {
         const t = `${r.title}\n[${r.url}](${r.url})`;
         return t.length > 600 ? `${r.title}\n[snipped]` : t;
       }).join('\n'));
-    searchmessage.edit({ embed });
+    searchmessage.edit({
+      embed
+    });
   }
 }
 
