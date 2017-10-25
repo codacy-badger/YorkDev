@@ -19,8 +19,12 @@ const animals = {
     get: async (resp) => resp.body.media.poster
   },
   'bill': {
-    fetch: async (args, message) => fetch(`http://belikebill.azurewebsites.net/billgen-API.php?default=1&name=${message.member.displayName}`),
+    fetch: async () => fetch('http://belikebill.azurewebsites.net/billgen-API.php?default=1'),
     get: async (resp) => resp.body
+  },
+  'bird': {
+    fetch: async () => fetch('http://random.birb.pw/tweet/'),
+    get: async (resp) => `https://random.birb.pw/img/${resp.body}`
   }
 };
 
@@ -31,6 +35,7 @@ class Random extends Social {
       description: 'Grabs a random image from some internet API.',
       category: 'Fun',
       usage: 'random <thing> []',
+      extended: `The following api's are supported: ${Object.keys(animals).join(', ')}`,
       cost: 5,
       botPerms: ['SEND_MESSAGES', 'ATTACH_FILES']
     });
