@@ -36,7 +36,7 @@ class Say extends Social {
         channel.stopTyping(true);
       }, 100 * args.join(' ').length / 2);
     } catch (error) {
-      throw error;
+      console.log(error);
     }
   }
 }

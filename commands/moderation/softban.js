@@ -27,7 +27,7 @@ class Ban extends Moderation {
       await this.buildModLog(this.client, message.guild, 's', target, message.author, reason);
       await message.channel.send(`\`${target.user.tag}\` was successfully softbanned.`);
     } catch (error) {
-      throw error;
+      console.log(error);
     }
   }
 }

@@ -57,7 +57,7 @@ class AFK extends Command {
         }
       }
     } catch (error) {
-      throw error;
+      console.log(error);
     }
   }
 }

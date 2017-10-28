@@ -51,7 +51,7 @@ class Tag extends Command {
       response < 1 ? response = 'There appears to be no tags saved at this time.' : response;
       message.channel.send(response);
     } catch (error) {
-      throw error;
+      console.log(error);
     }
   }
 }

@@ -26,7 +26,7 @@ class Kick extends Moderation {
       await this.buildModLog(this.client, message.guild, 'k', target, message.author, reason);
       await message.channel.send(`\`${target.user.tag}\` was successfully kicked.`);
     } catch (error) {
-      throw error;
+      console.log(error);
     }
   }
 }

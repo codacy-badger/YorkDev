@@ -12,13 +12,11 @@ class Yoda extends Command {
   }
 
   async run(message, args, level) { // eslint-disable-line no-unused-vars
-    const yoda = args.join(' ');
-    const Yodish = encodeURIComponent(yoda);
     try {
-      const { text } = await snek.get('http://yoda-api.appspot.com/api/v1/yodish?text='+ Yodish );
-      message.reply(JSON.parse(text).yodish);
+      const { text } = await snek.get(`http://yoda-api.appspot.com/api/v1/yodish?text=${encodeURIComponent(args.join(' ').toLowerCase())}`);
+      message.channel.send(JSON.parse(text).yodish);
     } catch (error) {
-      throw error;
+      console.log(error);
     }
   }
 }

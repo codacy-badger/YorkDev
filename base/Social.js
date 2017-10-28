@@ -20,7 +20,7 @@ class Social extends Command {
       if (check.bot) throw 'Bot\'s cannot accumulate points or levels.';
       if (check.username !== undefined) return id;
     } catch (error) {
-      throw error;
+      console.log(error);
     }
   }
 
@@ -77,7 +77,7 @@ class Social extends Command {
         message.channel.send(`You cannot claim your daily reward yet, please try again in ${fromNow}.`);
       }
     } catch (error) {
-      throw error;
+      console.log(error);
     }
   }
 
@@ -112,7 +112,7 @@ class Social extends Command {
         message.channel.send('Invalid response, please try again.');
       }
     } catch (error) {
-      throw error;
+      console.log(error);
     }
 
   }
@@ -146,7 +146,7 @@ class Social extends Command {
       this.client.points.set(`${message.guild.id}-${user}`, score);
       return true;
     } catch (error) {
-      throw error;
+      console.log(error);
     }
   }
 
@@ -158,7 +158,7 @@ class Social extends Command {
       await message.channel.send(`Awarded ${parseInt(amount)}${this.emoji(message.guild.id)} points to ${message.guild.member(user).displayName}.`);
       return;
     } catch (error) {
-      throw error;
+      console.log(error);
     }
   }
 
@@ -170,7 +170,7 @@ class Social extends Command {
       await message.channel.send(`Deducted ${parseInt(amount)}${this.emoji(message.guild.id)} points from ${message.guild.member(user).displayName}.`);
       return;
     } catch (error) {
-      throw error;
+      console.log(error);
     }
   }
 

@@ -49,7 +49,7 @@ class Respect extends Social {
       await msg.delete();
       m.react('🇫');
     } catch (error) {
-      throw error;
+      console.log(error);
     }
   }
 }

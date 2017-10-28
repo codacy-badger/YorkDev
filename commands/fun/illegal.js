@@ -45,7 +45,7 @@ class IsNowIllegal extends Social {
     } catch (error) {
       inUse.delete('true');
       message.channel.stopTyping({force:true});
-      throw error;
+      console.log(error);
     }
   }
 }

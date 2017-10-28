@@ -24,7 +24,7 @@ class Pay extends Social {
       await this.usrPay(message, message.author.id, user, parseInt(args[1]));
       // message.channel.send(points);
     } catch (error) {
-      throw error;
+      console.log(error);
     }
   }
 }

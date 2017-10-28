@@ -17,7 +17,7 @@ class Ping extends Command {
       const { text } = await snek.get('http://api.yomomma.info/');
       message.channel.send(`_${JSON.parse(text).joke}_`);
     } catch (error) {
-      throw error;
+      console.log(error);
     }
   }
 }

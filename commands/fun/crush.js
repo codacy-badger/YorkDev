@@ -48,7 +48,7 @@ class Crush extends Social {
       await message.channel.send({ files: [{ attachment: result, name: 'crush.png' }] });
       await msg.delete();
     } catch (error) {
-      throw error;
+      console.log(error);
     }
   }
 }

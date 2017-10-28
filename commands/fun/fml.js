@@ -63,7 +63,7 @@ class FML extends Social {
       if (error.message === 'Cannot send an empty message') {
         throw 'Today, something went wrong, so you\'ll have to try again in a few moments. FML';
       }
-      throw error;
+      console.log(error);
     }
   }
 }

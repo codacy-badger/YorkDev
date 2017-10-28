@@ -34,7 +34,7 @@ class Moderation extends Command {
       if (level <= this.client.permlevel(msg)) throw `${message.author}, |\`🛑\`| You cannot perform that action on someone of equal, or a higher permission level.`;
       return target;
     } catch (error) {
-      throw error;
+      console.log(error);
     }
   }
 

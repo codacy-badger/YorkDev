@@ -46,7 +46,7 @@ class Beautiful extends Social {
      
       await msg.delete();
     } catch (error) {
-      throw error;
+      console.log(error);
     }
   }
 }

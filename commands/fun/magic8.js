@@ -28,7 +28,7 @@ class Magic8 extends Social {
         Math.random() * (1 - 5) + 1 * 2000
       );
     } catch (error) {
-      throw error;
+      console.log(error);
     }
   }
 }

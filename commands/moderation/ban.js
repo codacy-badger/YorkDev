@@ -26,7 +26,7 @@ class Ban extends Moderation {
       await this.buildModLog(this.client, message.guild, 'b', target, message.author, reason);
       await message.channel.send(`\`${target.user.tag}\` was successfully banned.`);
     } catch (error) {
-      throw error;
+      console.log(error);
     }
   }
 }

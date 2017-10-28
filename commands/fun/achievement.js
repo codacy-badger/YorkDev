@@ -48,7 +48,7 @@ class Achievement extends Social {
       await message.channel.send({ files: [{ attachment: result, name: 'achievementGet.png' }] });
       await msg.delete();
     } catch (error) {
-      throw error;
+      console.log(error);
     }
   }
 }

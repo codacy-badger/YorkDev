@@ -25,7 +25,7 @@ class Award extends Social {
       if (message.author.id === user) throw 'You cannot reward yourself, why did you even try it?';
       await this.cmdRew(message, user, parseInt(args[1]));
     } catch (error) {
-      throw error;
+      console.log(error);
     }
   }
 }

@@ -26,7 +26,7 @@ class Warn extends Moderation {
       await this.buildModLog(this.client, message.guild, 'w', target, message.author, reason);
       await message.channel.send(`\`${target.user.tag}\` was successfully warned.`);
     } catch (error) {
-      throw error;
+      console.log(error);
     }
   }
 }

@@ -42,7 +42,7 @@ class Hug extends Command {
           break;
       }
     } catch (error) {
-      throw error;
+      console.log(error);
     }
   }
 }

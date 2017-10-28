@@ -21,7 +21,7 @@ module.exports = class {
         if (error.message === 'Cannot send messages to this user') {
           await message.channel.send(`I cannot send you that message ${user}, as it appears you have **Direct Messages's** disabled.`);
         } else {
-          throw error;
+          console.log(error);
         }
       }
     }

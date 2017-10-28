@@ -40,7 +40,7 @@ class Command {
       const check = await this.client.fetchUser(id);
       if (check.username !== undefined) return id;
     } catch (error) {
-      throw error;
+      console.log(error);
     }
   }
 
@@ -58,7 +58,7 @@ class Command {
       const check = await message.channel.fetchMessage(id);
       if (check.cleanContent !== undefined) return id;
     } catch (error) {
-      throw error;
+      console.log(error);
     }
   }
 
@@ -70,7 +70,7 @@ class Command {
       const check = await message.guild.channels.get(id);
       if (check.name !== undefined && check.type === 'text') return id;
     } catch (error) {
-      throw error;
+      console.log(error);
     }
   }
 }
