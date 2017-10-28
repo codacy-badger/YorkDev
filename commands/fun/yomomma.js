@@ -4,7 +4,7 @@ class Ping extends Command {
   constructor(client) {
     super(client, {
       name: 'yomomma',
-      description: 'Disrespect someone\'s mother with this command.',
+      description: 'Disrespect someone\'s mother with this.',
       category: 'Fun',
       usage: 'yomomma',
       aliases: ['yomama'],

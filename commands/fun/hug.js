@@ -13,31 +13,32 @@ class Hug extends Command {
   }
 
   async run(message, args, level) { // eslint-disable-line no-unused-vars
+    const person = message.mentions.members.first() || 'themself';
     const command = message.cleanContent.split(message.settings.prefix)[1].split(' ')[0];
     try {
       switch (command) {
         case ('stab'): {
-          message.channel.send(`Holy crap, they just stabbed ${message.mentions.members.first()}!`);
+          message.channel.send(`Holy crap, they just stabbed ${person}!`);
           break;
         }
         case ('knife'): {
-          message.channel.send(`Holy crap, they just stabbed ${message.mentions.members.first()}!`);
+          message.channel.send(`Holy crap, they just stabbed ${person}!`);
           break;
         }
         case ('shoot'): {
-          message.channel.send(`Holy crap, they just shot ${message.mentions.members.first()}!`);
+          message.channel.send(`Holy crap, they just shot ${person}!`);
           break;
         }
         case ('punch'): {
-          message.channel.send(`Holy crap, they just punched ${message.mentions.members.first()}!`);
+          message.channel.send(`Holy crap, they just punched ${person}!`);
           break;
         }
         case ('highfive'): {
-          message.channel.send(`Aww sweet, they just high fived ${message.mentions.members.first()}!`);
+          message.channel.send(`Aww sweet, they just high fived ${person}!`);
           break;
         }
         default:
-          message.channel.send(`Aww sweet, they just gave ${message.mentions.members.first()} a hug!`);        
+          message.channel.send(`Aww sweet, they just gave ${person} a hug!`);        
           break;
       }
     } catch (error) {
