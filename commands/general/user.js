@@ -42,7 +42,7 @@ class User extends Command {
       message.channel.send({embed});
     
     } catch (error) {
-      console.log(error);
+      throw error;
     }
   }
 }

@@ -51,7 +51,7 @@ class Slap extends Social {
       await message.channel.send({ files: [{ attachment: result, name: 'slapped.png' }] });
       await msg.delete();
     } catch (error) {
-      console.log(error);
+      throw error;
     }
   }
 }

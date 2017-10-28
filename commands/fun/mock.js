@@ -33,7 +33,7 @@ class Mock extends Social {
       if (!payMe) return;  
       await message.channel.send(alternateCase(mock.cleanContent), {files: [{attachment: mockBob, name: 'mock.png'}]});
     } catch (error) {
-      console.log(error);
+      throw error;
     }
   }
 }

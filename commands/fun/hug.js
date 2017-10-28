@@ -1,12 +1,14 @@
-const Command = require('../../base/Command.js');
+const Social = require('../../base/Social.js');
 
-class Hug extends Command {
+class Hug extends Social {
   constructor(client) {
     super(client, {
       name: 'hug',
       description: 'You can hug, or punch people with this.',
+      category: 'Fun',
       usage: 'hug [@mention]',
       extended: 'Ever needed to give a supportive hug, or high five another user? Now you can.',
+      cost: 1,
       aliases: ['stab', 'shoot', 'knife', 'punch', 'highfive'],
       botPerms: ['SEND_MESSAGES']
     });
@@ -15,6 +17,9 @@ class Hug extends Command {
   async run(message, args, level) { // eslint-disable-line no-unused-vars
     const person = message.mentions.members.first() || 'themself';
     const command = message.cleanContent.split(message.settings.prefix)[1].split(' ')[0];
+    const cost = this.cmdDis(this.help.cost, level);
+    const payMe = await this.cmdPay(message, message.author.id, cost, this.conf.botPerms);
+    if (!payMe) return;  
     try {
       switch (command) {
         case ('stab'): {
@@ -42,7 +47,7 @@ class Hug extends Command {
           break;
       }
     } catch (error) {
-      console.log(error);
+      throw error;
     }
   }
 }

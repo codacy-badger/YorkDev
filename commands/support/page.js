@@ -61,7 +61,7 @@ class Page extends Command {
       const response = await this.db[message.flags[0]](name, data);
       message.channel.send(response);
     } catch (error) {
-      console.log(error);
+      throw error;
     }
   }
 }

@@ -45,7 +45,7 @@ class Reminder extends Command {
       // }, ms(blah.split('#')[1]));
   
     } catch (error) {
-      console.log(error);
+      throw error;
     }
   }
 }

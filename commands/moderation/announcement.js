@@ -23,7 +23,7 @@ class Announcement extends Moderation {
       await message.delete().catch(console.error);
       return message.channel.send('Successfully posted announcement.');
     } catch (error) {
-      console.log(error);
+      throw error;
     }
   }
 }

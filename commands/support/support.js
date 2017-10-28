@@ -20,7 +20,7 @@ class Support extends Command {
     try {
       this.client.checkConsent(this.client, message, msg);
     } catch (error) {
-      console.log(error);
+      throw error;
     }
   }
 }

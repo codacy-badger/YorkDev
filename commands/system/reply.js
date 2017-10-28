@@ -30,7 +30,7 @@ class Reply extends Command {
       if (error.message === 'Cannot send messages to this user') {
         await message.channel.send(`I cannot send that message ${message.author.username}, as it appears they may have **Direct Messages's** disabled.`);
       } else {
-        console.log(error);
+        throw error;
       }
     }
   }

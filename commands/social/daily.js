@@ -18,7 +18,7 @@ class Daily extends Social {
     try {
       await this.usrDay(message, message.author.id, payee);
     } catch (error) {
-      console.log(error);
+      throw error;
     }
   }
 }

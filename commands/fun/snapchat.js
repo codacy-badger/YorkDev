@@ -44,7 +44,7 @@ class SnapChat extends Social {
       const result = await getSnap(text);
       await message.channel.send({ files: [{ attachment: result, name: `${text.toLowerCase().replace(' ', '-').replace('.', '-')}.png`}]});
     } catch (error) {
-      console.log(error);
+      throw error;
     }
   }
 }

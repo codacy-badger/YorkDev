@@ -36,7 +36,7 @@ class Triggered extends Social {
       await message.channel.send({ files: [{ attachment, name: 'triggered.gif' }] });
       await msg.delete();
     } catch (error) {
-      console.log(error);
+      throw error;
     }
   }
   

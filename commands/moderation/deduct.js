@@ -25,7 +25,7 @@ class Deduct extends Social {
       if (message.author.id === user) throw 'You cannot punish yourself, why did you even try it?';
       await this.cmdPun(message, user, parseInt(args[1]));
     } catch (error) {
-      console.log(error);
+      throw error;
     }
   }
 }

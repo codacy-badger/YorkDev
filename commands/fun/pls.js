@@ -44,7 +44,7 @@ class Please extends Social {
       const result = await pls(person);
       await message.channel.send({files: [{attachment: result, name: 'pls.png'}]});
     } catch (error) {
-      console.log(error);
+      throw error;
     }
   }
 }
