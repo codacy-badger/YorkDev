@@ -2,12 +2,12 @@ const Command = require('../../base/Command.js');
 const ms = require('ms');
 
 function regCheck(reminder) {
-  const remind = /\b(\d{1,2}(?:\.\d|\d)?) ?(s(?:ec(?:ond)?)?s?|m(?:in(?:ute)?)?s?|h(?:our)?s?|d(?:ay)?s?|w(?:eek)?s?|m(?:onth)?s?|y(?:ear)?s?)\b/g.exec(reminder);
+  const remind = /(?:^| )(\d{1,2}(?:\.\d|\d)?) ?(s(?:ec(?:ond)?)?s?|m(?:in(?:ute)?)?s?|h(?:our)?s?|d(?:ay)?s?|w(?:eek)?s?|m(?:onth)?s?|y(?:ear)?s?)\b/g.exec(reminder);
   if (!remind) return false;
   const time = remind[0]
     .replace(/ m(s?)/, ' min') //m => min
     .replace(/\ba ?(s(?:ec(?:ond)?)?s?|m(?:in(?:ute)?)?s?|h(?:our)?s?|d(?:ay)?s?|w(?:eek)?s?|m(?:onth)?s?|y(?:ear)?s?)\b/g, '1 $1'); // a "something" => 1 "something"
-  const input = remind.input
+  const input = remind.input.trim()
     .replace(/\b(in|me|to)\b/g, '')
     .replace(remind[0], '')
     .replace(/ +/, '');
