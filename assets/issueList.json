@@ -71,6 +71,12 @@
           "info":"The forbidden permission is typically related to permissions, for example trying to delete messages without the **MANAGE_MESSAGES** permission.",
           "problem":"Your bot is attempting to do something it can't, for example apply roles above itself to users.",
           "solution":"Depending on the action your bot is attempting will decide the course of action, your bot must have the correct permissions to achieve what you want and the bot for example cannot apply roles, or affect users with roles above it's own."
-        }
+        },
+        "defaultchannel": {
+            "message":"Looks like you're still trying to use defaulChannel.",
+            "info":"\u200b",
+            "problem":"The defaultChannel does not exist anymore in Discord, so trying to use it will likely cause your bot to crash",
+            "solution": "Use this code to find the first channel that you can post in ```const defaultChannel = guild.channels.find(c=> c.permissionsFor(guild.me).has("SEND_MESSAGES"));```. \nThis is not perfect, and you should try to use a per-server config to let them set a channel if you need to send announcements or anything."
+        }   
     }
 }
