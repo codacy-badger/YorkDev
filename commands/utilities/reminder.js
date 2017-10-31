@@ -2,7 +2,7 @@ const Command = require('../../base/Command.js');
 const ms = require('ms');
 
 function regCheck(reminder) {
-  const remind = /(?:^| )(\d{1,2}(?:\.\d|\d)?) ?((?:s(?:ec(?:ond)?)?|m(?:in(?:ute)?)?|h(?:our)?|d(?:ay)?|w(?:eek)?|m(?:onth)?|y(?:ear)?)s?)\b/g.exec(reminder);
+  const remind = /(?:^| )(\d{1,2}(?:\.\d|\d)?) ?((?:m(?:in(?:ute)?)?|h(?:our)?|d(?:ay)?|w(?:eek)?|m(?:onth)?|y(?:ear)?)s?)\b/g.exec(reminder);
   if (!remind) return false;
   const time = remind[0]
     .replace(/ ms?\b/, ' min') //m => min
