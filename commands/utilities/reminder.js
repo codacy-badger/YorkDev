@@ -5,7 +5,7 @@ function regCheck(reminder) {
   const remind = /(?:^| )(\d{1,2}(?:\.\d|\d)?) ?((?:s(?:ec(?:ond)?)?|m(?:in(?:ute)?)?|h(?:our)?|d(?:ay)?|w(?:eek)?|m(?:onth)?|y(?:ear)?)s?)\b/g.exec(reminder);
   if (!remind) return false;
   const time = remind[0]
-    .replace(/ m(s?)/, ' min') //m => min
+    .replace(/ ms?\b/, ' min') //m => min
     .replace(/\ba ?((?:s(?:ec(?:ond)?)?|m(?:in(?:ute)?)?|h(?:our)?|d(?:ay)?|w(?:eek)?|m(?:onth)?|y(?:ear)?)s?)\b/g, '1 $1'); // a "something" => 1 "something"
   const input = remind.input.trim()
     .replace(/\b(in|me|to)\b/g, '')
