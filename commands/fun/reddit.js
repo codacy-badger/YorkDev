@@ -8,7 +8,7 @@ class Reddit extends Social {
       description: 'Posts a random subreddit entry.',
       usage: 'reddit [-new|-random|-hot|-top] [subreddit]',
       category: 'Fun',
-      cost: 10,
+      cost: 1,
       botPerms: ['SEND_MESSAGES']
     });
   }
@@ -19,7 +19,7 @@ class Reddit extends Social {
     try {
       const { body } = await snek.get(`https://www.reddit.com/r/${subreddit}/${subRedCat}.json`);
       let meme;
-      if (message.flags[0] === 'random') meme = body[0].data.children[0].data;
+      if (message.flags[0] === 'random' || !message.flags[0]) meme = body[0].data.children[0].data;
       else meme = body.data.children[0].data;
 
       if (!message.channel.nsfw && meme.over_18) {
