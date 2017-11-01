@@ -2,7 +2,7 @@ const Command = require('../../base/Command.js');
 const ms = require('ms');
 
 function regCheck(reminder) {
-  const remind = /([0-9]{1,3}) (seconds|second|minutes|minute|hours|hour|days|day|weeks|week|months|month|years|year)/g.exec(reminder);
+  const remind = /([0-9]{1,3}) (minutes|minute|hours|hour|days|day|weeks|week|months|month|years|year)/g.exec(reminder);
   if (!remind) return false;
   const time = remind[0];
   const input = remind.input

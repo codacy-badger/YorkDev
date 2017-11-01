@@ -15,21 +15,21 @@ class Reddit extends Social {
 
   async run(message, args, level) { // eslint-disable-line no-unused-vars
     const subreddit = args.join(' ') || 'random';
-    const subRedCat = message.flags[0] || 'random'
+    const subRedCat = message.flags[0] || 'random';
     try {
       const { body } = await snek.get(`https://www.reddit.com/r/${subreddit}/${subRedCat}.json`);
       let meme;
-      if (subRedCat === 'random' || !message.flags[0]) meme = body[0].data.children[0].data;
-      else meme = body.data.children[0].data;
+      if (subRedCat === 'random' || !message.flags[0]) meme = body[0].data.children[Math.floor(Math.random() * body.data.children.length)].data;
+      else meme = body.data.children[Math.floor(Math.random() * body.data.children.length)].data;
 
       if (!message.channel.nsfw && meme.over_18) {
-        throw 'Cannot display NSFW content in a SFW channel.'
+        throw 'Cannot display NSFW content in a SFW channel.';
       }
       const cost = this.cmdDis(this.help.cost, level);
       const payMe = await this.cmdPay(message, message.author.id, cost, this.conf.botPerms);
       if (!payMe) return;  
       const msg = await message.channel.send(`'Fetching from ${meme.subreddit_name_prefixed}...'`);
-      await message.channel.send(`${meme.title} submitted by ${meme.author} in ${meme.subreddit_name_prefixed}\nUpvote Ratio ${meme.upvote_ratio}\n${meme.url}`)
+      await message.channel.send(`${meme.title} submitted by ${meme.author} in ${meme.subreddit_name_prefixed}\nUpvote Ratio ${meme.upvote_ratio}\n${meme.url}`);
       msg.delete();
     } catch (error) {
       throw error;
