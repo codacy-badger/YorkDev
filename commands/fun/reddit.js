@@ -7,9 +7,8 @@ class Reddit extends Social {
       name: 'reddit',
       description: 'Posts a random subreddit entry.',
       usage: 'reddit [-new|-random|-hot|-top] [subreddit]',
-      category: 'fun',
+      category: 'Fun',
       cost: 10,
-      hidden: true,
       botPerms: ['SEND_MESSAGES']
     });
   }
