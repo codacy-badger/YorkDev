@@ -10,7 +10,7 @@ class EslintRule extends Command {
       name: 'eslint-rule',
       description: 'Gets information on an eslint rule.',
       usage: 'eslint-rule <rule>',
-      category: 'Fun',
+      category: 'Support',
       aliases: ['rule'],
       botPerms: ['SEND_MESSAGES', 'EMBED_LINKS']
     });
