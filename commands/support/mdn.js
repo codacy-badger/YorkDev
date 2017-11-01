@@ -6,15 +6,15 @@ class Mdn extends Command {
   constructor(client) {
     super(client, {
       name: 'mdn',
-      description: 'Latency and API response times.',
+      description: 'Resources for developers, by developers.',
       usage: 'mdn <search term>',
-      extended: 'This command is a response test, it helps gauge if there is any latency (lag) in either the bots connection, or the API.',
+      category: 'Support',
       botPerms: ['SEND_MESSAGES']
     });
   }
 
   async run(message, args, level) { // eslint-disable-line no-unused-vars
-    const query = args.join('-');
+    const query = args.join(' ');
     try {
       const { body } = await snek
         .get('https://developer.mozilla.org/en-US/search.json')
