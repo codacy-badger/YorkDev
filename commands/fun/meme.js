@@ -6,6 +6,7 @@ class Meme extends Social {
       name: 'meme',
       description: 'Posts a random `dankmeme` image.',
       usage: 'meme',
+      category: 'Fun',
       cost: 1,
       aliases: ['dank', 'dankmeme'],
       botPerms: ['SEND_MESSAGES']
