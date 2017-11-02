@@ -13,8 +13,9 @@ class Docs extends Command {
   constructor(client) {
     super(client, {
       name: 'docs',
-      description: '',
+      description: 'Search the discord.js documentation',
       usage: 'docs <search>',
+      extended: 'Search the Discord.js Documentation for methods, properties and events.',
       category: 'Support',
       botPerms: ['SEND_MESSAGES', 'EMBED_LINKS']
     });
