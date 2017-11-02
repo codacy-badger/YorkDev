@@ -19,7 +19,7 @@ class Reddit extends Social {
     try {
       const { body } = await snek.get(`https://www.reddit.com/r/${subreddit}/${subRedCat}.json`);
       let meme;
-      if (subRedCat === 'random' || !message.flags[0]) meme = body[0].data.children[Math.floor(Math.random() * body.data.children.length)].data;
+      if (subRedCat === 'random' || !message.flags[0]) meme = body[0].data.children[Math.floor(Math.random() * body[0].data.children.length)].data;
       else meme = body.data.children[Math.floor(Math.random() * body.data.children.length)].data;
 
       if (!message.channel.nsfw && meme.over_18) {
