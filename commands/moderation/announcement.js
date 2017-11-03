@@ -6,7 +6,7 @@ class Announcement extends Moderation {
       name: 'announcement',
       description: 'Posts an announcement.',
       usage: 'announcement <role name> <announcement>',
-      extended: '<role> must be correctly spelt, otherwise it will throw an error.',
+      extended: '<role name> must be correctly spelt, otherwise it will throw an error.',
       botPerms: ['SEND_MESSAGES']
     });
   }

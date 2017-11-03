@@ -1,4 +1,28 @@
 module.exports = (client) => {
+
+  client.getSettings = (id) => {
+    const defaults = client.settings.get('default');
+    let guild = client.settings.get(id);
+    if (typeof guild != 'object') guild = {};
+    const returnObject = {};
+    Object.keys(defaults).forEach((key) => {
+      returnObject[key] = guild[key] ? guild[key] : defaults[key];
+    });
+    return returnObject;
+  };
+  
+  client.writeSettings = (id, newSettings) => {
+    const defaults = client.settings.get('default');
+    let settings = client.settings.get(id);
+    if (typeof settings != 'object') settings = {};
+    for (const key in newSettings) {
+      if (defaults[key] !== newSettings[key])  {
+        settings[key] = newSettings[key];
+      }
+    }
+    client.settings.set(id, settings);
+  };
+
   client.supportMsg = (message, msg) => {
     const { RichEmbed } = require('discord.js');
     const embed = new RichEmbed()

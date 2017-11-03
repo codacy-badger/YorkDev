@@ -16,58 +16,60 @@ class Set extends Command {
   }
 
   async run(message, [action, key, ...value], level) { // eslint-disable-line no-unused-vars
-    const settings = this.client.settings.get(message.guild.id);
+    //     const settings = message.settings;
+    //     const defaults = this.client.settings.get('default');
 
-    if (action === 'add') {
-      if (!key) return message.reply('Please specify a key to add');
-      if (settings[key]) return message.reply('This key already exists in the settings');
-      if (value.length < 1) return message.reply('Please specify a value');
+    //     if (action === 'add') {
+    //       if (!key) return message.reply('Please specify a key to add');
+    //       if (defaults[key]) return message.reply('This key already exists in the settings');
+    //       if (value.length < 1) return message.reply('Please specify a value');
 
-      settings[key] = value.join(' ');
+    //       defaults[key] = value.join(' ');
 
-      this.client.settings.set(message.guild.id, settings);
-      message.reply(`${key} successfully added with the value of ${value.join(' ')}`);
-    } else
+    //       this.client.settings.set('default', defaults);
+    //       message.reply(`${key} successfully added with the value of ${value.join(' ')}`);
+    //     } else
     
-    if (action === 'edit') {
-      if (!key) return message.reply('Please specify a key to edit');
-      if (!settings[key]) return message.reply('This key does not exist in the settings');
-      if (value.length < 1) return message.reply('Please specify a new value');
+    //     if (action === 'edit') {
+    //       if (!key) return message.reply('Please specify a key to edit');
+    //       if (!defaults[key]) return message.reply('This key does not exist in the settings');
+    //       if (value.length < 1) return message.reply('Please specify a new value');
 
-      settings[key] = value.join(' ');
+    //       defaults[key] = value.join(' ');
 
-      this.client.settings.set(message.guild.id, settings);
-      message.reply(`${key} successfully edited to ${value.join(' ')}`);
-    } else
+    //       this.client.settings.set('default', defaults);
+    //       message.reply(`${key} successfully edited to ${value.join(' ')}`);
+    //     } else
 
-    if (action === 'del') {
-      if (!key) return message.reply('Please specify a key to delete.');
-      if (!settings[key]) return message.reply('This key does not exist in the settings');
+    //     if (action === 'del') {
+    //       if (!key) return message.reply('Please specify a key to delete.');
+    //       if (!defaults[key]) return message.reply('This key does not exist in the settings');
       
-      const response = await this.client.awaitReply(message, `Are you sure you want to permanently delete ${key}? This **CANNOT** be undone.`);
-      if (['y', 'yes'].includes(response)) {
-        delete settings[key];
-        this.client.settings.set(message.guild.id, settings);
-        message.reply(`${key} was successfully deleted.`);
-      } else
+    //       const response = await this.client.awaitReply(message, `Are you sure you want to permanently delete ${key}? This **CANNOT** be undone.`);
+    //       if (['y', 'yes'].includes(response)) {
+    //         delete defaults[key];
+    //         this.client.settings.set('default', defaults);
+    //         message.reply(`${key} was successfully deleted.`);
+    //       } else
       
-      if (['n','no','cancel'].includes(response)) {
-        message.reply('Action cancelled.');
-      }
-    } else
+    //       if (['n','no','cancel'].includes(response)) {
+    //         message.reply('Action cancelled.');
+    //       }
+    //     } else
     
-    if (action === 'get') {
-      if (!key) return message.reply('Please specify a key to view');
-      if (!settings[key]) return message.reply('This key does not exist in the settings');
-      message.reply(`The value of ${key} is currently ${settings[key]}`);
-    } else {
-      const array = [];
-      Object.entries(this.client.settings.get(message.guild.id)).forEach(([key, value]) => {
-        array.push(`${key}${' '.repeat(20 - key.length)}::  ${value}`); 
-      });
-      message.channel.send(`= Settings =
-${array.join('\n')}`, {code: 'asciidoc'});
-    }
+    //     if (action === 'get') {
+    //       if (!key) return message.reply('Please specify a key to view');
+    //       if (!defaults[key]) return message.reply('This key does not exist in the settings');
+    //       message.reply(`The value of ${key} is currently ${settings[key]}`);
+    //     } else {
+    //       const array = [];
+    //       Object.entries(this.client.settings.get(message.guild.id)).forEach(([key, value]) => {
+    //         array.push(`${key}${' '.repeat(20 - key.length)}::  ${value}`); 
+    //       });
+    //       await message.channel.send(`= Settings =
+    // ${array.join('\n')}`, {code: 'asciidoc'});
+    await message.channel.send(`The settings configuration has been moved to the Dashboard on <${this.client.config.dashboard.callbackURL.split('/').slice(0, -1).join('/')}>`);
+    // }
   }
 }
 
