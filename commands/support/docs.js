@@ -17,7 +17,7 @@ class Docs extends Command {
       usage: 'docs <search>',
       extended: 'Search the Discord.js Documentation for methods, properties and events.',
       category: 'Support',
-      botPerms: ['SEND_MESSAGES', 'EMBED_LINKS']
+      botPerms: ['EMBED_LINKS']
     });
     this.docs = {};
   }

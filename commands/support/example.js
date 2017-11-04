@@ -9,7 +9,7 @@ class Example extends Command {
       category: 'Support',
       extended: '-add newExampleName This is your new example contents\n          -del exampleName\n          -edit existingExampleName This is new example edited contents\n          -list',
       aliases: ['ex', 'examples'],
-      botPerms: ['SEND_MESSAGES']
+      botPerms: []
     });
     this.init = client => {
       this.db = new client.db(client, 'examples');

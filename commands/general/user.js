@@ -9,7 +9,7 @@ class User extends Command {
       description: 'Get detailed info for a nominated user.',
       usage: 'user [@mention|userid]',
       extended: 'This command will get detailed information on either a nominated user, or yourself.',
-      botPerms: ['SEND_MESSAGES', 'EMBED_LINKS']
+      botPerms: ['EMBED_LINKS']
     });
   }
 

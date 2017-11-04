@@ -8,8 +8,9 @@ class Eval extends Command {
       category: 'System',
       usage: 'eval <expression>',
       extended: 'This is an extremely dangerous command, use with caution and never eval stuff strangers tell you.',
+      hidden: true,
       aliases: ['ev'],
-      botPerms: ['SEND_MESSAGES'],
+      botPerms: [],
       permLevel: 'Bot Admin'
     });
   }

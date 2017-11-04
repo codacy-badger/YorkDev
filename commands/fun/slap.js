@@ -33,7 +33,7 @@ class Slap extends Social {
       usage: 'slap <@mention>',
       extended: 'Mention another user to slap them.',
       cost: 1,
-      botPerms: ['SEND_MESSAGES', 'ATTACH_FILES'],
+      botPerms: ['ATTACH_FILES'],
       permLevel: 'Patron'
     });
   }

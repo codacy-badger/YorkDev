@@ -1,6 +1,6 @@
 {
   "name": "york_dev",
-  "version": "7.0.0",
+  "version": "7.2.0",
   "description": "Enmap based Development Bot",
   "main": "app.js",
   "scripts": {
@@ -34,8 +34,10 @@
     "fast-html-parser": "^1.0.1",
     "fs-nextra": "^0.2.1",
     "gifencoder": "^1.1.0",
+    "google-translate": "^2.0.5",
     "helmet": "^3.9.0",
     "inquirer": "^3.3.0",
+    "js-beautify": "^1.7.4",
     "klaw": "^2.1.0",
     "level-session-store": "^2.1.0",
     "marked": "^0.3.6",

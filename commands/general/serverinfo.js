@@ -10,7 +10,7 @@ class ServerInfo extends Command {
       extended: 'This command will return an organised embed with server information and statistics.',
       guildOnly: true,
       aliases: ['serverstats','guildinfo','guildstats'],
-      botPerms: ['SEND_MESSAGES', 'EMBED_LINKS']
+      botPerms: ['EMBED_LINKS']
     });
   }
 

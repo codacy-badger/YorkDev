@@ -12,7 +12,7 @@ class Tag extends Command {
           -edit existingtagName This is new new edited contents
           -list`,
       aliases: ['t', 'tags'],
-      botPerms: ['SEND_MESSAGES']
+      botPerms: []
     });
 
     this.init = client => {

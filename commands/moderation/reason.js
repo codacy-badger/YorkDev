@@ -7,7 +7,7 @@ class Reason extends Moderation {
       description: 'Updates a case log with a new reason.',
       usage: 'reason <case number> <reason>',
       extented: 'This will allow a member of staff to update a mod-log case reason.',
-      botPerms: ['SEND_MESSAGES', 'EMBED_LINKS']
+      botPerms: ['EMBED_LINKS']
     });
   }
 

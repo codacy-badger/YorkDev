@@ -12,7 +12,7 @@ class EslintRule extends Command {
       usage: 'eslint-rule <rule>',
       category: 'Support',
       aliases: ['rule'],
-      botPerms: ['SEND_MESSAGES', 'EMBED_LINKS']
+      botPerms: ['EMBED_LINKS']
     });
   }
 

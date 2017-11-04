@@ -16,7 +16,7 @@ class Triggered extends Social {
       extended: 'Ever get so pissed off you explode? You got triggered.',
       cost: 2,
       aliases: ['trigger'],
-      botPerms: ['SEND_MESSAGES', 'ATTACH_FILES']
+      botPerms: ['ATTACH_FILES']
     });
   }
 

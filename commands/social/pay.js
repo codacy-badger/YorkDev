@@ -9,7 +9,7 @@ class Pay extends Social {
       category: 'Social',
       cost: 0,
       aliases: ['loan', 'donate'],
-      botPerms: ['SEND_MESSAGES']
+      botPerms: []
     });
   }
 

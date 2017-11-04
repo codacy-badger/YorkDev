@@ -10,7 +10,7 @@ class Help extends Command {
       extended: 'This command will display all available commands for your permission level, with the additonal option of getting per command information when you run \'help <command name>\'.',
       hidden: true,
       aliases: ['h', 'halp'],
-      botPerms: ['SEND_MESSAGES']
+      botPerms: []
     });
   }
 

@@ -24,7 +24,7 @@ class Wanted extends Social {
       usage: 'wanted [@mention|user id]',
       extended: 'Mention another user to post a wanted poster of them.',
       cost: 5,
-      botPerms: ['SEND_MESSAGES', 'ATTACH_FILES'],
+      botPerms: ['ATTACH_FILES'],
     });
   }
   async run(message, args, level) {

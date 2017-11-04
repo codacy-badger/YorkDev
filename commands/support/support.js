@@ -9,7 +9,7 @@ class Support extends Command {
       category: 'Support',
       extended: 'This command will forward your Support DM to the Support Guild, your consent is **required** to use this command.',
       aliases: ['dm', 'contact'],
-      botPerms: ['SEND_MESSAGES']
+      botPerms: []
     });
   }
 

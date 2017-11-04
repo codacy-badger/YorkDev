@@ -8,9 +8,10 @@ class Set extends Command {
       category: 'System',
       usage: 'set <view/get/edit> <key> <value>',
       extended: 'This command is designed to change per-server-configurations for the guild the command was issued on.',
+      hidden: true,
       guildOnly: true,
       aliases: ['setting', 'settings', 'conf'],
-      botPerms: ['SEND_MESSAGES'],
+      botPerms: [],
       permLevel: 'Administrator'
     });
   }

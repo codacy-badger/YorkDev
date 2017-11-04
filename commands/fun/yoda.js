@@ -9,7 +9,7 @@ class Yoda extends Social {
       usage: 'yoda <message>',
       extended: 'This command will turn any supplied text into Yoda speech, results may vary.',
       cost: 1,
-      botPerms: ['SEND_MESSAGES']
+      botPerms: []
     });
   }
 
