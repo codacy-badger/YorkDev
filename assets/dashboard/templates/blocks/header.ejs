@@ -1,17 +1,30 @@
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html lang="en">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link href="https://bootswatch.com/darkly/bootstrap.min.css" rel="stylesheet" />
+    <meta name="GuideBot" />
+    <meta property="og:title" content="Test" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="http://dashboard.ban-hammered.me" /> <!--This redirects to the this site no matter what link-->
+    <meta property="og:description" content="Test" />
+    <meta property="og:image" content="<%= bot.user.displayAvatarURL %>"/>
+    <meta property="og:site_name" content="<%= bot.user.username %> Website">
+    <meta property="og:locale" content="en_US">
+
+    <link rel="stylesheet" href="/public/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/public/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/public/css/darkly.css">
+    <link rel="stylesheet" href="/public/css/dashboard.css" />
+    <link rel='icon' href='<%= bot.user.avatarURL %>'>
+
     <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.19.1/moment.min.js" integrity="sha256-zG8v+NWiZxmjNi+CvUYnZwKtHzFtdO8cAKUIdB8+U9I=" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="/public/dashboard.css" />
-    <link rel='icon' href='<%= bot.user.avatarURL %>'>
+
+    <!-- <script src="/public/js/script.js"></script> -->
+    <script src="/public/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+
     <title><%= bot.user.username %></title>
   </head>
   <body>

@@ -93,7 +93,7 @@
         .replace("{joined}", moment(member.joinedAt).format("MMMM Do YYYY, h:mm a"))
         .replace("{roles}", roles);
       if (member.bot) {
-        thishtml = thishtml.replace("{botimg}", ' <img src="/public/bot.png">');
+        thishtml = thishtml.replace("{botimg}", ' <img src="/public/images/bot.png">');
       } else { 
         thishtml = thishtml.replace("{botimg}", '');
       }
