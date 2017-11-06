@@ -26,7 +26,9 @@ class Translate extends Command {
 
   async run(message, args, level) { // eslint-disable-line no-unused-vars
     try {
-      const embed = new RichEmbed();
+      const embed = new RichEmbed()
+        .setColor(gcolor[Math.floor(Math.random() * gcolor.length)])
+        .setFooter('Google Translate');
       if (!args[0] && !message.flags.length) {
         return message.channel.send(this.help.usage);
       }
@@ -37,16 +39,19 @@ class Translate extends Command {
           langCodes.push(l.lang);
           langNames.push(l.name);
         });
-        embed.setColor(gcolor[Math.floor(Math.random() * gcolor.length)])
-          .addField('Name', langNames, true)
-          .addField('Code', langCodes, true)
-          .setFooter('Google Translate');
+        embed.addField('Name', langNames, true)
+          .addField('Code', langCodes, true);
         message.channel.send({embed});
       } else {
-        const target = message.flags[0] === 'detect' ? 'en' : args[0];
-        const code = this.client.languages.find('lang', args[0]);
+        let target = '';
+        if (message.flags[0] === 'detect') {
+          target = 'en';
+        } else {
+          target = args[0];
+          const code = this.client.languages.find('lang', target);
+          if (!code) throw 'Unsupported Language, please issue the command again with the `-codes` flag to see a list of supported languages.';
+        }
         const lang = args[0];
-        if (!code) throw 'Unsupported Language, please issue the command again with the `-codes` flag to see a list of supported languages.';
         if (!message.flags[0]) args.shift();
         const phrase = args.join(' ');
         const res = await request.post(`https://translation.googleapis.com/language/translate/v2?key=${this.client.config.apikey}`).send({ q: phrase, target:target });
@@ -54,13 +59,11 @@ class Translate extends Command {
           .setThumbnail('http://nyamato.me/i/kbfuj.png')
           .addField('Original Message', phrase)
           .addField('Translated Message', this.decodeHtmlEntity(res.body.data.translations[0].translatedText))
-          .addField(`${message.flags[0] ? 'Detected' : 'Selected'} Language`, message.flags[0] ? `${this.client.languages.get(res.body.data.translations[0].detectedSourceLanguage).name} (${res.body.data.translations[0].detectedSourceLanguage})` : `${this.client.languages.get(lang).name} (${lang})`)
-          .setFooter('Google Translate');
+          .addField(`${message.flags[0] ? 'Detected' : 'Selected'} Language`, message.flags[0] ? `${this.client.languages.get(res.body.data.translations[0].detectedSourceLanguage).name} (${res.body.data.translations[0].detectedSourceLanguage})` : `${this.client.languages.get(lang).name} (${lang})`);
 
         message.channel.send({embed});
       }
     } catch (error) {
-      message.channel.send('Something went wrong, please try again later...');
       throw error;
     }
   }
