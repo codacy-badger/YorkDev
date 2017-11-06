@@ -1,11 +1,12 @@
 {
   "name": "york_dev",
-  "version": "7.2.0",
+  "version": "8.0.0",
   "description": "Enmap based Development Bot",
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node app.js"
+    "start": "node app.js",
+    "prepublish": "node installdb.js"
   },
   "author": "York",
   "license": "MIT",
@@ -49,7 +50,6 @@
     "snekfetch": "^3.5.3",
     "stream-to-array": "^2.3.0",
     "twit": "^2.2.9",
-    "unfluff": "^1.1.0",
-    "wikidot-kit": "^0.7.0"
+    "unfluff": "^1.1.0"
   }
 }

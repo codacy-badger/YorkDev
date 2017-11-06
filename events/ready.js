@@ -5,7 +5,7 @@ module.exports = class {
   
   async execute() {
     await this.client.wait(1000);
-    this.client.settings.set('default', this.client.config.defaultSettings);
+
     if (this.client.users.has('1')) {
       this.client.users.delete('1');
     }
