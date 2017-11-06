@@ -29,9 +29,11 @@ class Translate extends Command {
       const embed = new RichEmbed()
         .setColor(gcolor[Math.floor(Math.random() * gcolor.length)])
         .setFooter('Google Translate');
+
       if (!args[0] && !message.flags.length) {
         return message.channel.send(this.help.usage);
       }
+
       if (message.flags[0] === 'codes') {
         const langCodes = [];
         const langNames = [];
@@ -42,7 +44,10 @@ class Translate extends Command {
         embed.addField('Name', langNames, true)
           .addField('Code', langCodes, true);
         message.channel.send({embed});
-      } else {
+      }
+      
+      else {
+
         let target = '';
         if (message.flags[0] === 'detect') {
           target = 'en';
@@ -51,6 +56,7 @@ class Translate extends Command {
           const code = this.client.languages.find('lang', target);
           if (!code) throw 'Unsupported Language, please issue the command again with the `-codes` flag to see a list of supported languages.';
         }
+        
         const lang = args[0];
         if (!message.flags[0]) args.shift();
         const phrase = args.join(' ');
