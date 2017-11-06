@@ -84,7 +84,7 @@ class Google extends Command {
       .setAuthor(`Results for "${term}"`, 'https://lh4.googleusercontent.com/-v0soe-ievYE/AAAAAAAAAAI/AAAAAAADwkE/KyrKDjjeV1o/photo.jpg', searchurl)
       .setTitle(first.title)
       .setURL(first.url)
-      .setThumbnail(first.image())
+      .setThumbnail(first.image().replace(/^\/(.*)/, `${first.url}$1`))
       .setDescription(first.snippet())
       .setTimestamp()
       .setFooter(Date.now() - time + ' ms')
