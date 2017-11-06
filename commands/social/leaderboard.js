@@ -1,5 +1,5 @@
 const Social = require('../../base/Social.js');
-
+const { RichEmbed } = require('discord.js');
 class Leaderboard extends Social {
   constructor(client) {
     super(client, {
@@ -16,26 +16,38 @@ class Leaderboard extends Social {
   async run(message, args, level) { // eslint-disable-line no-unused-vars
     try {
       const leaderboard = [];
-      const posBoard = [];
-      const score = this.client.points.get(`${message.guild.id}-${message.author.id}`) || this.client.points.set(`${message.guild.id}-${message.author.id}`, { points: 50, level: 0, user: message.author.id, guild: message.guild.id, daily: 1504120109}).get(`${message.guild.id}-${message.author.id}`);
-      const list = this.client.points.filter(p => p.guild === message.guild.id && p.points > 0);
-      list.map(p => ({ points: p.points, user: p.user }))
-        .sort((a,b) => b.points > a.points ? 1 : -1).forEach(mem => {
-        
-          posBoard.push(this.client.users.get(mem.user));
+      const lbServer = [];
+      
+      const score = this.client.points.get(`${message.guild.id}-${message.author.id}`) || this.client.points.set(`${message.guild.id}-${message.author.id}`, { points: 50, level: 0, user: message.author.id, guild: message.guild.id, daily: 1504120109 }).get(`${message.guild.id}-${message.author.id}`);
+      
+      const list = this.client.points.filter(p => p.guild === message.guild.id && message.guild.members.get(p.user) && p.points > 0);
+      
+      // getting user's position
+      list.map(p => ({points: p.points, user: p.user}))
+        .sort((a, b) => b.points > a.points ? 1 : -1)
+        .map(us => {
+          lbServer.push(us.user);
         });
-      list.map(p => ({ points: p.points, user: p.user }))
+      
+      // top-10 thing
+      list.map(p => ({points: p.points, user: p.user}))
         .sort((a, b) => b.points > a.points ? 1 : -1).slice(0, 10)
         .map((u, i) => {
-        // console.log(u);
-        // console.log(this.client.users.get(u.user));
           leaderboard.push(`${(i + 1).toString().padStart(2, '0')} ❯ ${this.client.users.get(u.user).tag}: ${u.points}`);
         });
-      leaderboard.push('-------------------------------------');    
-      const pos = (posBoard.indexOf(message.author.id) + 1).toString().padStart(2, '0');
-      leaderboard.push(`${pos} ❯ ${message.author.tag}: ${score.points}`);
-      await message.channel.send({ embed: { description: leaderboard.join('\n') } });
-    } catch (error) {console.log(error);}
-  }}
+      leaderboard.push('-------------------------------------');
+      
+      const pos = lbServer.indexOf(message.author.id).toString().padStart(2, '0');
+      const posTxt = pos == -1 ? '??' : (lbServer.indexOf(message.author.id) + 1).toString().padStart(2, '0');
+      leaderboard.push(`${posTxt} ❯ ${message.author.tag}: ${this.client.points.get(`${message.guild.id}-${message.author.id}`).points}`);
+      const embed = new RichEmbed()
+        .setAuthor(`${message.guild.name}'s Leaderboard`, message.guild.iconURL)
+        .setDescription(leaderboard.join('\n'));
+      await message.channel.send({embed});
+    } catch (error) {
+      console.log(error);
+    }
+  }
+}
 
 module.exports = Leaderboard;
