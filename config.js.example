@@ -31,11 +31,15 @@ const config = {
     'port': 3030
   },
 
+  'botSettings' : {
+    'afk': false,
+    'afkMessage': 'is currently AFK, they will be back soon.',
+    'botSupport': 'support-guild-id' // This is a guild ID for the support functionality.
+  },
+
   // Default per-server settings. New guilds have these settings. 
   'defaultSettings' : {
     'prefix': '-',
-    'afk': false,
-    'afkMessage': 'is currently AFK, they will be back soon.',
     'modLogChannel': 'mod-log',
     'patronRole': 'Patrons',
     'modRole': 'Moderator',

@@ -30,7 +30,7 @@ class Blame extends Social {
       category: 'Fun',
       extended: 'Blame someone else via this command.',
       cost: 2,
-      botPerms: ['SEND_MESSAGES', 'ATTACH_FILES']
+      botPerms: ['ATTACH_FILES']
     });
   }
 

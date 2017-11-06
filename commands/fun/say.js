@@ -10,7 +10,7 @@ class Say extends Social {
       extended: 'You can send a message to another channel via this command.',
       cost: 1,
       aliases: ['speak'],
-      botPerms: ['SEND_MESSAGES', 'MANAGE_MESSAGES'],
+      botPerms: ['MANAGE_MESSAGES'],
       permLevel: 'Patron'
     });
   }
@@ -24,7 +24,7 @@ class Say extends Social {
       }
       const channel = message.guild.channels.get(channelid);
       if (!message.member.permissionsIn(channel).has(['SEND_MESSAGES', 'READ_MESSAGES'])) throw 'You do not have permission to `say` in that channel.';
-
+      
       message.delete();
       const cost = this.cmdDis(this.help.cost, level);
       const payMe = await this.cmdPay(message, message.author.id, cost, this.conf.botPerms);

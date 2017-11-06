@@ -19,7 +19,7 @@ class Mock extends Social {
       extended: 'Based on the popular Spongebob Squarepants mocking meme.',
       cost: 4,
       aliases: [],
-      botPerms: ['SEND_MESSAGES', 'ATTACH_FILES']
+      botPerms: ['ATTACH_FILES']
     });
   }
 

@@ -9,7 +9,7 @@ class Daily extends Social {
       extended: 'You can either claim or donate your daily points.',
       cost: 0,
       aliases: ['claim'],
-      botPerms: ['SEND_MESSAGES']
+      botPerms: []
     });
   }
 

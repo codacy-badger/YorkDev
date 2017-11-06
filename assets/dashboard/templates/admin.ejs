@@ -1,5 +1,4 @@
-<%- include('blocks/header', {bot:bot, user: user, path: path, auth: auth}) %>
-<div class="container">
+<%- include('blocks/header', {bot, user, path}) %>
   <h1 class="display-3">Administration</h1>
   <ul class="list-unstyled">
     <% bot.guilds.forEach(guild => { %>
@@ -39,4 +38,4 @@
       <% }); %>
   </ul>
 
-  <% include ./blocks/footer %>
+  <% include blocks/footer %>

@@ -3,7 +3,7 @@
 	Yes, this is a modified version of Auto by Hackzilla
 
 */
-const issue = require('../assets/issueList.json');
+const issue = require('../assets/json/issueList.json');
 function parse(input) {
   if (input.includes('Block-scoped declarations (let, const, function, class) not yet supported outside strict mode')) {
     return {

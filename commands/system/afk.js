@@ -9,7 +9,7 @@ class AFK extends Command {
       usage: 'afk [-on|-off|-status|-edit <message>]',
       extended: 'Toggle bot owner AFK, view and edit current AFK message.',
       aliases: ['brb', 'bbl'],
-      botPerms: ['SEND_MESSAGES'],
+      botPerms: [],
       permLevel: 'Bot Owner'
     });
   }

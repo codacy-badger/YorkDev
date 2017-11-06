@@ -38,7 +38,7 @@ class Score extends Social {
       category: 'Social',
       cost: 0,
       aliases: ['points', 'level', 'bal', 'balance'],
-      botPerms: ['SEND_MESSAGES']
+      botPerms: []
     });
   }
 

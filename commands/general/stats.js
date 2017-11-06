@@ -9,7 +9,7 @@ class Stats extends Command {
       name: 'stats',
       description: 'Gives some useful bot statistics.',
       usage: 'stats',
-      botPerms: ['SEND_MESSAGES']
+      botPerms: []
     });
   }
 

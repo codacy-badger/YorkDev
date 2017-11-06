@@ -16,7 +16,7 @@ class Google extends Command {
       usage: 'google [search]',
       extended: 'Searches Google for your question.',
       aliases: ['g'],
-      botPerms: ['SEND_MESSAGES', 'EMBED_LINKS']
+      botPerms: ['EMBED_LINKS']
     });
   }
 

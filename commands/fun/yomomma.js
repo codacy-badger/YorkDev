@@ -8,7 +8,7 @@ class Ping extends Command {
       category: 'Fun',
       usage: 'yomomma',
       aliases: ['yomama'],
-      botPerms: ['SEND_MESSAGES']
+      botPerms: []
     });
   }
 

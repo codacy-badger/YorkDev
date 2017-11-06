@@ -29,7 +29,7 @@ class SnapChat extends Social {
       extended: 'This command uses canvas to generate a Snapchat styled image based on the well known statue meme.',
       cost: 4,
       aliases: ['sc'],
-      botPerms: ['SEND_MESSAGES', 'ATTACH_FILES']
+      botPerms: ['ATTACH_FILES']
     });
   }
 

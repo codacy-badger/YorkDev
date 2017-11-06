@@ -18,7 +18,7 @@ class Page extends Command {
       category:'Support',
       extended: '-add newPageName /path/to/page.html Snippet describing the page\n          -del pageName\n          -edit pageName This is new new edited snippet\n          -rename pageName newName\n          -export // exports and returns URL\n          -import http://url-to-import/\n          -list',
       aliases: ['guide', 'guides', 'pages', 'p'],
-      botPerms: ['SEND_MESSAGES']
+      botPerms: []
     });
 
     this.init = client => {

@@ -1,6 +1,6 @@
-const Moderation = require('../../base/Moderation.js');
+const Command = require('../../base/Command.js');
 
-class AdCheck extends Moderation {
+class AdCheck extends Command {
   constructor(client) {
     super(client, {
       name: 'adcheck',
@@ -10,7 +10,7 @@ class AdCheck extends Moderation {
       hidden: true,
       guildOnly: true,
       aliases: ['ads', 'checkads'],
-      botPerms: ['SEND_MESSAGES']
+      botPerms: []
     });
   }
 

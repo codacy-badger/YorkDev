@@ -30,7 +30,7 @@ class Achievement extends Social {
       extended: 'Either mention a user with text to give the achievement their user avatar, or just supply text for your own achievement.',
       cost: 4,
       aliases: ['get', 'achieveget', 'achievementget'],
-      botPerms: ['SEND_MESSAGES', 'ATTACH_FILES']
+      botPerms: ['ATTACH_FILES']
     });
   }
   async run(message, args, level) {

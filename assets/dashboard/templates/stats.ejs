@@ -1,5 +1,6 @@
-<%- include('blocks/header', {bot: bot, user: user, auth: auth, path: path, stats: stats}) %>
-<div class="container">
+<%- include('blocks/header', {bot, user, path}) %>
+<div class="jumbotron">
+    
     <div class="container">
       <div class="row justify-content-md-center">
         <div class="col col-10"><h3>Live Statistics.</h3>
@@ -37,5 +38,6 @@
         <div class="col-5 text-nowrap"><i class="fa fa-fw fa-cog" aria-hidden="true"></i> Node.js Version:</div>
         <div class="col-5 text-nowrap"><strong><%= stats.nVersion %></strong></div>
       </div>
+  </div>
   </div>
   <% include ./blocks/footer %>

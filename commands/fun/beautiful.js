@@ -25,7 +25,7 @@ class Beautiful extends Social {
       usage: 'beautiful [@mention|user id]',
       extended: 'Mention another user to admire a painting of them.',
       cost: 5,
-      botPerms: ['SEND_MESSAGES', 'ATTACH_FILES'],
+      botPerms: ['ATTACH_FILES'],
     });
   }
   async run(message, args, level) {

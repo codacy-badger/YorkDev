@@ -10,7 +10,7 @@ class Hug extends Social {
       extended: 'Ever needed to give a supportive hug, or high five another user? Now you can.',
       cost: 1,
       aliases: ['stab', 'shoot', 'knife', 'punch', 'highfive'],
-      botPerms: ['SEND_MESSAGES']
+      botPerms: []
     });
   }
 
