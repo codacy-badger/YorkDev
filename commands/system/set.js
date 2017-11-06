@@ -57,7 +57,7 @@ class Set extends Command {
       
     } else {
       const array = [];
-      Object.entries(this.client.settings.get(message.guild.id)).forEach(([key, value]) => {
+      Object.entries(settings).forEach(([key, value]) => {
         array.push(`${key}${' '.repeat(20 - key.length)}::  ${value}`); 
       });
       await message.channel.send(`= Current Guild Settings =
