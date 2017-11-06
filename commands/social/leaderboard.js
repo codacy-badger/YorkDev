@@ -17,9 +17,7 @@ class Leaderboard extends Social {
     try {
       const leaderboard = [];
       const lbServer = [];
-      
-      const score = this.client.points.get(`${message.guild.id}-${message.author.id}`) || this.client.points.set(`${message.guild.id}-${message.author.id}`, { points: 50, level: 0, user: message.author.id, guild: message.guild.id, daily: 1504120109 }).get(`${message.guild.id}-${message.author.id}`);
-      
+
       const list = this.client.points.filter(p => p.guild === message.guild.id && message.guild.members.get(p.user) && p.points > 0);
       
       // getting user's position
@@ -33,16 +31,16 @@ class Leaderboard extends Social {
       list.map(p => ({points: p.points, user: p.user}))
         .sort((a, b) => b.points > a.points ? 1 : -1).slice(0, 10)
         .map((u, i) => {
-          leaderboard.push(`${(i + 1).toString().padStart(2, '0')} ❯ ${this.client.users.get(u.user).tag}: ${u.points}`);
+          leaderboard.push(`${(i + 1).toString().padStart(2, '0')} ❯ ${this.client.users.get(u.user).tag}${' '.repeat(30 - this.client.users.get(u.user).tag.length)}::  ${u.points}`);
         });
-      leaderboard.push('-------------------------------------');
+      leaderboard.push('-------------------------------------------------------------');
       
       const pos = lbServer.indexOf(message.author.id).toString().padStart(2, '0');
       const posTxt = pos == -1 ? '??' : (lbServer.indexOf(message.author.id) + 1).toString().padStart(2, '0');
-      leaderboard.push(`${posTxt} ❯ ${message.author.tag}: ${this.client.points.get(`${message.guild.id}-${message.author.id}`).points}`);
+      leaderboard.push(`${posTxt} ❯ ${message.author.tag}${' '.repeat(30 - message.author.tag.length)}::  ${this.client.points.get(`${message.guild.id}-${message.author.id}`).points}`);
       const embed = new RichEmbed()
         .setAuthor(`${message.guild.name}'s Leaderboard`, message.guild.iconURL)
-        .setDescription(leaderboard.join('\n'));
+        .setDescription('```' + leaderboard.join('\n') + '```');
       await message.channel.send({embed});
     } catch (error) {
       console.log(error);
