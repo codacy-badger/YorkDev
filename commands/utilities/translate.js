@@ -44,7 +44,7 @@ class Translate extends Command {
         message.channel.send({embed});
       } else {
         const target = message.flags[0] === 'detect' ? 'en' : args[0];
-        const code = this.client.languages.find('code', args[0]);
+        const code = this.client.languages.find('lang', args[0]);
         const lang = args[0];
         if (!code) throw 'Unsupported Language, please issue the command again with the `-codes` flag to see a list of supported languages.';
         if (!message.flags[0]) args.shift();
