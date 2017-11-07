@@ -4,7 +4,6 @@ module.exports = class {
   }
 
   async execute(r, user) {
-    // console.log(require('util').inspect(r, {depth:2}));
     const message = r.message;
     const attachment = message.attachments.first() ? { files: [{ attachment: message.attachments.first().url, name: message.attachments.first().filename }] } : null;
     const validEmojis = ['📌', '📍'];
@@ -13,7 +12,7 @@ module.exports = class {
         const author = user;
         const member = message.guild.member(author);
         const msg = { author:author, member:member, guild: message.guild, client: this.client, channel: message.channel };
-        if (this.client.permlevel(msg) > 1)
+        if (this.client.permlevel(msg) > 2)
           await message.pin();
         else
           await user.send(`Here is the message you pinned:\n${message.cleanContent}`, attachment);
