@@ -15,6 +15,7 @@ class Triggered extends Social {
       category: 'Fun',
       extended: 'Ever get so pissed off you explode? You got triggered.',
       cost: 2,
+      cooldown: 30,
       aliases: ['trigger'],
       botPerms: ['ATTACH_FILES']
     });

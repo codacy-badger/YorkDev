@@ -30,6 +30,7 @@ class Crush extends Social {
       usage: 'crush <@mention>',
       extended: 'Mention another user to slap them.',
       cost: 1,
+      cooldown: 10,
       botPerms: ['ATTACH_FILES'],
       permLevel: 'Patron'
     });

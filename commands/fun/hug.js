@@ -9,6 +9,7 @@ class Hug extends Social {
       usage: 'hug [@mention]',
       extended: 'Ever needed to give a supportive hug, or high five another user? Now you can.',
       cost: 1,
+      cooldown: 3,
       aliases: ['stab', 'shoot', 'knife', 'punch', 'highfive'],
       botPerms: []
     });

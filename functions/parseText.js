@@ -103,6 +103,15 @@ function parse(input) {
       problem: issue.responses.ffmpeg.problem,
       solution: issue.responses.ffmpeg.solution,
     };
+  } else
+
+  if (input.includes('defaultChannel.send') && input.includes("TypeError: Cannot read property 'send' of undefined")) { // eslint-disable-line quotes
+    return {
+      message: issue.responses.defaultchannel.message,
+      info: issue.responses.defaultchannel.info,
+      problem: issue.responses.defaultchannel.problem,
+      solution: issue.responses.defaultchannel.solution,
+    };
   }
 
   return undefined;

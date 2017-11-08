@@ -40,6 +40,15 @@ module.exports = class {
     const args = message.content.slice(prefix.length).trim().split(/ +/g);
     const command = args.shift().toLowerCase();
     const cmd = this.client.commands.get(command) || this.client.commands.get(this.client.aliases.get(command));
+    
+    const rateLimit = await this.client.ratelimit(message, cmd.help.name, cmd.conf.cooldown); 
+    //message is passed
+    //The key will be the command name
+    //cooldown would be the cooldown, willl be set per command.
+    if (typeof rateLimit == 'string') { //see if the returned is a string
+      this.client.log('log', `${this.client.config.permLevels.find(l => l.level === level).name} ${message.author.username} (${message.author.id}) got ratelimited while running command ${cmd.help.name}`, 'CMD');
+      return message.channel.send(`Please wait ${rateLimit.toPlural()} to run this command.`); //return stop command from executing
+    }
 
     if (this.client.tags.has(command)) {
       return message.channel.send(`${args.join(' ')} ${this.client.tags.get(command).contents}`);

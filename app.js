@@ -22,6 +22,7 @@ class YorkDev extends Client {
     this.commands = new Enmap();
     this.aliases = new Enmap();
     this.invspam = new Enmap();
+    this.ratelimits = new Enmap();
   }
 
   permlevel(message) {

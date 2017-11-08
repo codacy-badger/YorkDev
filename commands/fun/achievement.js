@@ -29,6 +29,7 @@ class Achievement extends Social {
       usage: 'achievement',
       extended: 'Either mention a user with text to give the achievement their user avatar, or just supply text for your own achievement.',
       cost: 4,
+      cooldown: 10,
       aliases: ['get', 'achieveget', 'achievementget'],
       botPerms: ['ATTACH_FILES']
     });

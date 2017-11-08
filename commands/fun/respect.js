@@ -25,6 +25,7 @@ class Respect extends Social {
       usage: 'respect [@mention|user id]',
       extended: 'You can pay respects to any user on Discord.',
       cost: 1,
+      cooldown: 30,
       aliases: ['pressf', 'f', 'rip', 'ripme'],
       botPerms: ['ATTACH_FILES'],
       permLevel: 'Patron'

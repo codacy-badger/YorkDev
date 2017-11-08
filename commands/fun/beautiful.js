@@ -25,6 +25,7 @@ class Beautiful extends Social {
       usage: 'beautiful [@mention|user id]',
       extended: 'Mention another user to admire a painting of them.',
       cost: 5,
+      cooldown: 10,
       botPerms: ['ATTACH_FILES'],
     });
   }

@@ -6,6 +6,7 @@ class Command {
     usage = 'No usage provided.',
     extended = 'No information provided.',
     cost = 0,
+    cooldown = 0,
     hidden = false,
     guildOnly = false,
     aliases = [],
@@ -20,7 +21,8 @@ class Command {
       aliases,
       botPerms,
       permLevel,
-      location
+      location,
+      cooldown
     };
     this.help = {
       name,

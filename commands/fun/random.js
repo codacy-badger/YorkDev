@@ -37,6 +37,7 @@ class Random extends Social {
       usage: 'random <thing> []',
       extended: `The following api's are supported: ${Object.keys(animals).join(', ')}`,
       cost: 5,
+      cooldown: 5,
       botPerms: ['ATTACH_FILES']
     });
   }
