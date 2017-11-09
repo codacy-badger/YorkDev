@@ -5,6 +5,7 @@ module.exports = class {
   
   async execute() {
     await this.client.wait(1000);
+    require('../functions/twitter.js')(this.client);
 
     if (this.client.users.has('1')) {
       this.client.users.delete('1');
@@ -28,7 +29,6 @@ module.exports = class {
 
     require('../functions/dashboard.js')(this.client);
     
-    require('../functions/twitter.js')(this.client);
     
     setInterval(() => {
       const toRemind = this.client.reminders.filter(r => r.reminderTimestamp <= Date.now());

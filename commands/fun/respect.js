@@ -36,16 +36,11 @@ class Respect extends Social {
       const cost = this.cmdDis(this.help.cost, level);
       const payMe = await this.cmdPay(message, message.author.id, cost, this.conf.botPerms);
       if (!payMe) return;  
-      let target;
-      
-      if (!args[0]) target = message.author.id;
-      else target = await this.verifyUser(args[0]);
+      const target = await this.verifyUser(args[0] ? args[0] : message.author.id);
       
       const msg = await message.channel.send('Paying respects...');
-      const user = await this.client.fetchUser(target);
-      await this.verifyUser(user);
-
-      const result = await giveRespect(user.displayAvatarURL);
+      
+      const result = await giveRespect(target.displayAvatarURL);
       const m = await message.channel.send('Press 🇫 to pay respects.', { files: [{ attachment: result, name: 'paid-respects.png' }] });
       await msg.delete();
       m.react('🇫');

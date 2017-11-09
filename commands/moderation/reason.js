@@ -26,6 +26,7 @@ class Reason extends Moderation {
     const updatedReason = [parts[0], parts[1] = '\n**Reason:** ' + newReason].join(' ');
     const embed = await this.caseEmbed(logEmbed.color, updatedReason, logEmbed.author.name, logEmbed.createdAt, logEmbed.footer.text);
     await logMsg.edit({embed});
+    await message.channel.send(`Case ${caseNumber} successfully updated with the new reason: \`${newReason}\``);
   }
 }    
 

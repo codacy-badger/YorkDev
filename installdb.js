@@ -1,8 +1,9 @@
 const Enmap = require('enmap');
 const EnmapLevel = require('enmap-level');
 const defaultSettings = {
-  'prefix': '?',
+  'prefix': '-',
   'modLogChannel': 'mod-log',
+  'announceChannel': 'announcements',
   'patronRole': 'Patrons',
   'modRole': 'Moderator',
   'adminRole': 'Administrator',

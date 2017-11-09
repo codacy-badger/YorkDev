@@ -10,13 +10,14 @@ class Moderation extends Command {
     }));
 
     this.actions = {
-      w: { color: 0xFFFF00, display: 'Warn'    },
-      m: { color: 0xFF9900, display: 'Mute'    },
-      k: { color: 0xFF3300, display: 'Kick'    },
-      s: { color: 0xFF2F00, display: 'Softban' },
-      b: { color: 0xFF0000, display: 'Ban'     },
-      u: { color: 0x006699, display: 'Unban'   },
-      l: { color: 0x7289DA, display: 'Lockdown'}
+      wa: { color: 0xFFFF00, display: 'Warn'        },
+      mu: { color: 0xFF9900, display: 'Mute'        },
+      ki: { color: 0xFF3300, display: 'Kick'        },
+      so: { color: 0xFF2F00, display: 'Softban'     },
+      ba: { color: 0xFF0000, display: 'Ban'         },
+      bl: { color: 0x111111, display: 'Blacklisted' },
+      un: { color: 0x006699, display: 'Unban'       },
+      lo: { color: 0x7289DA, display: 'Lockdown'    }
     };
     
   }
@@ -24,10 +25,10 @@ class Moderation extends Command {
   async modCheck(message, user, level) {
     try {
       const modBot = message.guild.me;
-      const id = await this.verifyUser(user);
-      const target = await message.guild.fetchMember(id).catch(() => { throw `${message.author}, |\`❓\`| Cannot find member in guild.`; });
+      const userid = await this.verifyUser(user);
+      const target = await message.guild.fetchMember(userid).catch(() => { throw `${message.author}, |\`❓\`| Cannot find member in guild.`; });
       if (target.highestRole.position >= modBot.highestRole.position) throw `${message.author}, |\`🛑\`| You cannot perform that action on someone of equal, or higher role.`;
-      if (message.author.id === id) throw `${message.author}, |\`🛑\`| You cannot moderate yourself.`;
+      if (message.author.id === userid) throw `${message.author}, |\`🛑\`| You cannot moderate yourself.`;
       const author = target.user;
       const member = target;
       const msg = { author:author, member:member, guild: message.guild, client: this.client, channel: message.channel };
@@ -78,11 +79,11 @@ class Moderation extends Command {
   }
 
   async buildModLog(client, guild, action, target, mod, reason) {
-    const settings = client.settings.get(guild.id);
+    const settings = client.getSettings(guild.id);
     const caseNumber = await this.caseNumber(client, guild.channels.find('name', settings.modLogChannel));
     const thisAction = this.actions[action];
     if (reason.length < 1) reason = `Awaiting moderator's input. Use ${settings.prefix}reason ${caseNumber} <reason>.`;
-    const embed = await this.caseEmbed(thisAction.color, `**Action:** ${thisAction.display}\n**Target:** ${target.user.tag} (${target.id})\n**Reason:** ${reason}`,`${mod.tag} (${mod.id})`, new Date(), `Case ${caseNumber}`);
+    const embed = await this.caseEmbed(thisAction.color, `**Action:** ${thisAction.display}\n**Target:** ${target.tag} (${target.id})\n**Reason:** ${reason}`,`${mod.tag} (${mod.id})`, new Date(), `Case ${caseNumber}`);
     return guild.channels.find('name', settings.modLogChannel).send({embed});
   }
   

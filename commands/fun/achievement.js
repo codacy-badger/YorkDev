@@ -43,7 +43,7 @@ class Achievement extends Social {
       const payMe = await this.cmdPay(message, message.author.id, cost, this.conf.botPerms);
       if (!payMe) return;  
       const msg = await message.channel.send('`Achievement Getting...`');
-      const person = (message.mentions.users.first() || message.author).displayAvatarURL;
+      const person = await this.verifyUser(args[0] ? args[0] : message.author.id);
       if (message.mentions.users.first()) text = text.replace(/<@!?\d+>/, '').replace(/\n/g, ' ').trim();
       const result = await getAchievement(text, person);
       await message.channel.send({ files: [{ attachment: result, name: 'achievementGet.png' }] });

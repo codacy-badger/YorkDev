@@ -31,18 +31,16 @@ class Beautiful extends Social {
   }
   async run(message, args, level) {
     try {
-      let beautiful;
-      if (!args[0]) beautiful = message.member;
-      else beautiful = await this.verifyMember(message.guild, args[0]);
-  
+      const beautiful = await this.verifyUser(args[0] ? args[0] : message.author.id);
+      
       const cost = this.cmdDis(this.help.cost, level);
 
       const payMe = await this.cmdPay(message, message.author.id, cost, this.conf.botPerms);
       if (!payMe) return;
 
-      const msg = await message.channel.send('Gazing at the painting...');
+      const msg = await message.channel.send('Admiring the painting...');
   
-      const result = await getBeautiful(beautiful.user.displayAvatarURL);
+      const result = await getBeautiful(beautiful.displayAvatarURL);
       await message.channel.send({ files: [{ attachment: result, name: 'beautiful.jpg' }] });
      
       await msg.delete();

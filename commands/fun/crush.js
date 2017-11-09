@@ -25,10 +25,10 @@ class Crush extends Social {
   constructor(client) {
     super(client, {
       name: 'crush',
-      description: 'Crush another user as Batman.',
+      description: '',
       category: 'Fun',
-      usage: 'crush <@mention>',
-      extended: 'Mention another user to slap them.',
+      usage: 'crush [@mention|userid]',
+      extended: '',
       cost: 1,
       cooldown: 10,
       botPerms: ['ATTACH_FILES'],
@@ -37,15 +37,14 @@ class Crush extends Social {
   }
   async run(message, args, level) {
     try {
-      const crush = await this.verifyMember(message.guild, args[0]);
+      const crush = await this.verifyUser(args[0] ? args[0] : message.author.id);
       const crusher = message.author;
-      if (crush.id === crusher.id) throw 'Narcissistic much?';
       const cost = this.cmdDis(this.help.cost, level);
       const payMe = await this.cmdPay(message, message.author.id, cost, this.conf.botPerms);
       if (!payMe) return;  
-      const msg = await message.channel.send(`Admiring ${crush.displayName}...`);
+      const msg = await message.channel.send(`Gazing at ${crush.username}...`);
 
-      const result = await getCrushped(crusher.displayAvatarURL, crush.user.displayAvatarURL);
+      const result = await getCrushped(crusher.displayAvatarURL, crush.displayAvatarURL);
       await message.channel.send({ files: [{ attachment: result, name: 'crush.png' }] });
       await msg.delete();
     } catch (error) {

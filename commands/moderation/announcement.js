@@ -12,16 +12,16 @@ class Announcement extends Command {
     });
   }
 
-  async run(message, args, level) { // eslint-disable-line no-unused-vars
+  async run(message, [role, ...announcement], level) { // eslint-disable-line no-unused-vars
     try {
-      const role = message.guild.roles.find('name', `${args[0]}`);
-      if (!role) return message.reply(`Cannot find ${args[0]}`);
-      const channel = message.guild.channels.find('name', 'announcements');
-      if (!channel) return message.reply('Cannot find Announcements channel');
-      if (role.mentionable === false) await role.edit({mentionable: true});
-      await channel.send(`${role}\n${args.slice(1).join(' ')}`);
-      await role.edit({mentionable: false});
-      await message.delete().catch(console.error);
+      const settings = this.client.getSettings(message.guild.id);      
+      const anRole = message.guild.roles.find('name', `${role}`);
+      if (!anRole) return message.reply(`Cannot find ${role}.`);
+      const channel = message.guild.channels.find('name', settings.announceChannel);
+      if (!channel) return message.reply(`Cannot find ${settings.announceChannel} channel.`);
+      if (anRole.mentionable === false) await anRole.edit({mentionable: true});
+      await channel.send(`${anRole}\n${announcement.join(' ')}`);
+      await anRole.edit({mentionable: false});
       return message.channel.send('Successfully posted announcement.');
     } catch (error) {
       throw error;

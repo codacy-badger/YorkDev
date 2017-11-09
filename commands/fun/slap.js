@@ -40,15 +40,14 @@ class Slap extends Social {
   }
   async run(message, args, level) {
     try {
-      const slapped = await this.verifyMember(message.guild, args[0]);
+      const slapped = await this.verifyUser(args[0] ? args[0] : message.author.id);
       const slapper = message.author;
-      if (slapped.id === slapper.id) throw 'Quit hitting yourself, quit hitting yourself, quit hitting yourself...';
       const cost = this.cmdDis(this.help.cost, level);
       const payMe = await this.cmdPay(message, message.author.id, cost, this.conf.botPerms);
       if (!payMe) return;  
-      const msg = await message.channel.send(`Finding ${slapped.displayName}...`);
+      const msg = await message.channel.send(`Finding ${slapped.username}...`);
 
-      const result = await getSlapped(slapper.displayAvatarURL, slapped.user.displayAvatarURL);
+      const result = await getSlapped(slapper.displayAvatarURL, slapped.displayAvatarURL);
       await message.channel.send({ files: [{ attachment: result, name: 'slapped.png' }] });
       await msg.delete();
     } catch (error) {

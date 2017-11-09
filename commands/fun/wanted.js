@@ -30,21 +30,17 @@ class Wanted extends Social {
   }
   async run(message, args, level) {
     try {
-      let wanted;
-      if (!args[0]) wanted = message.member;
-      else wanted = await this.verifyMember(message.guild, args[0]);
-  
+      const wanted = await this.verifyUser(args[0] ? args[0] : message.author.id);
+      
       const cost = this.cmdDis(this.help.cost, level);
-
       const payMe = await this.cmdPay(message, message.author.id, cost, this.conf.botPerms);
       if (!payMe) return;
 
       const msg = await message.channel.send('Fetching the Sheriff...');
-  
-      const result = await getWanted(wanted.user.displayAvatarURL);
+      const result = await getWanted(wanted.displayAvatarURL);
       await message.channel.send({ files: [{ attachment: result, name: 'wanted.jpg' }] });
-     
       await msg.delete();
+
     } catch (error) {
       throw error;
     }

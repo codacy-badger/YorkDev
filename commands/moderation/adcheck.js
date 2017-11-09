@@ -9,8 +9,7 @@ class AdCheck extends Command {
       extended: 'This command will check for any discord invite links in members \'Playing\' status.',
       hidden: true,
       guildOnly: true,
-      aliases: ['ads', 'checkads'],
-      botPerms: []
+      aliases: ['ads', 'checkads']
     });
   }
 

@@ -23,16 +23,14 @@ class Triggered extends Social {
 
   async run(message, args, level) { // eslint-disable-line no-unused-vars 
     try {
-      let target;
-      if (!args[0]) target = message.author.id;
-      else target = await this.verifySocialUser(args[0]);
+      const target = await this.verifyUser(args[0] ? args[0] : message.author.id);
+      const cost = this.cmdDis(this.help.cost, level);
+      const payMe = await this.cmdPay(message, message.author.id, cost, this.conf.botPerms);
+      if (!payMe) return;
 
-      const user = await this.client.fetchUser(target);
-      await this.verifyUser(user);
+      const msg = await message.channel.send(`Triggering...${target.tag}`);
 
-      const msg = await message.channel.send(`Triggering...${user.tag}`);
-
-      const attachment = await this.getTriggered(user.displayAvatarURL.replace(/\.(gif|jpg|png|jpeg)\?size=2048/g, '.png?size=512'));
+      const attachment = await this.getTriggered(target.displayAvatarURL.replace(/\.(gif|jpg|png|jpeg)\?size=2048/g, '.png?size=512'));
       await message.channel.send({ files: [{ attachment, name: 'triggered.gif' }] });
       await msg.delete();
     } catch (error) {
