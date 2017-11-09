@@ -23,6 +23,6 @@ module.exports = client => {
   });
 
   twStream.on('connect', () => client.log('log', 'Twitter Module: Connecting to Twitter API'));
-  twStream.on('connected', () => client.log('log', 'Twitter Module: Connected to Twitter API', 'Ready! '));
+  twStream.on('connected', () => client.log('log', 'Twitter Module: Connected to Twitter API', 'Ready!'));
   twStream.on('disconnect', () => client.log('log', 'Twitter Module: Disconnected from Twitter API'));
 };
