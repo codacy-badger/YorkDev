@@ -10,7 +10,7 @@ const defaultSettings = {
   'levelNotice': 'false',
   'systemNotice': 'true',
   'inviteLimit': '10',
-  'nmsEnabled': 'true',
+  'nmsEnabled': 'false',
   'nmsRate': '7500',
   'nmsBanCount': '10',
   'scoreTime': '5',

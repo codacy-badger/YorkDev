@@ -1,6 +1,6 @@
 {
   "name": "york_dev",
-  "version": "8.0.0",
+  "version": "8.1.0",
   "description": "Enmap based Development Bot",
   "main": "app.js",
   "scripts": {
@@ -48,7 +48,6 @@
     "passport-discord": "^0.1.2",
     "simple-youtube-api": "^3.0.1",
     "snekfetch": "^3.5.3",
-    "stream-to-array": "^2.3.0",
     "twit": "^2.2.9",
     "unfluff": "^1.1.0"
   }

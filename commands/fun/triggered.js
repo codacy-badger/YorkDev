@@ -3,8 +3,6 @@ const Canvas = require('canvas');
 const snek = require('snekfetch');
 const { readFile } = require('fs-nextra');
 const GIFEncoder = require('gifencoder');
-const streamToArray = require('stream-to-array');
-
 
 class Triggered extends Social {
   constructor(client) {
@@ -38,6 +36,41 @@ class Triggered extends Social {
     }
   }
   
+  streamToArray(stream) {
+    if (!stream.readable) return Promise.resolve([]);
+    return new Promise((resolve, reject) => {
+      const array = [];
+  
+      function onData(data) {
+        array.push(data);
+      }
+  
+      function onEnd(error) {
+        if (error) reject(error);
+        else resolve(array);
+        cleanup();
+      }
+  
+      function onClose() {
+        resolve(array);
+        cleanup();
+      }
+  
+      function cleanup() {
+        stream.removeListener('data', onData);
+        stream.removeListener('end', onEnd);
+        stream.removeListener('error', onEnd);
+        stream.removeListener('close', onClose);
+      }
+  
+      stream.on('data', onData);
+      stream.on('end', onEnd);
+      stream.on('error', onEnd);
+      stream.on('close', onClose);
+    });
+  }
+  
+
   async getTriggered(triggered) {
     
     const imgTitle = new Canvas.Image();
@@ -68,7 +101,7 @@ class Triggered extends Social {
     }
   
     encoder.finish();
-    return streamToArray(stream).then(Buffer.concat);
+    return this.streamToArray(stream).then(Buffer.concat);
   }
 
 }
