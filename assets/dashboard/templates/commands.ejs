@@ -8,9 +8,9 @@ bot.commands.forEach((command) => {
 });
 %>
   <% for (const category in help) { %>
-    <h3><%= category %></h3>
+    <h3 class="hover-trigger spacer" data-toggle="collapse" data-target="#<%= category.replace(/\s/g, "-") %>Collapse" aria-expanded="false" aria-controls="<%= category.replace(/\s/g, "-") %>Collapse"><%= category %></h3>
     <br>
-    <div class="card-columns">
+    <div class="card-columns collapse show" id="<%= category.replace(/\s/g, "-")) %>Collapse"
       <% for (const command of help[category]) { %>
         <div class="card">
           <h3 class="card-header"><%= command.help.name.toProperCase() %></h3>
