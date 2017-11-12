@@ -1,6 +1,8 @@
 const Command = require('../../base/Command.js');
 const { RichEmbed } = require('discord.js');
 const snek = require('snekfetch');
+const toMarkdown = require('to-markdown');
+const mdnLink = 'https://developer.mozilla.org';
 
 class Mdn extends Command {
   constructor(client) {
@@ -14,19 +16,25 @@ class Mdn extends Command {
   }
 
   async run(message, args, level) { // eslint-disable-line no-unused-vars
-    const query = args.join(' ');
+    const query = args.join(' ').replace(/#/g, '.prototype.');
     try {
       const { body } = await snek
-        .get('https://developer.mozilla.org/en-US/search.json')
+        .get('https://mdn.topkek.pw/search')
         .query({ q: query });
-      if (!body.documents.length) throw 'Could not find any results.';
-      const data = body.documents[0];
+
+      if (!body.URL || !body.Title || !body.Summary) throw 'Could not find any results.';
+
       const embed = new RichEmbed()
         .setColor(0x066FAD)
         .setAuthor('MDN', 'https://i.imgur.com/DFGXabG.png')
-        .setURL(data.url)
-        .setTitle(data.title)
-        .setDescription(data.excerpt);
+        .setURL(`${mdnLink}${body.URL}`)
+        .setTitle(body.Title)
+        .setDescription(toMarkdown(body.Summary, {
+          converters: [{
+            filter: 'a',
+            replacement: (text, node) => `[${text}](${mdnLink}${node.href})`
+          }]
+        }));
       return message.channel.send(embed);
     } catch (err) {
       return message.reply(`Oh no, an error occurred: \`${err.message}\`. Try again later!`);
