@@ -48,7 +48,7 @@ module.exports = class {
     
     if (!cmd) return;
     
-    const rateLimit = await this.client.ratelimit(message, cmd.help.name, cmd.conf.cooldown); 
+    const rateLimit = await this.client.ratelimit(message, level, cmd.help.name, cmd.conf.cooldown); 
     //message is passed
     //The key will be the command name
     //cooldown would be the cooldown, willl be set per command.

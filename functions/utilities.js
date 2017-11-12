@@ -2,7 +2,8 @@ const moment = require('moment');
 require('moment-duration-format');
 module.exports = (client) => {
 
-  client.ratelimit = async (message, key, duration) => {
+  client.ratelimit = async (message, level, key, duration) => {
+    if (level > 1) return false;
     //need the message var from message event
     //key: the command run
     //duration of the ratelimit. IE command with 3 secs cooldown would have 3000 set as the duration

@@ -22,7 +22,7 @@ class Ban extends Moderation {
     if (typeof modLevel === 'string') return message.reply(modLevel);
     const reason   = args.splice(1, args.length).join(' ');
     try {
-      await message.guild.ban({days:0, reason: reason.length < 1 ? 'No reason supplied.': reason});
+      await message.guild.ban(target, {days:0, reason: reason.length < 1 ? 'No reason supplied.': reason});
       await this.buildModLog(this.client, message.guild, 'ba', target, message.author, reason);
       await message.channel.send(`\`${target.tag}\` was successfully banned.`);
     } catch (error) {

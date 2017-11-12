@@ -5,15 +5,12 @@ module.exports = class {
   }
   async execute(member) {
     const guild = member.guild;
-    this.client.points.delete(`${guild.id}-${member.id}`);
+    if (!member.user.bot) this.client.points.delete(`${guild.id}-${member.id}`);
     if (!member || !member.id || !guild) return;
     try {
       const guildBans = await guild.fetchBans();
       if (guildBans && guildBans.has(member.user.id)) return;
       
-      const auditActions = await guild.fetchAuditLogs({user: member.user});
-      if (!auditActions || auditActions.size === 0) return;
-  
       const channel = guild.channels.find('name', 'raw-logs');
       if (!channel) return;
       const fromNow = moment(member.joinedTimestamp).fromNow();
