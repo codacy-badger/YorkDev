@@ -83,9 +83,11 @@ class Google extends Command {
       .setColor(gcolor[Math.floor(Math.random() * gcolor.length)])
       .setAuthor(`Results for "${term}"`, 'https://lh4.googleusercontent.com/-v0soe-ievYE/AAAAAAAAAAI/AAAAAAADwkE/KyrKDjjeV1o/photo.jpg', searchurl)
       .setTitle(first.title)
-      .setURL(first.url)
-      .setThumbnail(first.image().replace(/^\/(.*)/, `${first.url}$1`))
-      .setDescription(first.snippet())
+      .setURL(first.url);
+    try {
+      embed.setThumbnail(first.image().replace(/^\/(.*)/, `${first.url}$1`));
+    } catch (e) {}
+    embed.setDescription(first.snippet())
       .setTimestamp()
       .setFooter(Date.now() - time + ' ms')
       .addField('Top results', result.map(r => {
