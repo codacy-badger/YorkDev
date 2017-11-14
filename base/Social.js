@@ -71,19 +71,9 @@ class Social extends Command {
         }).get(`${message.guild.id}-${payer}`);
 
       if (Date.now() > getPayer.daily) {
-        let msg;
-        if (payer === payee) {
-          msg = await message.channel.send(`You have claimed your daily ${pointsReward}${this.emoji(message.guild.id)} points, Ain't that dandy?`);
-          getPayer.daily = msg.createdTimestamp + (dailyTime * 60 * 60 * 1000);
-          getPayer.points += pointsReward;
-          this.client.points.set(`${message.guild.id}-${payer}`, getPayer);
-        } else {
-          msg = await message.channel.send(`You have donated your daily ${pointsReward}${this.emoji(message.guild.id)} points, Ain't that dandy?`);
-          getPayer.daily = msg.createdTimestamp + (dailyTime * 60 * 60 * 1000);
-          getPayee.points += pointsReward;
-          this.client.points.set(`${message.guild.id}-${payee}`, getPayee);
-        }
+        let reminded = false;
         if (message.content.indexOf('-r') !== -1) {
+          reminded = true;
           const time = '1 day',
             action = 'claim daily';
           this.client.reminders.set(`${message.author.id}-${message.createdTimestamp + ms(time)}`, {
@@ -91,9 +81,21 @@ class Social extends Command {
             reminder: action,
             reminderTimestamp: message.createdTimestamp + ms(time)
           });
-          message.channel.send(`I will remind you to \`${action}\`, ${time} from now.`);
         }
-        return msg;
+
+        if (payer === payee) {
+          const msg = await message.channel.send(`You have claimed your daily ${pointsReward}${this.emoji(message.guild.id)} points, Ain't that dandy?` + reminded ? ' A reminder was also created for you to `collect daily`, a day from now' : '');
+          getPayer.daily = msg.createdTimestamp + (dailyTime * 60 * 60 * 1000);
+          getPayer.points += pointsReward;
+          this.client.points.set(`${message.guild.id}-${payer}`, getPayer);
+          return msg;
+        } else {
+          const msg = await message.channel.send(`You have donated your daily ${pointsReward}${this.emoji(message.guild.id)} points, Ain't that dandy?` + reminded ? ' A reminder was also created for you to `collect daily`, a day from now' : '');
+          getPayer.daily = msg.createdTimestamp + (dailyTime * 60 * 60 * 1000);
+          getPayee.points += pointsReward;
+          this.client.points.set(`${message.guild.id}-${payee}`, getPayee);
+          return msg;
+        }
       } else {
         const fromNow = moment(getPayer.daily).fromNow(true);
         message.channel.send(`You cannot claim your daily reward yet, please try again in ${fromNow}.`);
