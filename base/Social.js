@@ -98,7 +98,20 @@ class Social extends Command {
         }
       } else {
         const fromNow = moment(getPayer.daily).fromNow(true);
-        message.channel.send(`You cannot claim your daily reward yet, please try again in ${fromNow}.`);
+        let reminded = false,
+          exists = false;
+        if (message.content.indexOf('-r') !== -1) {
+          reminded = true;
+          if (this.client.reminders.find(r => r.reminder === 'collect daily' && message.author.id === r.id)) exists = true;
+          const time = fromNow,
+            action = 'claim daily';
+          this.client.reminders.set(`${message.author.id}-${message.createdTimestamp + ms(time)}`, {
+            id: message.author.id,
+            reminder: action,
+            reminderTimestamp: message.createdTimestamp + ms(time)
+          });
+        }
+        message.channel.send(`You cannot claim your daily reward yet, please try again in ${fromNow}.` + (reminded ? (exists ? 'You have already created a reminder for your dailes, a new one was not made.' : `A reminder was also created for you to \`collect daily\`, ${fromNow} from now.`) : ''));
       }
     } catch (error) {
       throw error;
