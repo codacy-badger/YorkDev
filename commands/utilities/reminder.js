@@ -3,13 +3,12 @@ const ms = require('ms');
 const moment = require('moment');
 
 function regCheck(reminder) {
-  const remind = /(?:^| )((?:\d{1,2}(?:\.\d|\d)?)|a) ?((?:m(?:in(?:ute)?)?|h(?:our)?|d(?:ay)?|w(?:eek)?|m(?:onth)?|y(?:ear)?)s?)\b/g.exec(reminder);
+  const remind = /(?:^| )(?:in ?)?(((?:\d{1,2}(?:\.\d|\d)?)|a) ?((?:m(?:in(?:ute)?)?|h(?:our)?|d(?:ay)?|w(?:eek)?|m(?:onth)?|y(?:ear)?)s?))\b/gi.exec(reminder);
   if (!remind) return false;
-  const time = remind[0]
+  const time = remind[1]
     .replace(/ ms?\b/, ' min') //m => min
     .replace(/\ba ?((?:m(?:in(?:ute)?)?|h(?:our)?|d(?:ay)?|w(?:eek)?|m(?:onth)?|y(?:ear)?)s?)\b/g, '1 $1').trim(); // a "something" => 1 "something"
-  const input = remind.input
-    .replace(/\b(in|me|to)\b/g, '')
+  const input = /(?:me ?)?(?:to ?)?(.*)/gi.exec(reminder)[1]
     .replace(remind[0], '').trim();
   if (input.length === 0) return false;
   return `${input}#${time}`;
