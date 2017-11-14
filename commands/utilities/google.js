@@ -86,7 +86,7 @@ class Google extends Command {
       .setURL(first.url);
     try {
       embed.setThumbnail(first.image().replace(/^\/(.*)/, `${first.url}$1`));
-    } catch (e) {}
+    } catch (e) {} //eslint-disable-line no-empty
     embed.setDescription(first.snippet())
       .setTimestamp()
       .setFooter(Date.now() - time + ' ms')
