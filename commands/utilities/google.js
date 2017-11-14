@@ -82,10 +82,12 @@ class Google extends Command {
     const embed = new RichEmbed()
       .setColor(gcolor[Math.floor(Math.random() * gcolor.length)])
       .setAuthor(`Results for "${term}"`, 'https://lh4.googleusercontent.com/-v0soe-ievYE/AAAAAAAAAAI/AAAAAAADwkE/KyrKDjjeV1o/photo.jpg', searchurl)
-      .setTitle(first.title)
-      .setURL(first.url)
-      .setThumbnail(first.image())
-      .setDescription(first.snippet())
+      .setTitle(`${first.title} - ${first.url}`)
+      .setURL(first.url);
+    try {
+      embed.setThumbnail(first.image().replace(/^\/(.*)/, `${first.url}$1`));
+    } catch (e) {} //eslint-disable-line no-empty
+    embed.setDescription(first.snippet())
       .setTimestamp()
       .setFooter(Date.now() - time + ' ms')
       .addField('Top results', result.map(r => {
