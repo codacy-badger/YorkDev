@@ -1,4 +1,5 @@
-const Social = require('../../base/Social.js');
+const Social = require('../../base/Social.js'),
+  ms = require('ms');
 class Daily extends Social {
   constructor(client) {
     super(client, {
@@ -17,6 +18,16 @@ class Daily extends Social {
     const payee = args.join(' ') || message.author.id;
     try {
       await this.usrDay(message, message.author.id, payee);
+      if (args.join(' ').indexOf('-r') !== -1) {
+        const time = '1 day',
+          action = 'claim daily';
+        this.client.reminders.set(`${message.author.id}-${message.createdTimestamp + ms(time)}`, {
+          id: message.author.id,
+          reminder: action,
+          reminderTimestamp: message.createdTimestamp + ms(time)
+        });
+        message.channel.send(`I will remind you to \`${action}\`, ${time} from now.`);
+      }
     } catch (error) {
       throw error;
     }
