@@ -30,8 +30,8 @@ class Reminder extends Command {
 
   async run(message, args, level) { // eslint-disable-line no-unused-vars
     if (args.length === 0) {
-      let reminders = this.client.reminders.findAll('id', message.author.id);
-      reminders.length === 0 ? reminders = 'You do not have any reminders set.' : '**Your Reminders:**\n' + reminders.map(r => `${r.reminder} - ${moment(r.reminderTimestamp).fromNow()}`).join('\n');
+      let reminders = this.client.reminders.findAll('id', message.author.id).map(r => `${r.reminder} - ${moment(r.reminderTimestamp).fromNow()}`);
+      reminders.length === 0 ? reminders = 'You do not have any reminders set.' : '**Your Reminders:**\n' + reminders;
 
       message.channel.send(reminders);
       return;
