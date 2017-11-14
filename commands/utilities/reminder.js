@@ -1,5 +1,6 @@
 const Command = require('../../base/Command.js');
 const ms = require('ms');
+const moment = require('moment');
 
 function regCheck(reminder) {
   const remind = /(?:^| )((?:\d{1,2}(?:\.\d|\d)?)|a) ?((?:m(?:in(?:ute)?)?|h(?:our)?|d(?:ay)?|w(?:eek)?|m(?:onth)?|y(?:ear)?)s?)\b/g.exec(reminder);
@@ -28,6 +29,12 @@ class Reminder extends Command {
   }
 
   async run(message, args, level) { // eslint-disable-line no-unused-vars
+    if (args.length === 0) {
+      let reminders = this.client.reminders.findAll('id', message.author.id);
+      if (reminders.length === 0) reminders = 'You do not have any reminders set.';
+      message.channel.send('**Your Reminders:**\n' + reminders.map(r => `${r.reminder} - ${moment(r.reminderTimestamp).fromNow()}`).join('\n'));
+      return;
+    }
     const blah = await regCheck(args.join(' '));
     if (!blah) throw '|`❌`| Invalid Command usage, you must supply a reminder message and duration e.g; `Do the laundry in 20 minutes`.';
     this.client.reminders.set(`${message.author.id}-${message.createdTimestamp + ms(blah.split('#')[1])}`, {
@@ -37,13 +44,6 @@ class Reminder extends Command {
     });
 
     message.channel.send(`I will remind you to \`${blah.split('#')[0]}\`, ${blah.split('#')[1]} from now.`);
-
-    // setTimeout(async () => {
-    //   message.author.send(`Here is your reminder: ${blah.split('#')[0]}`);
-    //   const reminder = this.client.reminders.find('id', `${message.author.id}-${message.guild.id}`);
-    //   this.client.reminders.delete(`${message.author.id}-${reminder.reminderTimestamp}`);
-    // }, ms(blah.split('#')[1]));
-
   }
 }
 
