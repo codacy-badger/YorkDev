@@ -8,9 +8,7 @@ module.exports = class {
     if (!member.user.bot) this.client.points.delete(`${guild.id}-${member.id}`);
     if (!member || !member.id || !guild) return;
     try {
-      const guildBans = await guild.fetchBans();
-      if (guildBans && guildBans.has(member.user.id)) return;
-      
+     
       const channel = guild.channels.find('name', 'raw-logs');
       if (!channel) return;
       const fromNow = moment(member.joinedTimestamp).fromNow();
