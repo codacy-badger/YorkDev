@@ -33,11 +33,14 @@ In a command prompt in your project's folder (wherever that may be) run the foll
 Once finished:
 
 - In the folder from where you ran the git command, run `cd York-Dev` and then run `npm install`
-- Rename `config_example.json` to `config.json`
-- Edit `config.json` and enter your token and other details as indicated. It should look something like this afterwards:
+- Rename `config_example.js` to `config.js`
+- Edit `config.js` and enter your token and other details as indicated. It should look something like this afterwards:
 
 ```js
 const config = {
+  // Bot Owner, level 10 by default. You no longer need to supply the owner ID, as the bot
+  // will pull this information directly from it's application page.
+
   // Bot Admins, level 9 by default. Array of user ID strings.
   'admins': [],
 
@@ -45,42 +48,57 @@ const config = {
   'support': [],
 
   // Your Bot's Token. Available on https://discordapp.com/developers/applications/me
-  'token': 'VkO_2G4Qv3T--NO--lWetW_tjND--TOKEN--QFTm6YGtzq9PH--4U--tG0',
+  'token': 'mfa.VkO_2G4Qv3T--NO--lWetW_tjND--TOKEN--QFTm6YGtzq9PH--4U--tG0',
 
-  'dashboard' : {
-    'clientID': '1234567891234156',
-    'oauthSecret': 'your oauth secret from the app page',
-    'callbackURL': 'http://localhost:8080/callback',
-    'sessionSecret': 'enterasecrethere',
-    'domain': 'localhost',
-    'port': 8080
+  'twitterUser': 'your-twitter-id', // Taken from http://gettwitterid.com/
+  'twitChannel': 'your-channel-id', // Twitter Feed Channel
+
+  // Make an app at https://apps.twitter.com/, and use those details here.
+  'twitter':  {
+    'consumer_key': '...',
+    'consumer_secret': '...',
+    'access_token': '...',
+    'access_token_secret': '...'
   },
 
 
-  // DO NOT LEAVE ANY OF THESE BLANK, AS YOU WILL NOT BE ABLE TO UPDATE THEM
-  // VIA COMMANDS IN THE GUILD.
+  'dashboard' : {
+    'oauthSecret': 'your oauth secret from the app page',
+    'callbackURL': 'http://localhost:3030/callback',
+    'sessionSecret': 'enterasecrethere',
+    'domain': 'localhost',
+    'port': 3030
+  },
 
-  // Default per-server settings. New guilds have these settings.
-  'defaultSettings' : {
-    'prefix': '-',
+  'botSettings' : {
     'afk': false,
     'afkMessage': 'is currently AFK, they will be back soon.',
+    'botSupport': 'support-guild-id' // This is a guild ID for the support functionality.
+  },
+
+  // Default per-server settings. New guilds have these settings. 
+  'defaultSettings' : {
+    'prefix': '-',
     'modLogChannel': 'mod-log',
+    'announceChannel': 'announcements',
     'patronRole': 'Patrons',
     'modRole': 'Moderator',
     'adminRole': 'Administrator',
-    'levelNotice': false,
-    'systemNotice': true,
-    'inviteLimit': 10,
-    'scoreTime': 5,
-    'dailyTime': 24,
-    'pointsReward': 250,
-    'minPoints': 1,
-    'maxPoints': 50,
-    'costMulti': 10,
-    'customEmoji': false,
-    'gEmojiID': '355099025449680896',
-    'uEmoji': '💲'
+    'levelNotice': 'false',
+    'systemNotice': 'true',
+    'inviteLimit': '10',
+    'nmsEnabled': 'false',
+    'nmsRate': '7500',
+    'nmsBanCount': '10',
+    'scoreTime': '5',
+    'dailyTime': '24',
+    'pointsReward': '250',
+    'minPoints': '1',
+    'maxPoints': '50',
+    'costMulti': '10',
+    'customEmoji': 'false',
+    'gEmojiID': 'replace-this',
+    'uEmoji': ''
   },
 
   // PERMISSION LEVEL DEFINITIONS.
@@ -88,7 +106,7 @@ const config = {
   permLevels: [
     // This is the lowest permisison level, this is for non-roled users.
     { level: 0,
-      name: 'User',
+      name: 'User', 
       // Don't bother checking, just return true which allows them to execute any command their
       // level allows them to.
       check: () => true
@@ -131,7 +149,7 @@ const config = {
     },
 
     { level: 3,
-      name: 'Administrator',
+      name: 'Administrator', 
       check: (message) => {
         try {
           const adminRole = message.guild.roles.find(r => r.name.toLowerCase() === message.settings.adminRole.toLowerCase());
@@ -143,7 +161,7 @@ const config = {
     },
     // This is the server owner.
     { level: 4,
-      name: 'Server Owner',
+      name: 'Server Owner', 
       // Simple check, if the guild owner id matches the message author's ID, then it will return true.
       // Otherwise it will return false.
       check: (message) => message.channel.type === 'text' ? (message.guild.owner.user.id === message.author.id ? true : false) : false
@@ -168,7 +186,7 @@ const config = {
     // The reason this should be the highest level is because of dangerous commands such as eval
     // or exec (if the owner has that).
     { level: 10,
-      name: 'Bot Owner',
+      name: 'Bot Owner', 
       // Another simple check, compares the message author id to the one stored in the config file.
       check: (message) => message.client.appInfo.owner.id === message.author.id
     }
