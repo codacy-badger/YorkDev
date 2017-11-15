@@ -82,7 +82,7 @@ class Google extends Command {
     const embed = new RichEmbed()
       .setColor(gcolor[Math.floor(Math.random() * gcolor.length)])
       .setAuthor(`Results for "${term}"`, 'https://lh4.googleusercontent.com/-v0soe-ievYE/AAAAAAAAAAI/AAAAAAADwkE/KyrKDjjeV1o/photo.jpg', searchurl)
-      .setTitle(`${first.title} - ${first.url}`)
+      .setTitle(`${first.title.substring(0, 200)} - ${first.url.substring(0, 50) + (first.url.length > 50 ? '...' : '')}`)
       .setURL(first.url);
     try {
       embed.setThumbnail(first.image().replace(/^\/(.*)/, `${first.url}$1`));
