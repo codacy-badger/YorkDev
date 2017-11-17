@@ -104,12 +104,11 @@ class Social extends Command {
           reminded = true;
           if (this.client.reminders.find(r => r.reminder === 'claim daily' && message.author.id === r.id)) exists = true;
           else {
-            const time = fromNow,
-              action = 'claim daily';
+            const action = 'claim daily';
             this.client.reminders.set(`${message.author.id}-${message.createdTimestamp + ms(time)}`, {
               id: message.author.id,
               reminder: action,
-              reminderTimestamp: message.createdTimestamp + ms(time)
+              reminderTimestamp: getPayer.daily
             });
           }
         }
