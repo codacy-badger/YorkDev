@@ -33,7 +33,7 @@ In a command prompt in your project's folder (wherever that may be) run the foll
 Once finished:
 
 - In the folder from where you ran the git command, run `cd York-Dev` and then run `npm install`
-- Rename `config_example.js` to `config.js`
+- Rename `config.js.example` to `config.js`
 - Edit `config.js` and enter your token and other details as indicated. It should look something like this afterwards:
 
 ```js
