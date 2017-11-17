@@ -77,6 +77,12 @@
             "info": "You are now able to delete former default channels, as well. Discord rolled out this change on 2017-08-15. https://blog.discordapp.com/8-15-2017-change-log-43af80e7e4d1",
             "problem": "You're trying to use guild.defaultChannel, but Discord has removed that feature, so it is `undefined` instead of a `TextChannel`",
             "solution": "To find the first channel you can post in:\n```js\nconst defaultChannel = guild.channels.find(\n  c => c.permissionsFor(guild.me).has('SEND_MESSAGES')\n);\n\nif (!defaultChannel) {\n  // This guild has no channels the bot is allowed to post in ¯\\_(ツ)_/¯\n  return;\n}\n```\n\nA more robust solution is to have per-server configs where server owners can set what channel they want your announcements, etc., in."
+        },
+        "unmetdeps": {
+            "message": "Looks like you have a number of warnings.",
+            "info": "Discord.js has optional dependencies. They are not required, but can be installed for some features.",
+            "problem": "There is no problem, really, these are warnings.",
+            "solution": "Ignore them, or install the dependencies noted, separately."
         }
     }
 }

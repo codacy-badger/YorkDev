@@ -112,6 +112,15 @@ function parse(input) {
       problem: issue.responses.defaultchannel.problem,
       solution: issue.responses.defaultchannel.solution,
     };
+  } else
+
+  if (input.includes('unmet peer dependencies')) { // eslint-disable-line quotes
+    return {
+      message: issue.responses.unmetdeps.message,
+      info: issue.responses.unmetdeps.info,
+      problem: issue.responses.unmetdeps.problem,
+      solution: issue.responses.unmetdeps.solution,
+    };
   }
 
   return undefined;
