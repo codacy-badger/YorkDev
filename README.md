@@ -18,7 +18,7 @@ for more info.
 
 OS | Command
 ----- | -----
-OS X | `brew install pkg-config cairo pango libpng jpeg giflib`
+OS X | `sudo brew install pkg-config cairo pango libpng jpeg giflib`
 Ubuntu | `sudo apt-get install libcairo2-dev libjpeg8-dev libpango1.0-dev libgif-dev build-essential g++`
 Fedora | `sudo yum install cairo cairo-devel cairomm-devel libjpeg-turbo-devel pango pango-devel pangomm pangomm-devel giflib-devel`
 Solaris | `pkgin install cairo pango pkg-config xproto renderproto kbproto xextproto`
