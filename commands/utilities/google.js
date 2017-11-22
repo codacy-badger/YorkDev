@@ -5,6 +5,9 @@ const { lazy: uf } = require('unfluff');
 const { RichEmbed } = require('discord.js');
 const Command = require('../../base/Command.js');
 
+/* esllint-disable no-useless-escape */
+/* eat a dick, codacy */
+
 const gcolor = ['#4285FA', '#0F9D58', '#F4B400', '#DB4437'];
 
 class Google extends Command {
