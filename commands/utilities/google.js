@@ -39,32 +39,32 @@ class Google extends Command {
 
     const result = (await Promise.all(
       $.querySelectorAll('.r')
-      .filter(e => e.childNodes[0].tagName === 'a' && e.childNodes[0].attributes.href)
-      .filter(e => e.childNodes[0].attributes.href.replace('/url?', '').indexOf('/search?') === -1)
-      .slice(0, 5)
-      .map(async (e) => {
-        let url = e.childNodes[0].attributes.href.replace('/url?', '');
-        if (url.startsWith('/')) url = 'http://google.com' + url;
-        else url = qs(url).q || url;
+        .filter(e => e.childNodes[0].tagName === 'a' && e.childNodes[0].attributes.href)
+        .filter(e => e.childNodes[0].attributes.href.replace('/url?', '').indexOf('/search?') === -1)
+        .slice(0, 5)
+        .map(async (e) => {
+          let url = e.childNodes[0].attributes.href.replace('/url?', '');
+          if (url.startsWith('/')) url = 'http://google.com' + url;
+          else url = qs(url).q || url;
 
-        const body = await get(url);
-        const details = uf(body.text);
-        const obj = {
-          url,
-          snippet: () => {
-            const x = (details.description() || '').substring(0, 240);
-            const y = (details.text() || '').substring(0, 240) + '...';
-            return y.includes(x) ? y : x + '\n' + y;
-          },
-          image: () => details.image()
-        };
-        try {
-          obj.title = new parse(body.text).querySelector('head').childNodes.find(e => e.tagName === 'title').childNodes[0].text;
-        } catch (e) {
-          obj.title = details.title() || 'No title found';
-        }
-        return obj;
-      })
+          const body = await get(url);
+          const details = uf(body.text);
+          const obj = {
+            url,
+            snippet: () => {
+              const x = (details.description() || '').substring(0, 240);
+              const y = (details.text() || '').substring(0, 240) + '...';
+              return y.includes(x) ? y : x + '\n' + y;
+            },
+            image: () => details.image()
+          };
+          try {
+            obj.title = new parse(body.text).querySelector('head').childNodes.find(e => e.tagName === 'title').childNodes[0].text;
+          } catch (e) {
+            obj.title = details.title() || 'No title found';
+          }
+          return obj;
+        })
     ));
 
     /*
