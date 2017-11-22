@@ -33,12 +33,16 @@ class Google extends Command {
     All results are under class .r
     There are 3 different types of URLs from google searches, in the href tag:
     /url?q=URL - This one is most common
-    /search?q=TERM - This one is typically a Google Images result or similar
+    /search?q=TERM - This one is typically a Google Images result or similar - these are removed!
     URL - Direct links are usually Google Books results
     */
 
     const result = (await Promise.all(
-      $.querySelectorAll('.r').filter(e => e.childNodes[0].tagName === 'a' && e.childNodes[0].attributes.href).slice(0, 5).map(async (e) => {
+      $.querySelectorAll('.r')
+      .filter(e => e.childNodes[0].tagName === 'a' && e.childNodes[0].attributes.href)
+      .filter(e => e.childNodes[0].attributes.href.replace('/url?', '').indexOf('/search?') === -1)
+      .slice(0, 5)
+      .map(async (e) => {
         let url = e.childNodes[0].attributes.href.replace('/url?', '');
         if (url.startsWith('/')) url = 'http://google.com' + url;
         else url = qs(url).q || url;
@@ -93,8 +97,8 @@ class Google extends Command {
       .setFooter(Date.now() - time + ' ms')
       .addField('Top results', result.map(r => {
         const vu = /^https?\:\/\/[\w\.]+(?:\:\d+|\.\w*)(?:\/|$)/g.exec(r.url)[0];
-        const u = vu.substring(0, 300) + (vu.length > 300 ? '...' : '');
-        return `${r.title.substring(0, 200) + (r.title.length > 200 ? '...' : '')}\n[${u}](${u})`;
+        const u = r.url.substring(0, 200) + (r.url.length > 200 ? '...' : '');
+        return `${r.title.substring(0, 200) + (r.title.length > 200 ? '...' : '')}\n[${u}](${vu.substring(0, 300) + (vu.length > 300 ? '...' : '')})`;
       }).join('\n'));
     searchmessage.edit({
       embed
