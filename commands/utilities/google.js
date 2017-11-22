@@ -24,7 +24,7 @@ class Google extends Command {
   async run(message, args, level) { // eslint-disable-line no-unused-vars
     const time = Date.now();
     const term = args.join(' ');
-    const searchurl = 'http://google.com/search?safe=active&q=' + encodeURIComponent(term);
+    const searchurl = 'http://google.com/search?safe=active&gl=uk&hl=en&q=' + encodeURIComponent(term);
     const searchmessage = await message.channel.send('Searching for ' + term);
     const body = await get(searchurl);
     const $ = new parse(body.text);
@@ -79,10 +79,11 @@ class Google extends Command {
 
     if (!result.length) return searchmessage.edit('No results found for ' + term);
     const first = result.shift();
+    const vanityurl = /^https?\:\/\/[\w\.]+(?:\:\d+|\.\w*)(?:\/|$)/g.exec(first.url)[0];
     const embed = new RichEmbed()
       .setColor(gcolor[Math.floor(Math.random() * gcolor.length)])
       .setAuthor(`Results for "${term}"`, 'https://lh4.googleusercontent.com/-v0soe-ievYE/AAAAAAAAAAI/AAAAAAADwkE/KyrKDjjeV1o/photo.jpg', searchurl)
-      .setTitle(`${first.title.substring(0, 200)} - ${first.url.substring(0, 50) + (first.url.length > 50 ? '...' : '')}`)
+      .setTitle(`${first.title.substring(0, 200)} - ${vanityurl.substring(0, 50) + (vanityurl.length > 50 ? '...' : '')}`)
       .setURL(first.url);
     try {
       embed.setThumbnail(first.image().replace(/^\/(.*)/, `${first.url}$1`));
@@ -91,8 +92,9 @@ class Google extends Command {
       .setTimestamp()
       .setFooter(Date.now() - time + ' ms')
       .addField('Top results', result.map(r => {
-        const t = `${r.title}\n[${r.url}](${r.url})`;
-        return t.length > 600 ? `${r.title}\n[snipped]` : t;
+        const vu = /^https?\:\/\/[\w\.]+(?:\:\d+|\.\w*)(?:\/|$)/g.exec(r.url)[0];
+        const u = vu.substring(0, 300) + (vu.length > 300 ? '...' : '');
+        return `${r.title.substring(0, 200) + (r.title.length > 200 ? '...' : '')}\n[${u}](${u})`;
       }).join('\n'));
     searchmessage.edit({
       embed
