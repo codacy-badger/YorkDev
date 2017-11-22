@@ -2,7 +2,7 @@
 
 This bot serves as one of the backbones of the Idiot's Guide Community, using the community's [Guide Bot](https://github.com/An-Idiots-Guide/guidebot) as a base framework, York Dev expands on its functionalities with common error detection with solution, fun commands, as well as a tag and example command!
 
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/aecd644228534158bbdcc94064b3da75)](https://www.codacy.com/app/YorkAARGH/York-Dev?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=YorkAARGH/York-Dev&amp;utm_campaign=Badge_Grade)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/74ebb8bd0ea246deb09ef8dcbb8bfe83)](https://www.codacy.com/app/YorkAARGH/York-Dev?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=YorkAARGH/York-Dev&amp;utm_campaign=Badge_Grade)
 
 ## Requirements
 
