@@ -207,3 +207,4 @@ To add the bot to your guild, you have to get an OAuth link for it.
 
 You can use this site to help you generate a full OAuth Link, which includes a calculator for the permissions:
 [Permissions Calculator](https://finitereality.github.io/permissions-calculator/?v=0)
+Discord now has his own permissions calculator and OAuth generator. Click [here for the OAuth generator](https://discordapp.com/developers/tools/oauth2-url-generator). Click on bot and you can select perms for the bot!
