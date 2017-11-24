@@ -86,20 +86,23 @@ class Google extends Command {
 
     if (!result.length) return searchmessage.edit('No results found for ' + term);
     const first = result.shift();
-    const vanityurl = /^https?:\/\/[\w\.]+(?::\d+|\.\w*)(?:\/|$)/g.exec(first.url)[0];
+    const vanityurl = /^https?:\/\/[\w\.-_]+(?::\d+|\.\w*)(?:\/|$)/g.exec(first.url)[0];
     const embed = new RichEmbed()
       .setColor(gcolor[Math.floor(Math.random() * gcolor.length)])
       .setAuthor(`Results for "${term}"`, 'https://lh4.googleusercontent.com/-v0soe-ievYE/AAAAAAAAAAI/AAAAAAADwkE/KyrKDjjeV1o/photo.jpg', searchurl)
       .setTitle(`${first.title.substring(0, 200)} - ${vanityurl.substring(0, 50) + (vanityurl.length > 50 ? '...' : '')}`)
       .setURL(first.url);
     try {
-      embed.setThumbnail(first.image().replace(/^\/(.*)/, `${first.url}$1`));
-    } catch (e) {} //eslint-disable-line no-empty
+      embed.setThumbnail(first.image().replace(/^\.*\/(.*)/, `${first.url}$1`));
+    } catch (e) {
+      embed.thumbnail = undefined;
+      void e;
+    }
     embed.setDescription(first.snippet())
       .setTimestamp()
       .setFooter(Date.now() - time + ' ms')
       .addField('Top results', result.map(r => {
-        const vu = /^https?:\/\/[\w\.]+(?::\d+|\.\w*)(?:\/|$)/g.exec(r.url)[0];
+        const vu = /^https?:\/\/[\w\.-_]+(?::\d+|\.\w*)(?:\/|$)/g.exec(r.url)[0];
         const u = r.url.substring(0, 200) + (r.url.length > 200 ? '...' : '');
         return `${r.title.substring(0, 200) + (r.title.length > 200 ? '...' : '')}\n[${u}](${vu.substring(0, 300) + (vu.length > 300 ? '...' : '')})`;
       }).join('\n'));
