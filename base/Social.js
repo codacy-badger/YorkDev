@@ -75,7 +75,7 @@ class Social extends Command {
         if (message.content.indexOf('-r') !== -1) {
           reminded = true;
           const time = '1 day',
-            action = 'claim daily';
+            action = `claim daily in server: \`${message.guild.name}\``;
           this.client.reminders.set(`${message.author.id}-${message.createdTimestamp + ms(time)}`, {
             id: message.author.id,
             reminder: action,
@@ -84,13 +84,13 @@ class Social extends Command {
         }
 
         if (payer === payee) {
-          const msg = await message.channel.send(`You have claimed your daily ${pointsReward}${this.emoji(message.guild.id)} points, ` + (reminded ? 'A reminder was also created for you to `collect daily`, a day from now, ' : '') + 'Ain\'t that dandy?');
+          const msg = await message.channel.send(`You have claimed your daily ${pointsReward}${this.emoji(message.guild.id)} points, ` + (reminded ? `A reminder was also created for you to \`collect daily in server: ${message.guild.name}\`, a day from now, ` : '') + 'Ain\'t that dandy?');
           getPayer.daily = msg.createdTimestamp + (dailyTime * 60 * 60 * 1000);
           getPayer.points += pointsReward;
           this.client.points.set(`${message.guild.id}-${payer}`, getPayer);
           return msg;
         } else {
-          const msg = await message.channel.send(`You have donated your daily ${pointsReward}${this.emoji(message.guild.id)} points, ` + (reminded ? 'A reminder was also created for you to `collect daily`, a day from now, ' : '') + 'Ain\'t that dandy?');
+          const msg = await message.channel.send(`You have donated your daily ${pointsReward}${this.emoji(message.guild.id)} points, ` + (reminded ? `A reminder was also created for you to \`collect daily in server: ${message.guild.name}\`, a day from now, ` : '') + 'Ain\'t that dandy?');
           getPayer.daily = msg.createdTimestamp + (dailyTime * 60 * 60 * 1000);
           getPayee.points += pointsReward;
           this.client.points.set(`${message.guild.id}-${payee}`, getPayee);
