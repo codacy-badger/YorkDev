@@ -20,17 +20,14 @@ assets/selfies/selfie_meme.jpg
 assets/selfies/selfie_triggered.jpg
 assets/images/image_evil.png
 
+# Base
+base/Music.js
+
 # Commands
 commands/fun/evil.js
 commands/documentation/init.js
-commands/music/pause.js
-commands/music/play.js
-commands/music/queue.js
-commands/music/resume.js
-commands/music/search.js
-commands/music/skip.js
-commands/music/stop.js
-commands/music/volume.js
+
+commands/music/*
 
 # Monitors
 monitors/starboard.js
