@@ -1,5 +1,6 @@
 
 exports.run = async (client, message, level) => { // eslint-disable-line no-unused-vars
+  if (!message.channel.type == 'text') return;
   if (level > 1) return;
   if (/(discord\.(gg|io|me|li)\/.+|discordapp\.com\/invite\/.+)/i.test(message.content)) {
     message.delete().then(() => {
