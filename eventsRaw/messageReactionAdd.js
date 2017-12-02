@@ -18,10 +18,12 @@ module.exports = class {
     const message = await channel.fetchMessage(reaction.message_id);
     switch (reaction.emoji.name) {
 
+      /*
       case '🔍':
         this.inspect.run({channel_id: reaction.channel_id, channel, message: message, message_id: reaction.message_id}).catch(e => console.log(e));
         break;
-
+      */
+      
       // case '✡':
       // case '⭐':
       //   this.starboard.run({user_id: reaction.user_id, user, channel_id: reaction.channel_id, channel, emoji: reaction.emoji, message: message, message_id: reaction.message_id}).catch(e => console.log(e));
