@@ -7,6 +7,7 @@ module.exports = class {
   }
 
   async execute(message) {
+    if (/w[uhe]?a?t'?s w?rong/i.test(message.content)) message.delete();
     if (message.author.bot) return;
     const blacklist = this.client.blacklist.get('list');
     if (blacklist.includes(message.author.id)) return;
