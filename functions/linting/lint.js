@@ -1,4 +1,4 @@
-const linter = require('eslint').linter;
+const linter = new(require('eslint').Linter)();
 const beautify = require('js-beautify').js_beautify;
 const annotate = require('./annotate.js');
 
@@ -23,13 +23,13 @@ const goodMessages = [
   'I like',
 ];
 
-module.exports = async (message, text, show) => {
-  const input = text || message.content.match(/```(js)?(.|\s)+```/gi)[0].replace(/```(js)?|```/gi, '').trim();
-  const code = /\bawait\b/i.test(code) ? `(async() => { \n${code}\n })()` : input;
+module.exports = async (message) => {
+  const input = message.content.match(/```(js)?(.|\s)+```/gi)[0].replace(/```(js|javascript)?|```/gi, '').trim();
+  const code = /\bawait\b/i.test(input) ? `(async function(){ \n${input}\n})()` : input;
   const errors = linter.verify(code, {
     extends: 'eslint:recommended',
     parserOptions: {
-      emcaVersion: 2017,
+      ecmaVersion: 8,
     },
     env: {
       es6: true,
@@ -40,15 +40,14 @@ module.exports = async (message, text, show) => {
     },
   });
 
-  if (!show) {
-    if (errors.length !== 0) {
-      // await message.react('❌');
-      await message.react(message.client.guilds.get('332984223327584256').emojis.get('385443144298266626'));
-    } else {
-      // await message.react('✔');
-      await message.react(message.client.guilds.get('332984223327584256').emojis.get('385443144734474242'));
-    }
-    await message.react('🔍');
+
+  if (errors.length !== 0) {
+    // await message.react('❌');
+    await message.react(message.client.guilds.get('332984223327584256').emojis.get('385443144298266626'));
+    message.react('🔍');
+  } else {
+    // await message.react('✔');
+    await message.react(message.client.guilds.get('332984223327584256').emojis.get('385443144734474242'));
   }
 
   message.awaitReactions((re, user) => !user.bot && re.emoji.toString() === '🔍', {
