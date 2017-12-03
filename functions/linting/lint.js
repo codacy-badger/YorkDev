@@ -1,4 +1,4 @@
-const linter = new(require('eslint').Linter)();
+const linter = new (require('eslint').Linter)();
 const beautify = require('js-beautify').js_beautify;
 const annotate = require('./annotate.js');
 
@@ -24,8 +24,8 @@ const goodMessages = [
 ];
 
 module.exports = async (message) => {
-  const input = message.content.match(/```(js)?(.|\s)+```/gi)[0].replace(/```(js|javascript)?|```/gi, '').trim();
-  const code = /\bawait\b/i.test(input) ? `(async function(){ \n${input}\n})()` : input;
+  const code = message.content.match(/```(js)?(.|\s)+```/gi)[0].replace(/```(js|javascript)?|```/gi, '').trim();
+  //const code = /\bawait\b/i.test(input) ? `(async function(){ \n${input}\n})()` : input;
   const errors = linter.verify(code, {
     extends: 'eslint:recommended',
     parserOptions: {

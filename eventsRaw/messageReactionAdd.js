@@ -1,12 +1,12 @@
 // const Starboard = require('../functions/Starboard.js');
 const Pinned2DM = require('../functions/Pinned2DM.js');
-const Inspect = require('../functions/linting/Inspect.js');
+// const Inspect = require('../functions/linting/Inspect.js');
 module.exports = class {
   constructor(client) {
     this.client = client;
     // this.starboard = new Starboard(this.client);
     this.pinned2dm = new Pinned2DM(this.client);
-    this.inspect = new Inspect(this.client);
+    // this.inspect = new Inspect(this.client);
   }
 
   async execute(data) {
