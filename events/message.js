@@ -86,7 +86,7 @@ This command requires level ${this.client.levelCache[cmd.conf.permLevel]} (${cmd
 
     cmd.run(message, args, level).catch(error => {
       if (error.message || error.stack) console.log(error);
-      messagr.channel.send(error); 
+      message.channel.send(error); 
     });
   }
 };
