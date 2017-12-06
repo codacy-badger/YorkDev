@@ -86,7 +86,8 @@ class Google extends Command {
 
     if (!result.length) return searchmessage.edit('No results found for ' + term);
     const first = result.shift();
-    const vanityurl = /^https?:\/\/[\w\.\-_]+(?::\d+|\.\w*)(?:\/|$)/g.exec(first.url)[0];
+    const vanityurl_1 = /^https?:\/\/[\w\.\-_]+(?::\d+|\.\w*)(?:\/|$)/g.exec(first.url)[0];
+    const vanityurl = vanityurl_1 && vanityurl_1[0] ? vanityurl_1[0] : first.url;   
     const embed = new RichEmbed()
       .setColor(gcolor[Math.floor(Math.random() * gcolor.length)])
       .setAuthor(`Results for "${term}"`, 'https://lh4.googleusercontent.com/-v0soe-ievYE/AAAAAAAAAAI/AAAAAAADwkE/KyrKDjjeV1o/photo.jpg', searchurl)
@@ -102,7 +103,8 @@ class Google extends Command {
       .setTimestamp()
       .setFooter(Date.now() - time + ' ms')
       .addField('Top results', result.map(r => {
-        const vu = /^https?:\/\/[\w\.\-_]+(?::\d+|\.\w*)(?:\/|$)/g.exec(r.url)[0];
+        const vu_1 = /^https?:\/\/[\w\.\-_]+(?::\d+|\.\w*)(?:\/|$)/g.exec(r.url)[0];
+        const vu = vu_1 && vu_1[0] ? vu_1[0] : r.url;
         const u = r.url.substring(0, 200) + (r.url.length > 200 ? '...' : '');
         return `${r.title.substring(0, 200) + (r.title.length > 200 ? '...' : '')}\n[${u}](${vu.substring(0, 300) + (vu.length > 300 ? '...' : '')})`;
       }).join('\n'));
