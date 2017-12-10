@@ -86,7 +86,7 @@ class Google extends Command {
 
     if (!result.length) return searchmessage.edit('No results found for ' + term);
     const first = result.shift();
-    const vanityurl_1 = /^https?:\/\/[\w\.\-_]+(?::\d+|\.\w*)(?:\/|$)/g.exec(first.url)[0];
+    const vanityurl_1 = /^https?:\/\/[\w\.\-_]+(?::\d+|\.\w*)(?:\/|$)/g.exec(first.url);
     const vanityurl = vanityurl_1 && vanityurl_1[0] ? vanityurl_1[0] : first.url;   
     const embed = new RichEmbed()
       .setColor(gcolor[Math.floor(Math.random() * gcolor.length)])
@@ -101,13 +101,19 @@ class Google extends Command {
     }
     embed.setDescription(first.snippet())
       .setTimestamp()
-      .setFooter(Date.now() - time + ' ms')
-      .addField('Top results', result.map(r => {
-        const vu_1 = /^https?:\/\/[\w\.\-_]+(?::\d+|\.\w*)(?:\/|$)/g.exec(r.url)[0];
-        const vu = vu_1 && vu_1[0] ? vu_1[0] : r.url;
-        const u = r.url.substring(0, 200) + (r.url.length > 200 ? '...' : '');
-        return `${r.title.substring(0, 200) + (r.title.length > 200 ? '...' : '')}\n[${u}](${vu.substring(0, 300) + (vu.length > 300 ? '...' : '')})`;
-      }).join('\n'));
+      .setFooter(Date.now() - time + ' ms');
+    const embeds = result.reduce((acc, r) => {
+      const vu_1 = /^https?:\/\/[\w\.\-_]+(?::\d+|\.\w*)(?:\/|$)/g.exec(r.url);
+      const vu = vu_1 && vu_1[0] ? vu_1[0] : r.url;
+      const u = r.url.substring(0, 200) + (r.url.length > 200 ? '...' : ''); //203
+      const text = `${r.title.substring(0, 200) + (r.title.length > 200 ? '...' : '')}\n[${u}](${u.endsWith('...') ? vu.substring(0, 300) + (vu.length > 300 ? '...' : '') : u})`;
+      if (acc[acc.length - 1].length + text.length < 1000) acc[acc.length - 1] += `${text}\n`;
+      else acc[acc.length] = text;
+      return acc;
+    }, ['']);
+    for (const [i, e] of embeds.entries()) {
+      embed.addField(i === 0 ? 'Top Results' : '\u200b', e);
+    }
     searchmessage.edit({
       embed
     });
