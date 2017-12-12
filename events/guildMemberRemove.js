@@ -6,6 +6,9 @@ module.exports = class {
   async execute(member) {
     const guild = member.guild;
     if (!member.user.bot) this.client.points.delete(`${guild.id}-${member.id}`);
+    this.client.reminders.findAll('id', member.id).forEach((i) => {
+      if (guild.id === i.guildid) this.client.reminders.delete(`${i.id}-${i.reminderTimestamp}`);
+    });
     if (!member || !member.id || !guild) return;
     try {
      

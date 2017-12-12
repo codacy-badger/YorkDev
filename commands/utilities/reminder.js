@@ -22,7 +22,7 @@ class Reminder extends Command {
       category: 'Utilities',
       usage: 'reminder [me] <reminder message>',
       extended: 'Need to be reminded to take the trash out? This command can help!',
-      aliases: ['remember', 'remind'],
+      aliases: ['remember', 'remind', 'reminders'],
       botPerms: []
     });
   }
@@ -39,6 +39,7 @@ class Reminder extends Command {
     if (!blah) throw '|`❌`| Invalid Command usage, you must supply a reminder message and duration e.g; `Do the laundry in 20 minutes`.';
     this.client.reminders.set(`${message.author.id}-${message.createdTimestamp + ms(blah.split('#')[1])}`, {
       id: message.author.id,
+      guildid: message.guild.id,
       reminder: blah.split('#')[0],
       reminderTimestamp: message.createdTimestamp + ms(blah.split('#')[1])
     });

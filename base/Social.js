@@ -63,7 +63,7 @@ class Social extends Command {
         if (message.content.indexOf('-r') !== -1) {
           reminded = true;
           const time = '1 day', action = `claim daily in server: ${message.guild.name}`;
-          this.client.reminders.set(`${message.author.id}-${message.createdTimestamp + ms(time)}`, { id: message.author.id, reminder: action, reminderTimestamp: message.createdTimestamp + ms(time) });
+          this.client.reminders.set(`${message.author.id}-${message.createdTimestamp + ms(time)}`, { id: message.author.id, guildid: message.guild.id, reminder: action, reminderTimestamp: message.createdTimestamp + ms(time) });
         }
 
         if (payer === payee) {
