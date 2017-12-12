@@ -13,24 +13,28 @@ settings.json
 config.json
 config.js
 tagsbot.sqlite
+copy-paste-spam-filters.json
 
 # Asset Files
 assets/selfies/selfie.jpg
 assets/selfies/selfie_meme.jpg
 assets/selfies/selfie_triggered.jpg
 assets/images/image_evil.png
+assets/images/plate_stepped.jpg
 
-# Base
+# Music
+assets/stations/*
 base/Music.js
+commands/music/*
+functions/Music.js
 
 # Commands
 commands/fun/evil.js
 commands/documentation/init.js
 
-commands/music/*
 
 # Monitors
 monitors/starboard.js
 
 # Functions
-functions/music.js
+functions/starboard.js

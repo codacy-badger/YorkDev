@@ -5,7 +5,7 @@ const fsn = require('fs-nextra');
 
 const getBeautiful = async (person) => {
   const plate = await fsn.readFile('./assets/images/plate_beautiful.png');
-  const png = person.replace(/\.gif.+/g, '.png');
+  const png = person.replace(/\.(gif|jpg|png|jpeg)\?size=2048/g, '.png?size=256');
   const { body } = await snek.get(png);
   return new Canvas(634, 675)
     .setColor('#000000')

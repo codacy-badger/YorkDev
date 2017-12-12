@@ -8,7 +8,7 @@ Canvas.registerFont(resolve(join(__dirname, '../../assets/fonts/NotoEmoji-Regula
 
 const getAchievement = async (text, person) => {
   const plate = await fsn.readFile('./assets/images/plate_achievement.png');
-  const png = person.replace(/\.gif.+/g, '.png');
+  const png = person.replace(/\.(gif|jpg|png|jpeg)\?size=2048/g, '.png?size=32');
   const { body } = await snek.get(png);
   return new Canvas(320, 64)
     .addImage(plate, 0, 0, 320, 64)
@@ -34,6 +34,7 @@ class Achievement extends Social {
       botPerms: ['ATTACH_FILES']
     });
   }
+
   async run(message, args, level) {
     let text = args.join(' ');
     if (text.length < 1) throw 'You must give an achievement description.';
@@ -43,7 +44,7 @@ class Achievement extends Social {
       const payMe = await this.cmdPay(message, message.author.id, cost, this.conf.botPerms);
       if (!payMe) return;  
       const msg = await message.channel.send('`Achievement Getting...`');
-      const person = await this.verifyUser(args[0] ? args[0] : message.author.id);
+      const person = (message.mentions.users.first() || message.author).displayAvatarURL;
       if (message.mentions.users.first()) text = text.replace(/<@!?\d+>/, '').replace(/\n/g, ' ').trim();
       const result = await getAchievement(text, person);
       await message.channel.send({ files: [{ attachment: result, name: 'achievementGet.png' }] });

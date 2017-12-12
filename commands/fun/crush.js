@@ -4,8 +4,8 @@ const snek = require('snekfetch');
 const fsn = require('fs-nextra');
 
 const getCrushped = async (crusher, crush) => {
-  const pngCrusher = crusher.replace(/\.gif.+/g, '.png');
-  const pngCrush = crush.replace(/\.gif.+/g, '.png');
+  const pngCrush = crush.replace(/\.(gif|jpg|png|jpeg)\?size=2048/g, '.png?size=512');
+  const pngCrusher = crusher.replace(/\.(gif|jpg|png|jpeg)\?size=2048/g, '.png?size=128');
   const [ plate, Crusher, Crush ] = await Promise.all([
     fsn.readFile('./assets/images/plate_crush.png'),
     snek.get(pngCrusher),

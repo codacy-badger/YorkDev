@@ -4,8 +4,8 @@ const snek = require('snekfetch');
 const fsn = require('fs-nextra');
 
 const getSlapped = async (slapper, slapped) => {
-  const pngSlapper = slapper.replace(/\.gif.+/g, '.png');
-  const pngSlapped = slapped.replace(/\.gif.+/g, '.png');
+  const pngSlapper = slapper.replace(/\.(gif|jpg|png|jpeg)\?size=2048/g, '.png?size=128');
+  const pngSlapped = slapped.replace(/\.(gif|jpg|png|jpeg)\?size=2048/g, '.png?size=128');
   const [
     plate,
     Slapper,
