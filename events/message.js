@@ -22,7 +22,7 @@ module.exports = class {
     const mentionPrefix = new RegExp(`^<@!?${this.client.user.id}> `);
     const prefixMention = mentionPrefix.exec(message.content);
 
-    const prefixes = [settings.prefix, defaults.prefix, `${prefixMention}`];
+    const prefixes = [settings.prefix, `${prefixMention}`];
     let prefix = false;
   
     for (const thisPrefix of prefixes) {
@@ -30,9 +30,7 @@ module.exports = class {
     }
   
     if (message.content.match(new RegExp(`^<@!?${this.client.user.id}>$`))) {
-      let mentionMsg = '';
-      settings.prefix === defaults.prefix ? mentionMsg = `The prefix is \`${settings.prefix}\`.` : mentionMsg = `This server's prefix is \`${settings.prefix}\`, whilst the default prefix is \`${defaults.prefix}\``;
-      return message.channel.send(mentionMsg);
+      return message.channel.send(`The prefix is \`${settings.prefix}\`.`);
     }
   
     if (!prefix) return;

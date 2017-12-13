@@ -19,11 +19,10 @@ module.exports = class {
 
     this.client.log('log', `Logged in as ${this.client.user.tag} and I'm ready to serve ${this.client.users.size} users in ${this.client.guilds.size} servers.`, 'Ready!');
     
-    await this.client.user.setGame(`${this.client.settings.get('default').prefix}help | ${this.client.guilds.size} Servers`);
+    await this.client.user.setGame(`@${this.client.user.username} help | ${this.client.guilds.size} Servers`);
     
     
     if (!this.client.blacklist.get('list')) this.client.blacklist.set('list', []);
-    
     if (!this.client.botSettings.get('bot')) this.client.botSettings.set('bot', this.client.config.botSettings);
     if (this.client.botSettings.get('bot').afk) this.client.user.setStatus('dnd');
 
