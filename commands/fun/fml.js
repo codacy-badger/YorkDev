@@ -40,7 +40,7 @@ class FML extends Social {
       const signature = root.querySelector('.panel div.text-center');
       const link = 'http://www.fmylife.com' + href.rawAttrs.replace(/^href=|"/g,'');
       const cardId = card.rawAttrs.replace(/\D/g,'');
-      let signatureDisplay = 'Author and date of this fml unkown';
+      let signatureDisplay = 'Author and date of this fml unknown';
       if (signature.childNodes.length === 1) {
         signatureDisplay = signature.childNodes[0].text;
       } else if (signature.childNodes.length === 3) {
