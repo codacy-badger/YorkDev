@@ -21,7 +21,7 @@ class Braille extends Command {
   }
 
   async run(message, args, level) { // eslint-disable-line no-unused-vars
-    if (args.lengh > 1) return message.reply('I cannot trasnslate nothingness.. How about you put something there?');
+    if (args.length > 1) return message.reply('I cannot trasnslate nothingness.. How about you put something there?');
     const msg = args.join(' ');
     const reply = To(msg);
     message.reply(reply);
