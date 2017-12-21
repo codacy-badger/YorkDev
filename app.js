@@ -2,7 +2,7 @@ if (process.version.slice(1).split('.')[0] < 8) throw new Error('Node 8.0.0 or h
 // For dashboard stuff.
 // npm install body-parser ejs express express-passport express-session marked passport passport-discord
 const { Client } = require('discord.js');
-const {readdir} = require('fs-nextra');
+const { readdir } = require('fs-nextra');
 const Enmap = require('enmap');
 const EnmapLevel = require('enmap-level');
 const klaw = require('klaw');
