@@ -25,7 +25,7 @@ const goodMessages = [
 
 module.exports = async (message) => {
   const input = message.content.match(/```(js)?(.|\s)+```/gi)[0].replace(/```(js|javascript)?|```/gi, '').trim();
-  const code = /\bawait\b/i.test(input) ? `(async function(){ \n${input}\n})()` : input;
+  const code = /\bawait\b/i.test(input) ? `(async () => {\n${input}\n})()` : input;
   const errors = linter.verify(code, {
     extends: 'eslint:recommended',
     parserOptions: {
