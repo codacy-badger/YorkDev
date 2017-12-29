@@ -1,6 +1,7 @@
-const linter = new (require('eslint').Linter)();
+const linter = new(require('eslint').Linter)();
 const beautify = require('js-beautify').js_beautify;
 const annotate = require('./annotate.js');
+const lang = require('lang-detector');
 
 const badMessages = [
   'I think you may want to take a second look.',
@@ -24,9 +25,10 @@ const goodMessages = [
 ];
 
 module.exports = async (message) => {
-  const input = message.content.match(/```(js)?(.|\s)+```/gi)[0].replace(/```(js|javascript)?|```/gi, '').trim();
-  const code = /\bawait\b/i.test(input) ? `(async () => {\n${input}\n})()` : input;
-  const errors = linter.verify(code, {
+  //let code = message.content.match(/```(js)?(.|\s)+```/gi)[0].replace(/```(js|javascript)?|```/gi, '').trim();
+  const input = message.content.split('```').filter((e,i) => i % 2 === 1);
+  let code = input.find(e => /^(js|javascript)\n/.test(e)) || input.find(e => lang(e) === 'JavaScript') || input[0];
+  const check = (code => linter.verifyAndFix(code, {
     extends: 'eslint:recommended',
     parserOptions: {
       ecmaVersion: 8,
@@ -38,9 +40,20 @@ module.exports = async (message) => {
     rules: {
       'no-console': 0,
     },
-  });
-
-
+  }));
+  let result = check(code);
+  if (result.messages.length) {
+    const awaitlines = result.messages.filter(a => {
+      const line = code.split('\n')[a.line - 1];
+      return line === undefined ? false : line.includes('await');
+    });
+    if (awaitlines.length) {
+      code = `(async () => {\n${code}\n})()`;
+      result = check(code);
+    }
+  }
+  
+  const errors = result.messages;
   if (errors.length !== 0) {
     // await message.react('❌');
     await message.react(message.client.guilds.get('332984223327584256').emojis.get('385443144298266626'));
@@ -71,11 +84,13 @@ module.exports = async (message) => {
           {
             name: 'Annotated Code',
             value: `\`\`\`${annotate(code, errors)}\`\`\``,
-          },
-          {
+          }
+          /*
+          ,{
             name: 'Beautified Code',
             value: `\`\`\`js\n${beautify(code, { indent_size: 2 })}\`\`\``,
           },
+          */
           ],
         },
       });
