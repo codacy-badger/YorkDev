@@ -5,7 +5,7 @@
 
 */
 
-const Command = require('../../base/Command.js');
+const Command = require(`${process.cwd()}/base/Command.js`);
 const request = require('snekfetch');
 const { oneLineTrim } = require('common-tags');
 
@@ -265,7 +265,7 @@ class Docs extends Command {
     const [main, member] = this.search(docs, query);
 
     if (!main) {
-      throw 'Could not find that item in the docs.';
+      message.error(undefined, 'Could not find that item in the docs.');
     }
 
     const embed = member ? {

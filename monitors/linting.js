@@ -1,4 +1,4 @@
-const lint = require('../functions/linting/lint.js');
+const lint = require(`${process.cwd()}/functions/linting/lint.js`);
 const lang = require('lang-detector');
 exports.run = async (client, message, level) => { // eslint-disable-line no-unused-vars
   if (message.content.match(/```js\s(.|\s)+```/gi)) {

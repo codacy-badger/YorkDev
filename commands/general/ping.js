@@ -1,4 +1,4 @@
-const Command = require('../../base/Command.js');
+const Command = require(`${process.cwd()}/base/Command.js`);
 
 class Ping extends Command {
   constructor(client) {
@@ -17,7 +17,7 @@ class Ping extends Command {
       const msg = await message.channel.send('🏓 Ping!');
       msg.edit(`🏓 Pong! (Roundtrip took: ${msg.createdTimestamp - message.createdTimestamp}ms. 💙: ${Math.round(this.client.ping)}ms.)`);
     } catch (error) {
-      throw error;
+      this.client.logger.error(error);
     }
   }
 }

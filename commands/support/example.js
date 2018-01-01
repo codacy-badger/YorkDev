@@ -1,4 +1,4 @@
-const Command = require('../../base/Command.js');
+const Command = require(`${process.cwd()}/base/Command.js`);
 
 class Example extends Command {
   constructor(client) {
@@ -46,7 +46,7 @@ class Example extends Command {
       const response = await this.db[message.flags[0]](name, data);
       message.channel.send(response);
     } catch (error) {
-      throw error;
+      this.channel.logger.error(error);
     }
   }
 }

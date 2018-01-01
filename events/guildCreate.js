@@ -5,7 +5,6 @@ module.exports = class {
 
   async execute(guild) {
     if (!guild.available) return;
-    await this.client.user.setGame(`@${this.client.user.username} help | ${this.client.guilds.size} Servers`);
-    this.client.log('log', `New guild has been joined: ${guild.name} (${guild.id}) with ${guild.memberCount - 1 } members.`, 'JOINED');
+    await this.client.user.setGame(`@${this.client.user.username} help`);
   }
 };

@@ -1,4 +1,3 @@
-
 exports.run = async (client, message, level) => { // eslint-disable-line no-unused-vars
   if (!message.channel.type == 'text') return;
   if (level > 1) return;
@@ -16,7 +15,7 @@ exports.run = async (client, message, level) => { // eslint-disable-line no-unus
       }
       client.invspam.set(spammer, { count });
     });
-    message.channel.send(`${message.author} |\`⛔\`| Your message contained a server invite link, which this server prohibits.`);
+    message.error(undefined, 'Your message contained a server invite link, which this server prohibits.');
   }
 
 };

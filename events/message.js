@@ -1,5 +1,5 @@
-const errorChecks = require('../functions/parseText.js');
-const monitor = require('../monitors/monitor.js');
+const errorChecks = require(`${process.cwd()}/functions/parseText.js`);
+const monitor = require(`${process.cwd()}/monitors/monitor.js`);
 
 module.exports = class {
   constructor(client) {
@@ -8,8 +8,6 @@ module.exports = class {
 
   async execute(message) {
     if (message.author.bot) return;
-    const blacklist = this.client.blacklist.get('list');
-    if (blacklist.includes(message.author.id)) return;
   
     const defaults = this.client.settings.get('default');
     const settings = message.guild ? this.client.getSettings(message.guild.id) : defaults;
@@ -47,20 +45,18 @@ module.exports = class {
     if (!cmd) return;
     
     const rateLimit = await this.client.ratelimit(message, level, cmd.help.name, cmd.conf.cooldown); 
-    //message is passed
-    //The key will be the command name
-    //cooldown would be the cooldown, willl be set per command.
-    if (typeof rateLimit == 'string') { //see if the returned is a string
-      this.client.log('log', `${this.client.config.permLevels.find(l => l.level === level).name} ${message.author.username} (${message.author.id}) got ratelimited while running command ${cmd.help.name}`, 'CMD');
-      return message.channel.send(`Please wait ${rateLimit.toPlural()} to run this command.`); //return stop command from executing
+
+    if (typeof rateLimit == 'string') {
+      this.client.logger.warn(`${this.client.config.permLevels.find(l => l.level === level).name} ${message.author.username} (${message.author.id}) got ratelimited while running command ${cmd.help.name}`);
+      return message.error(undefined, `Please wait ${rateLimit.toPlural()} to run this command.`);
     }
 
     if (cmd && !message.guild && cmd.conf.guildOnly)
-      return message.channel.send('This command is unavailable via private message. Please run this command in a guild.');
+      return message.error(undefined, 'This command is unavailable via private message. Please run this command in a guild.');
 
     if (level < this.client.levelCache[cmd.conf.permLevel]) {
       if (settings.systemNotice === 'true') {
-        return message.channel.send(`You do not have permission to use this command.
+        return message.error(undefined, `You do not have permission to use this command.
 Your permission level is ${level} (${this.client.config.permLevels.find(l => l.level === level).name})
 This command requires level ${this.client.levelCache[cmd.conf.permLevel]} (${cmd.conf.permLevel})`);
       } else {
@@ -75,16 +71,16 @@ This command requires level ${this.client.levelCache[cmd.conf.permLevel]} (${cmd
       message.flags.push(args.shift().slice(1));
     }
 
-    this.client.log('log', `${this.client.config.permLevels.find(l => l.level === level).name} ${message.author.username} (${message.author.id}) ran command ${cmd.help.name}`, 'CMD');
+    this.client.logger.cmd(`${this.client.config.permLevels.find(l => l.level === level).name} ${message.author.username} (${message.author.id}) ran command ${cmd.help.name}`);
 
     if (message.channel.type === 'text') {      
       const mPerms = this.client.permCheck(message, cmd.conf.botPerms);
-      if (mPerms.length) return message.channel.send(`The bot does not have the following permissions \`${mPerms.join(', ')}\``);
+      if (mPerms.length) return message.error(undefined, `The bot does not have the following permissions \`${mPerms.join(', ')}\``);
     }
 
     cmd.run(message, args, level).catch(error => {
-      if (error.message || error.stack) console.log(error);
-      message.channel.send(error); 
+      console.log(error);
+      // if (error.message || error.stack) this.client.logger.error(error);
     });
   }
 };

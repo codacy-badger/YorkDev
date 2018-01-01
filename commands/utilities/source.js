@@ -1,4 +1,4 @@
-const Command = require('../../base/Command.js');
+const Command = require(`${process.cwd()}/base/Command.js`);
 
 class Source extends Command {
   constructor(client) {
@@ -13,7 +13,7 @@ class Source extends Command {
   async run(message, args, level) { // eslint-disable-line no-unused-vars
 
     const fetchedMessage = await message.channel.fetchMessages({ limit: args[0] ? 1 : 2, around: args[0] || message.channel.lastMessageID });
-    message.channel.send(`Content for Message ID \`${args[0] || message.channel.lastMessageID}\`: \`\`\`md\n${await this.client.clean(this.client, fetchedMessage.last().content)}\n\`\`\``);
+    message.channel.send(`Content for Message ID \`${args[0] || message.channel.lastMessageID}\`: \`\`\`md\n${await this.client.clean(this.client, fetchedMessage.last().content)}\n\`\`\``).catch(error => this.client.logger.error(error));
   }
 }
 

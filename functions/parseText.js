@@ -3,7 +3,7 @@
 	Yes, this is a modified version of Auto by Hackzilla
 
 */
-const issue = require('../assets/json/issueList.json');
+const issue = require(`${process.cwd()}/assets/json/issueList.json`);
 function parse(input) {
   if (input.includes('Block-scoped declarations (let, const, function, class) not yet supported outside strict mode')) {
     return {
@@ -59,12 +59,12 @@ function parse(input) {
     };
   } else
 
-  // if (input.includes('TypeError: Discord.RichEmbed is not a constructor')) {
+  // if (input.includes('TypeError: Discord.MessageEmbed is not a constructor')) {
   //   return {
-  //     message: issue.responses.richembed.message,
-  //     info: issue.responses.richembed.info,
-  //     problem: issue.responses.richembed.problem,
-  //     solution: issue.responses.richembed.solution,
+  //     message: issue.responses.MessageEmbed.message,
+  //     info: issue.responses.MessageEmbed.info,
+  //     problem: issue.responses.MessageEmbed.problem,
+  //     solution: issue.responses.MessageEmbed.solution,
   //   };
   // } else
   // : Unhandled promise rejection (rejection id: 1): Error: Bad Request

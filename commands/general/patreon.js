@@ -1,5 +1,5 @@
-const Command = require('../../base/Command.js');
-const { RichEmbed } = require('discord.js');
+const Command = require(`${process.cwd()}/base/Command.js`);
+const { MessageEmbed } = require('discord.js');
 
 class Patreon extends Command {
   constructor(client) {
@@ -15,7 +15,7 @@ class Patreon extends Command {
   }
 
   async run(message, args, level) { // eslint-disable-line no-unused-vars
-    const embed = new RichEmbed()
+    const embed = new MessageEmbed()
       .setColor(0xff5900)
       .addField('Disclaimer', 'All rewards will be honoured for **active** patrons.\n\nPatreon will charge up front due to a number of scam attempts in the past.\n\nThe **Supporter** tier is limited to **10** patrons due to time and availability constraints.\n\nThe **Code Monkey** tier is limited to **1** patron due to time and availability constraints.', true)
       .addField('Become a Patron', 'Get an exclusive role with a Patron only channel!\n**Click [here](https://www.patreon.com/bePatron?c=639896&rid=1314501) to pledge $1.00**\n', true)

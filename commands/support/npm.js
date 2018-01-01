@@ -1,5 +1,5 @@
-const Command = require('../../base/Command.js');
-const { RichEmbed } = require('discord.js');
+const Command = require(`${process.cwd()}/base/Command.js`);
+const { MessageEmbed } = require('discord.js');
 const snek = require('snekfetch');
 
 class Npm extends Command {
@@ -38,7 +38,7 @@ class Npm extends Command {
         deps.push(`...${len} more.`);
       }
       // Now we just need to present the data to the end user.
-      const embed = new RichEmbed()
+      const embed = new MessageEmbed()
         .setColor(0xCB0000)
         .setAuthor(body.name, 'https://i.imgur.com/ErKf5Y0.png')
         .setDescription(`${body.description || 'No description.'}
@@ -50,9 +50,9 @@ class Npm extends Command {
 **Download:** [${body.name}](https://www.npmjs.com/package/${query})`);
         
       message.channel.send({embed});
-    } catch (err) {
-      if (err.status === 404) throw 'Could not find any results.';
-      console.log(err);
+    } catch (error) {
+      if (error.status === 404) message.error(undefined, 'Could not find any results.');
+      this.client.logger.error(error);
     }
   }
 }
