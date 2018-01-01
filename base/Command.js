@@ -5,7 +5,6 @@ class Command {
     category = 'General',
     usage = 'No usage provided.',
     extended = 'No information provided.',
-    cost = 0,
     cooldown = 0,
     hidden = false,
     guildOnly = false,
@@ -20,8 +19,7 @@ class Command {
       description,
       category,
       usage,
-      extended,
-      cost
+      extended
     };
     this.conf = {
       hidden,
@@ -75,6 +73,7 @@ class Command {
       this.client.logger.error(error);
     }
   }
+  
   async run(message, args, level) { // eslint-disable-line no-unused-vars
     message.error(new Error(`Command ${this.constructor.name} doesn't provide a run method.`)); 
   }
