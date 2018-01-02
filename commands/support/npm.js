@@ -14,7 +14,8 @@ class Npm extends Command {
   }
 
   async run(message, args, level) { // eslint-disable-line no-unused-vars
-    const query = args.join(' ');
+    const query = args.join(' ').trim();
+    if (query.length) return message.error(undefined, 'Query string empty!.');
     try {
       const { body } = await snek.get(`https://registry.npmjs.com/${query}`);
       // Get the latest version by the dist-tags.
