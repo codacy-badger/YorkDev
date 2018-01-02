@@ -26,7 +26,7 @@ class Beautify extends Command {
     }
 
     if (!code) {
-      message.error(undefined, 'No JavaScript code blocks found.');
+      message.reply('No JavaScript code blocks found.');
     }
 
     let beautifiedCode = beautify(code, { indent_size: 2, brace_style: 'none' });

@@ -48,15 +48,15 @@ module.exports = class {
 
     if (typeof rateLimit == 'string') {
       this.client.logger.warn(`${this.client.config.permLevels.find(l => l.level === level).name} ${message.author.username} (${message.author.id}) got ratelimited while running command ${cmd.help.name}`);
-      return message.error(undefined, `Please wait ${rateLimit.toPlural()} to run this command.`);
+      return message.reply(`Please wait ${rateLimit.toPlural()} to run this command.`);
     }
 
     if (cmd && !message.guild && cmd.conf.guildOnly)
-      return message.error(undefined, 'This command is unavailable via private message. Please run this command in a guild.');
+      return message.reply('This command is unavailable via private message. Please run this command in a guild.');
 
     if (level < this.client.levelCache[cmd.conf.permLevel]) {
       if (settings.systemNotice === 'true') {
-        return message.error(undefined, `You do not have permission to use this command.
+        return message.reply(`You do not have permission to use this command.
 Your permission level is ${level} (${this.client.config.permLevels.find(l => l.level === level).name})
 This command requires level ${this.client.levelCache[cmd.conf.permLevel]} (${cmd.conf.permLevel})`);
       } else {
@@ -75,7 +75,7 @@ This command requires level ${this.client.levelCache[cmd.conf.permLevel]} (${cmd
 
     if (message.channel.type === 'text') {      
       const mPerms = this.client.permCheck(message, cmd.conf.botPerms);
-      if (mPerms.length) return message.error(undefined, `The bot does not have the following permissions \`${mPerms.join(', ')}\``);
+      if (mPerms.length) return message.reply(`The bot does not have the following permissions \`${mPerms.join(', ')}\``);
     }
 
     cmd.run(message, args, level).catch(error => {

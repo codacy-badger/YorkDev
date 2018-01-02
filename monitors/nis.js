@@ -15,7 +15,7 @@ exports.run = async (client, message, level) => { // eslint-disable-line no-unus
       }
       client.invspam.set(spammer, { count });
     });
-    message.error(undefined, 'Your message contained a server invite link, which this server prohibits.');
+    message.reply('Your message contained a server invite link, which this server prohibits.');
   }
 
 };

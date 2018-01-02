@@ -59,12 +59,12 @@ function parse(input) {
     };
   } else
 
-  // if (input.includes('TypeError: Discord.MessageEmbed is not a constructor')) {
+  // if (input.includes('TypeError: Discord.RichEmbed is not a constructor')) {
   //   return {
-  //     message: issue.responses.MessageEmbed.message,
-  //     info: issue.responses.MessageEmbed.info,
-  //     problem: issue.responses.MessageEmbed.problem,
-  //     solution: issue.responses.MessageEmbed.solution,
+  //     message: issue.responses.RichEmbed.message,
+  //     info: issue.responses.RichEmbed.info,
+  //     problem: issue.responses.RichEmbed.problem,
+  //     solution: issue.responses.RichEmbed.solution,
   //   };
   // } else
   // : Unhandled promise rejection (rejection id: 1): Error: Bad Request

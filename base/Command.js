@@ -35,7 +35,7 @@ class Command {
   async verifyUser(message, user) {
     try {
       const match = /(?:<@!?)?([0-9]{17,20})>?/gi.exec(user);
-      if (!match) message.error(undefined, 'Invalid user');
+      if (!match) message.reply('Invalid user');
       const id = match[1];
       const check = await this.client.fetchUser(id, true);
       if (check.username !== undefined) return check;
@@ -53,7 +53,7 @@ class Command {
   async verifyMessage(message, msgid) {
     try {
       const match = /([0-9]{17,20})/.exec(msgid);
-      if (!match) message.error(undefined, 'Invalid message id.');
+      if (!match) message.reply('Invalid message id.');
       const id = match[1];
       const check = await message.channel.fetchMessage(id);
       if (check.cleanContent !== undefined) return id;

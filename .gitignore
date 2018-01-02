@@ -24,3 +24,6 @@ commands/fun/stepped.js
 
 # Functions
 functions/starboard.js
+config\.1\.js
+
+commands/support/github\.js

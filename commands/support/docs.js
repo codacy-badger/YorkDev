@@ -265,7 +265,7 @@ class Docs extends Command {
     const [main, member] = this.search(docs, query);
 
     if (!main) {
-      message.error(undefined, 'Could not find that item in the docs.');
+      message.reply('Could not find that item in the docs.');
     }
 
     const embed = member ? {

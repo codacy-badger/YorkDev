@@ -1,5 +1,5 @@
 const Twit = require('twit');
-const { MessageEmbed } = require('discord.js');
+const { RichEmbed } = require('discord.js');
 
 
 module.exports = client => {
@@ -9,7 +9,7 @@ module.exports = client => {
   twStream.on('tweet', tweet => {
     if (tweet.retweeted_status || tweet.user.id_str != client.config.twitterUser || tweet.in_reply_to_status_id != null) return;
 
-    const embed = new MessageEmbed()
+    const embed = new RichEmbed()
       .setColor('#1DA1F2')
       .setAuthor(`${tweet.user.name} (@${tweet.user.screen_name})`)
       .setURL(`https://twitter.com/${tweet.user.screen_name}/status/${tweet.id_str}`)

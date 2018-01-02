@@ -1,5 +1,5 @@
 const Command = require(`${process.cwd()}/base/Command.js`);
-const { MessageEmbed } = require('discord.js');
+const { RichEmbed } = require('discord.js');
 const snek = require('snekfetch');
 
 class Npm extends Command {
@@ -14,6 +14,7 @@ class Npm extends Command {
   }
 
   async run(message, args, level) { // eslint-disable-line no-unused-vars
+    if (args.length === 0) return message.reply('You must supply a search term.');
     const query = args.join(' ');
     try {
       const { body } = await snek.get(`https://registry.npmjs.com/${query}`);
@@ -38,7 +39,7 @@ class Npm extends Command {
         deps.push(`...${len} more.`);
       }
       // Now we just need to present the data to the end user.
-      const embed = new MessageEmbed()
+      const embed = new RichEmbed()
         .setColor(0xCB0000)
         .setAuthor(body.name, 'https://i.imgur.com/ErKf5Y0.png')
         .setDescription(`${body.description || 'No description.'}
@@ -51,7 +52,7 @@ class Npm extends Command {
         
       message.channel.send({embed});
     } catch (error) {
-      if (error.status === 404) message.error(undefined, 'Could not find any results.');
+      if (error.status === 404) message.reply('Could not find any results.');
       this.client.logger.error(error);
     }
   }
