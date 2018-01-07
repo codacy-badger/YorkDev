@@ -261,6 +261,7 @@ class Docs extends Command {
 
 
   async run(message, [query, version = 'stable'], level) { // eslint-disable-line no-unused-vars
+    if (!query) query = 'client';
     const docs = await this.fetchDocs(version);
     const [main, member] = this.search(docs, query);
 
