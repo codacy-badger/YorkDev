@@ -26,9 +26,10 @@ const goodMessages = [
 
 module.exports = async (message) => {
   //let code = message.content.match(/```(js)?(.|\s)+```/gi)[0].replace(/```(js|javascript)?|```/gi, '').trim();
-  const input = message.content.split(/```(js|javascript)?/i).filter((e,i) => i % 2 === 1);
+  const input = message.content.split('```').filter((e,i) => i % 2 === 1);
   let code = input.find(e => /^(js|javascript)\n/.test(e)) || input.find(e => lang(e) === 'JavaScript') || input[0];
-  if (!code) return;
+  code = code.replace(/^(?:js|javascript)\n/i, '');
+  if (!code || !code.length) return;
   const check = (code => linter.verifyAndFix(code, {
     extends: 'eslint:recommended',
     parserOptions: {
