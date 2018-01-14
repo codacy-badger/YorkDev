@@ -30,6 +30,7 @@ module.exports = async (message) => {
   let code = input.find(e => /^(js|javascript)\n/.test(e)) || input.find(e => lang(e) === 'JavaScript') || input[0];
   code = code.replace(/^(?:js|javascript)\n/i, '');
   if (!code || !code.length) return;
+  if (/(?:Syntax|Type|Range|Eval|Internal|Reference|URI)Error: (?:[^\s]+(?: |$)){2,}/.test(code)) return; //check if node error instead of actual JS
   const check = (code => linter.verifyAndFix(code, {
     extends: 'eslint:recommended',
     parserOptions: {
