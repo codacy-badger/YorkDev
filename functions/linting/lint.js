@@ -63,8 +63,8 @@ module.exports = async (message) => {
     // await message.react('✔');
     await message.react(message.client.guilds.get('332984223327584256').emojis.get('385443144734474242'));
   }
-  const annotated = annotate(code, errors);
-  const sentEmbed = message.awaitReactions((re, user) => !user.bot && re.emoji.toString() === '🔍', {
+  
+  const sentEmbed = await message.awaitReactions((re, user) => !user.bot && re.emoji.toString() === '🔍', {
     time: 1000 * 60 * 60,
     max: 1,
     errors: 'time'
@@ -74,7 +74,7 @@ module.exports = async (message) => {
       for (const error of errors) {
         errs.push(`- [${error.line}:${error.column}] ${error.message}`);
       }
-
+      const annotated = annotate(code, errors);
       return message.channel.send(badMessages[Math.floor(Math.random() * badMessages.length)], {
         embed: {
           color: 0xf44259,
@@ -96,12 +96,13 @@ module.exports = async (message) => {
         },
       });
     } else {
+      const beautified = beautify(code, { indent_size: 2 });
       return message.channel.send(goodMessages[Math.floor(Math.random() * goodMessages.length)], {
         embed: {
           color: 0x43B581,
           fields: [{
             name: 'Beautified Code',
-            value: `\`\`\`js\n${beautify(code, { indent_size: 2 })}\`\`\``,
+            value: `\`\`\`js\n${beautified.length > 1015 ? beautified.substring(0, 1010) + '...' : beautified}\`\`\``,
           }, ],
         },
       });
