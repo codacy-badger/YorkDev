@@ -62,8 +62,8 @@ module.exports = async (message) => {
     // await message.react('✔');
     await message.react(message.client.guilds.get('332984223327584256').emojis.get('385443144734474242'));
   }
-
-  message.awaitReactions((re, user) => !user.bot && re.emoji.toString() === '🔍', {
+  const annotated = annotate(code, errors);
+  const sentEmbed = message.awaitReactions((re, user) => !user.bot && re.emoji.toString() === '🔍', {
     time: 1000 * 60 * 60,
     max: 1,
     errors: 'time'
@@ -74,7 +74,7 @@ module.exports = async (message) => {
         errs.push(`- [${error.line}:${error.column}] ${error.message}`);
       }
 
-      message.channel.send(badMessages[Math.floor(Math.random() * badMessages.length)], {
+      return message.channel.send(badMessages[Math.floor(Math.random() * badMessages.length)], {
         embed: {
           color: 0xf44259,
           fields: [{
@@ -83,7 +83,7 @@ module.exports = async (message) => {
           },
           {
             name: 'Annotated Code',
-            value: `\`\`\`${annotate(code, errors)}\`\`\``,
+            value: `\`\`\`${annotated.length > 1015 ? annotated.substring(0, 1010) + '...' : annotated}\`\`\``,
           }
           /*
           ,{
@@ -95,7 +95,7 @@ module.exports = async (message) => {
         },
       });
     } else {
-      message.channel.send(goodMessages[Math.floor(Math.random() * goodMessages.length)], {
+      return message.channel.send(goodMessages[Math.floor(Math.random() * goodMessages.length)], {
         embed: {
           color: 0x43B581,
           fields: [{
@@ -106,4 +106,11 @@ module.exports = async (message) => {
       });
     }
   }).catch(e => void e);
+  await sentEmbed.react('❌');
+  sentEmbed.awaitReactions((re, user) => !user.bot && re.emoji.toString() === '❌', {
+    time: 1000 * 60 * 60,
+    max: 1,
+    errors: 'time'
+  }).then(() => sentEmbed.delete()).catch(e => void e);
+
 };
