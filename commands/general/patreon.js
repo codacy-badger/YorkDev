@@ -1,4 +1,4 @@
-const Command = require('../../base/Command.js');
+const Command = require(`${process.cwd()}/base/Command.js`);
 const { RichEmbed } = require('discord.js');
 
 class Patreon extends Command {

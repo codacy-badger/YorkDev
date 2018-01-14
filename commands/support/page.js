@@ -1,4 +1,4 @@
-const Command = require('../../base/Command.js');
+const Command = require(`${process.cwd()}/base/Command.js`);
 const baseUrl = 'https://anidiots.guide';
 
 /*
@@ -61,7 +61,7 @@ class Page extends Command {
       const response = await this.db[message.flags[0]](name, data);
       message.channel.send(response);
     } catch (error) {
-      throw error;
+      this.client.logger.error(error);
     }
   }
 }

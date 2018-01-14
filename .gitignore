@@ -1,16 +1,12 @@
 # Directories
 /node_modules/
 /data/
-/docs/
 
 # File Extensions
 *.log
-*.txt
 
 # Specific Files
 package-lock.json
-settings.json
-config.json
 config.js
 tagsbot.sqlite
 copy-paste-spam-filters.json
@@ -22,19 +18,12 @@ assets/selfies/selfie_triggered.jpg
 assets/images/image_evil.png
 assets/images/plate_stepped.jpg
 
-# Music
-assets/stations/*
-base/Music.js
-commands/music/*
-functions/Music.js
-
 # Commands
 commands/fun/evil.js
-commands/documentation/init.js
-
-
-# Monitors
-monitors/starboard.js
+commands/fun/stepped.js
 
 # Functions
 functions/starboard.js
+config\.1\.js
+
+commands/support/github\.js

@@ -33,15 +33,15 @@ exports.run = async (client, message, level) => { // eslint-disable-line no-unus
   
   // If the total number of mentions in the last `ratelimit` is above the server ban level... well, ban their ass.
   if (entry > nmsBanCount) {
-    client.log('log', `[${message.guild.name}] ${message.author.username} spamming mentions x${entry}`);
+    client.logger.log(`[${message.guild.name}] ${message.author.username} spamming mentions x${entry}`);
     message.member.ban(1).then(member => {
       message.channel.send(`:no_entry_sign: User ${member.user.tag} (${member.id}) has just been banned for mentioning ${entry} users. :hammer:
   Users that have been mentioned, we apologize for the annoyance.`);
-      client.emit('log', `[${member.id}] Banned ${member.user.username} from ${message.guild.name} for mentioning too many users (${entry}).`);
+      client.logger.log(`[${member.id}] Banned ${member.user.username} from ${message.guild.name} for mentioning too many users (${entry}).`);
     })
       .catch(e => {
-        client.log('error', `[${message.author.id}] Tried to ban ${message.author.tag} from ${message.guild.name} but they have a higher role.`);
-        console.log(e);
+        client.logger.error(`[${message.author.id}] Tried to ban ${message.author.tag} from ${message.guild.name} but they have a higher role.`);
+        client.logger.error(e);
       });
     slowmode.delete(message.author.id);
   } else {

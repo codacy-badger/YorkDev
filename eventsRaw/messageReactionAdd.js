@@ -1,12 +1,8 @@
-// const Starboard = require('../functions/Starboard.js');
-const Pinned2DM = require('../functions/Pinned2DM.js');
-// const Inspect = require('../functions/linting/Inspect.js');
+const Pinned2DM = require(`${process.cwd()}/functions/Pinned2DM.js`);
 module.exports = class {
   constructor(client) {
     this.client = client;
-    // this.starboard = new Starboard(this.client);
     this.pinned2dm = new Pinned2DM(this.client);
-    // this.inspect = new Inspect(this.client);
   }
 
   async execute(data) {
@@ -18,20 +14,9 @@ module.exports = class {
     const message = await channel.fetchMessage(reaction.message_id);
     switch (reaction.emoji.name) {
 
-      /*
-      case '🔍':
-        this.inspect.run({channel_id: reaction.channel_id, channel, message: message, message_id: reaction.message_id}).catch(e => console.log(e));
-        break;
-      */
-      
-      // case '✡':
-      // case '⭐':
-      //   this.starboard.run({user_id: reaction.user_id, user, channel_id: reaction.channel_id, channel, emoji: reaction.emoji, message: message, message_id: reaction.message_id}).catch(e => console.log(e));
-      //   break;
-    
       case '📍':
       case '📌':
-        this.pinned2dm.run({user_id: reaction.user_id, user, channel_id: reaction.channel_id, channel, emoji: reaction.emoji, message: message, message_id: reaction.message_id}).catch(e => console.log(e));
+        this.pinned2dm.run({user_id: reaction.user_id, user, channel_id: reaction.channel_id, channel, emoji: reaction.emoji, message: message, message_id: reaction.message_id}).catch(e => this.client.logger.error(e));
         break;
     
       default:

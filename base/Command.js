@@ -5,7 +5,6 @@ class Command {
     category = 'General',
     usage = 'No usage provided.',
     extended = 'No information provided.',
-    cost = 0,
     cooldown = 0,
     hidden = false,
     guildOnly = false,
@@ -15,6 +14,13 @@ class Command {
     location = ''
   }) {
     this.client = client;
+    this.help = {
+      name,
+      description,
+      category,
+      usage,
+      extended
+    };
     this.conf = {
       hidden,
       guildOnly,
@@ -24,43 +30,35 @@ class Command {
       location,
       cooldown
     };
-    this.help = {
-      name,
-      description,
-      category,
-      usage,
-      extended,
-      cost
-    };
   }
 
-  async verifyUser(user) {
+  async verifyUser(message, user) {
     try {
       const match = /(?:<@!?)?([0-9]{17,20})>?/gi.exec(user);
-      if (!match) throw 'Invalid user';
+      if (!match) message.reply('Invalid user');
       const id = match[1];
-      const check = await this.client.fetchUser(id);
+      const check = await this.client.fetchUser(id, true);
       if (check.username !== undefined) return check;
     } catch (error) {
-      throw error;
+      this.client.logger.error(error);
     }
   }
 
-  async verifyMember(guild, member) {
-    const user = await this.verifyUser(member);
-    const target = await guild.fetchMember(user);
+  async verifyMember(message, member) {
+    const user = await this.verifyUser(message, member);
+    const target = await message.guild.fetchMember(user);
     return target;
   }
 
   async verifyMessage(message, msgid) {
     try {
       const match = /([0-9]{17,20})/.exec(msgid);
-      if (!match) throw 'Invalid message id.';
+      if (!match) message.reply('Invalid message id.');
       const id = match[1];
       const check = await message.channel.fetchMessage(id);
       if (check.cleanContent !== undefined) return id;
     } catch (error) {
-      throw error;
+      this.client.logger.error(error);
     }
   }
 
@@ -72,11 +70,12 @@ class Command {
       const check = await message.guild.channels.get(id);
       if (check.name !== undefined && check.type === 'text') return id;
     } catch (error) {
-      throw error;
+      this.client.logger.error(error);
     }
   }
+  
   async run(message, args, level) { // eslint-disable-line no-unused-vars
-    throw new Error(`Command ${this.constructor.name} doesn't provide a run method.`); 
+    message.error(new Error(`Command ${this.constructor.name} doesn't provide a run method.`)); 
   }
 }
 module.exports = Command;

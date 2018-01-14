@@ -5,7 +5,7 @@
 
 */
 
-const Command = require('../../base/Command.js');
+const Command = require(`${process.cwd()}/base/Command.js`);
 const request = require('snekfetch');
 const { oneLineTrim } = require('common-tags');
 
@@ -261,11 +261,12 @@ class Docs extends Command {
 
 
   async run(message, [query, version = 'stable'], level) { // eslint-disable-line no-unused-vars
+    if (!query) query = 'client';
     const docs = await this.fetchDocs(version);
     const [main, member] = this.search(docs, query);
 
     if (!main) {
-      throw 'Could not find that item in the docs.';
+      message.reply('Could not find that item in the docs.');
     }
 
     const embed = member ? {

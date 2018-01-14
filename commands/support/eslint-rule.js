@@ -1,4 +1,4 @@
-const Command = require('../../base/Command.js');
+const Command = require(`${process.cwd()}/base/Command.js`);
 const { Linter } = require('eslint');
 const linter = new Linter();
 const rules = linter.getRules();
@@ -11,15 +11,16 @@ class EslintRule extends Command {
       description: 'Gets information on an eslint rule.',
       usage: 'eslint-rule <rule>',
       category: 'Support',
-      aliases: ['rule'],
+      aliases: ['rule', 'eslint'],
       botPerms: ['EMBED_LINKS']
     });
   }
 
   async run(message, args, level) { // eslint-disable-line no-unused-vars
+    if (args.length === 0) return message.reply('You must supply an eslint rule.');
     const rule = args.join('-');
     try {
-      if (!rules.has(rule)) throw 'Could not find any results.';
+      if (!rules.has(rule)) message.reply('Could not find any results.');
       const data = rules.get(rule).meta;
       const embed = new RichEmbed()
         .setAuthor('ESLint', 'https://i.imgur.com/TlurpFC.png')
@@ -29,7 +30,7 @@ class EslintRule extends Command {
         .setDescription(data.docs.description);
       return message.channel.send(embed);
     } catch (error) {
-      throw error;
+      this.client.logger.error(error);
     }
   }
 }

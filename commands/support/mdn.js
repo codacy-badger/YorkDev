@@ -1,4 +1,4 @@
-const Command = require('../../base/Command.js');
+const Command = require(`${process.cwd()}/base/Command.js`);
 const { RichEmbed } = require('discord.js');
 const snek = require('snekfetch');
 const toMarkdown = require('to-markdown');
@@ -16,13 +16,14 @@ class Mdn extends Command {
   }
 
   async run(message, args, level) { // eslint-disable-line no-unused-vars
+    if (args.length === 0) return message.reply('You must supply a search term.');
     const query = args.join(' ').replace(/#/g, '.prototype.');
     try {
       const { body } = await snek
         .get('https://mdn.topkek.pw/search')
         .query({ q: query });
 
-      if (!body.URL || !body.Title || !body.Summary) throw 'Could not find any results.';
+      if (!body.URL || !body.Title || !body.Summary) message.reply('Could not find any results.');
 
       const embed = new RichEmbed()
         .setColor(0x066FAD)

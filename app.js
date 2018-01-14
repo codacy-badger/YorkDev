@@ -2,7 +2,6 @@ if (process.version.slice(1).split('.')[0] < 8) throw new Error('Node 8.0.0 or h
 // For dashboard stuff.
 // npm install body-parser ejs express express-passport express-session marked passport passport-discord
 const { Client } = require('discord.js');
-const { readdir } = require('fs-nextra');
 const Enmap = require('enmap');
 const EnmapLevel = require('enmap-level');
 const klaw = require('klaw');
@@ -13,18 +12,16 @@ class YorkDev extends Client {
     super(options);
     this.db = require('./functions/EnmapDB.js');
     this.config = require('./config.js');
-    this.botSettings = new Enmap({provider: new EnmapLevel({name: 'bot_settings'})});
+    this.logger = require('./util/Logger.js');
     this.settings = new Enmap({provider: new EnmapLevel({name: 'settings'})});
-    this.consent = new Enmap({provider: new EnmapLevel({name: 'consent'})});
-    this.blacklist = new Enmap({provider: new EnmapLevel({name: 'blacklist'})});
-    this.points = new Enmap({provider: new EnmapLevel({name: 'points'})});
-    this.reminders = new Enmap({provider: new EnmapLevel({name: 'reminders'})});
+    // this.whitelist = new Enmap({provider: new EnmapLevel({name: 'whitelist'})});
     this.commands = new Enmap();
     this.aliases = new Enmap();
     this.invspam = new Enmap();
     this.ratelimits = new Enmap();
   }
 
+  
   permlevel(message) {
     let permlvl = 0;
     const permOrder = client.config.permLevels.slice(0).sort((p, c) => p.level < c.level ? 1 : -1);
@@ -39,11 +36,6 @@ class YorkDev extends Client {
     return permlvl;
   }
 
-  log(type, message, title) {
-    if (!title) title = 'Log';
-    console.log(`[${type}] [${title}]${message}`);
-  }
-
   permCheck(message, perms) {
     if (message.channel.type !== 'text') return;
     return message.channel.permissionsFor(message.guild.me).missing(perms);
@@ -53,7 +45,7 @@ class YorkDev extends Client {
     try {
       const props = new (require(`${commandPath}${path.sep}${commandName}`))(client);
       props.conf.location = commandPath;
-      client.log('log', `Loading Command: ${props.help.name}. 👌`);
+      // client.logger.log(`Loading Command: ${props.help.name}. 👌`);
       if (props.init) {
         props.init(client);
       }
@@ -86,30 +78,41 @@ class YorkDev extends Client {
 
 const client = new YorkDev({
   fetchAllMembers: true,
+  disableEveryone: true,
   disabledEvents:['TYPING_START']
 });
 
 require('./functions/utilities.js')(client);
-// require('./functions/music.js')(client);
-
 
 const init = async () => {
+
+  const commandList = [];
   klaw('./commands').on('data', (item) => {
-    const file = path.parse(item.path);
-    if (!file.ext || file.ext !== '.js') return;
-    const response = client.loadCommand(file.dir, `${file.name}${file.ext}`);
-    if (response) console.log(response);
-  });
+    const cmdFile = path.parse(item.path);
+    if (!cmdFile.ext || cmdFile.ext !== '.js') return;
+    const response = client.loadCommand(cmdFile.dir, `${cmdFile.name}${cmdFile.ext}`);
+    commandList.push(cmdFile.name);
+    if (response) client.logger.error(response);
+  }).on('end', () => {
+    client.logger.log(`Loaded a total of ${commandList.length} commands.`);
+  }).on('error', (error) => client.logger.error(error));
   
-  const evtFiles = await readdir('./events/');
-  client.log('log', `Loading a total of ${evtFiles.length} events.`);
-  evtFiles.forEach(file => {
-    const eventName = file.split('.')[0];
-    const event = new (require(`./events/${file}`))(client);
-    client.on(eventName, (...args) => event.execute(...args));
-    client.log('log', `Loading Event: ${eventName}. ✔`);
-    delete require.cache[require.resolve(`./events/${file}`)];
-  });
+  const eventList = [];
+  klaw('./events').on('data', (item) => {  
+    const eventFile = path.parse(item.path);
+    if (!eventFile.ext || eventFile.ext !== '.js') return;
+    const eventName = eventFile.name.split('.')[0];
+    try {
+      const event = new (require(`${eventFile.dir}${path.sep}${eventFile.name}${eventFile.ext}`))(client);    
+      eventList.push(event);      
+      client.on(eventName, (...args) => event.execute(...args));
+      delete require.cache[require.resolve(`${eventFile.dir}${path.sep}${eventFile.name}${eventFile.ext}`)];
+    } catch (error) {
+      client.logger.error(`Error loading event ${eventFile.name}: ${error}`);
+    }
+  }).on('end', () => {
+    client.logger.log(`Loaded a total of ${eventList.length} events.`);
+  }).on('error', (error) => client.logger.error(error));
 
   client.levelCache = {};
   for (let i = 0; i < client.config.permLevels.length; i++) {

@@ -1,4 +1,4 @@
-const Command = require('../../base/Command.js');
+const Command = require(`${process.cwd()}/base/Command.js`);
 
 class Set extends Command {
   constructor(client) {
@@ -62,7 +62,6 @@ class Set extends Command {
       });
       await message.channel.send(`= Current Guild Settings =
 ${array.join('\n')}`, {code: 'asciidoc'});
-      message.channel.send(`See the Dashboard on <${this.client.config.dashboard.callbackURL.split('/').slice(0, -1).join('/')}>`);
     }
   }
 }

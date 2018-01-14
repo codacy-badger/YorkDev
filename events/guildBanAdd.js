@@ -11,7 +11,7 @@ module.exports = class {
       const fromNow = member ? moment(member.joinedTimestamp).fromNow() : 'unknown (member not cached)';
       channel.send(`🚨 ${user.tag} (${user.id})  was banned by unknown, they joined: ${fromNow}\n**Reason**: Responsible moderator, you know what to do!`);
     } catch (error) {
-      console.log(error);
+      this.client.logger.error(error);
     }
   }
 };

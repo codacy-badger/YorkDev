@@ -1,4 +1,4 @@
-const Command = require('../../base/Command.js');
+const Command = require(`${process.cwd()}/base/Command.js`);
 
 class Tag extends Command {
   constructor(client) {
@@ -51,7 +51,7 @@ class Tag extends Command {
       response < 1 ? response = 'There appears to be no tags saved at this time.' : response;
       message.channel.send(response);
     } catch (error) {
-      throw error;
+      this.client.logger.error(error);
     }
   }
 }

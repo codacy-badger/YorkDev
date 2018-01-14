@@ -3,7 +3,6 @@ module.exports = class {
     this.client = client;
   }
   async execute(messages) {
-    console.log('FIRE IN THE HOLE!');
     const message = messages.first();
     if (!message || !message.id || !message.content || !message.guild) return;
     

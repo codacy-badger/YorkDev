@@ -19,9 +19,9 @@ class Pinned2DM {
         await user.send(`Here is the message you pinned:\n\`\`\`${message.cleanContent}\`\`\``, attachment);
     } catch (error) {
       if (error.message === 'Cannot send messages to this user') {
-        await message.channel.send(`I cannot send you that message ${user}, as it appears you have **Direct Messages's** disabled.`);
+        await message.reply('I cannot send you that message, as it appears you have **Direct Messages\'s** disabled.');
       } else {
-        throw error;
+        this.client.logger.error(error);
       }
     }
   }
